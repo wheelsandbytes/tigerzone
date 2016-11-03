@@ -1,8 +1,8 @@
 import java.util.*;
 
 /*-----------------------------------------------------------------------------------------------	
-|	Board Player:   											
-|  	Contains information about current board game 												
+|	Player Class:   											
+|  	Contains information and behaviors of a Player Object												
 -------------------------------------------------------------------------------------------------*/
 
 public abstract class Player {
