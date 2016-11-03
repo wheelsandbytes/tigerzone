@@ -2,7 +2,7 @@ import java.util.*;
 
 /*-----------------------------------------------------------------------------------------------	
 |	Player Class:   											
-|  	Contains information and behaviors of a Player Object												
+|  	Contains information and behaviours of a Player Object												
 -------------------------------------------------------------------------------------------------*/
 
 public abstract class Player {
