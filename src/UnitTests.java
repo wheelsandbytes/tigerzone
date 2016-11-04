@@ -34,45 +34,62 @@ public class UnitTests {
 	}
 
 	@Test
-	void testRegionClass(){
+	void testFieldClass(){
 		Region field = new Field();
 		assertEquals(field.getType(), GameInfo.FIELD);
 		assertTrue(field instanceof Region);
-
-		Region city = new City();
-		assertEquals(city.getType(), GameInfo.CITY);
-		assertTrue(city instanceof Region);
-
-		Region church = new Church();
-		assertEquals(church.getType(), GameInfo.CHURCH);
-		assertTrue(church instanceof Region);
-
-		Region road = new Road();
-		assertEquals(road.getType(), GameInfo.ROAD);
-		assertTrue(road instanceof Region);
-
 	}
 
 	@Test
-	void testMeepleClass(){
+	void testCityClass(){
+		Region city = new City();
+		assertEquals(city.getType(), GameInfo.CITY);
+		assertTrue(city instanceof Region);
+	}
+	
+	@Test
+	void testChurchClass(){
+		Region church = new Church();
+		assertEquals(church.getType(), GameInfo.CHURCH);
+		assertTrue(church instanceof Region);
+	}
+	
+	@Test
+	void testRoadClass(){
+		Region road = new Road();
+		assertEquals(road.getType(), GameInfo.ROAD);
+		assertTrue(road instanceof Region);
+	}
+
+	@Test
+	void testFarmerClass(){
 		Meeple farmer = new Farmer();
 		assertEquals(farmer.getType(), GameInfo.FIELD);
 		assertTrue(field instanceof Meeple);
 		assertTrue(farmer.isAvailable());
 		assertEquals(null, farmer.getRegion());
+	}
 
+	@Test
+	void testKnightClass(){
 		Meeple knight = new Knight();
 		assertEquals(field.getType(), GameInfo.CITY);
 		assertTrue(knight instanceof Meeple);
 		assertTrue(knight.isAvailable());
 		assertEquals(null, knight.getRegion());
-
+	}
+	
+	@Test
+	void testMonkClass(){
 		Meeple monk = new Monk();
 		assertEquals(field.getType(), GameInfo.CHURCH);
 		assertTrue(monk instanceof Meeple);
 		assertTrue(monk.isAvailable());
 		assertEquals(null, monk.getRegion());
-
+	}
+	
+	@Test
+	void testThiefClass(){
 		Meeple thief = new Thief();
 		assertEquals(field.getType(), GameInfo.ROAD);
 		assertTrue(thief instanceof Meeple);
