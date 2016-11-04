@@ -1,5 +1,5 @@
+import static org.junit.Assert.*;
 import org.junit.Test;
-
 /*-----------------------------------------------------------------------------------------------
 |	UnitTests Class:
 |  	Contains all Unit Tests for our Program
@@ -9,17 +9,17 @@ import org.junit.Test;
 
 public class UnitTests {
 	@Test
-	void testPlayerClass(){
+	public void testPlayerClass(){
 		Player p = new AI();
 		assertTrue(p instanceof Player);
 		assertTrue(p instanceof AI);
-		assertEquals(p.getScore, 0);
+		assertEquals(p.getScore(), 0);
 		p.altScore(2);
 		assertEquals(p.getScore(), 2);
 	}
 
 	@Test
-	void testBoardClass(){
+	public void testBoardClass(){
 		Board b = new Board();
 		assertEquals(b.checkValid(), false);
 	}
@@ -27,21 +27,22 @@ public class UnitTests {
 	//Continue Testing Components as desired
 	//.......
 	@Test
-	void testTileClass(){
+	public void testTileClass(){
 		Tile t = new Tile();
 		assertEquals(null, t.innerRegions);
 		assertEquals(null, t.adjacentTiles);
 	}
 
+	/*
 	@Test
-	void testFieldClass(){
+	public void testFieldClass(){
 		Region field = new Field();
 		assertEquals(field.getType(), GameInfo.FIELD);
 		assertTrue(field instanceof Region);
 	}
 
 	@Test
-	void testCityClass(){
+	public void testCityClass(){
 		Region city = new City();
 		assertEquals(city.getType(), GameInfo.CITY);
 		assertTrue(city instanceof Region);
@@ -55,45 +56,58 @@ public class UnitTests {
 	}
 	
 	@Test
-	void testRoadClass(){
+	public void testRoadClass(){
 		Region road = new Road();
 		assertEquals(road.getType(), GameInfo.ROAD);
 		assertTrue(road instanceof Region);
 	}
-
+*/
+	
 	@Test
-	void testFarmerClass(){
+	public void testFarmerClass(){
 		Meeple farmer = new Farmer();
 		assertEquals(farmer.getType(), GameInfo.FIELD);
-		assertTrue(field instanceof Meeple);
+		assertTrue(farmer instanceof Meeple);
 		assertTrue(farmer.isAvailable());
 		assertEquals(null, farmer.getRegion());
 	}
 
 	@Test
-	void testKnightClass(){
+	public void testKnightClass(){
 		Meeple knight = new Knight();
-		assertEquals(field.getType(), GameInfo.CITY);
+		assertEquals(knight.getType(), GameInfo.CITY);
 		assertTrue(knight instanceof Meeple);
 		assertTrue(knight.isAvailable());
 		assertEquals(null, knight.getRegion());
 	}
 	
 	@Test
-	void testMonkClass(){
+	public void testMonkClass(){
 		Meeple monk = new Monk();
-		assertEquals(field.getType(), GameInfo.CHURCH);
+		assertEquals(monk.getType(), GameInfo.CHURCH);
 		assertTrue(monk instanceof Meeple);
 		assertTrue(monk.isAvailable());
 		assertEquals(null, monk.getRegion());
 	}
 	
 	@Test
-	void testThiefClass(){
+	public void testThiefClass(){
 		Meeple thief = new Thief();
-		assertEquals(field.getType(), GameInfo.ROAD);
+		assertEquals(thief.getType(), GameInfo.ROAD);
 		assertTrue(thief instanceof Meeple);
 		assertTrue(thief.isAvailable());
 		assertEquals(null, thief.getRegion());
+	}
+	
+	public void MeepleTests(){
+		testFarmerClass();
+		testKnightClass();
+		testMonkClass();
+		testThiefClass();
+	}
+	
+	public static void main(String args[]){
+		UnitTests t = new UnitTests();
+		t.MeepleTests();
 	}
 }
