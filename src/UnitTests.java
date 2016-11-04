@@ -33,7 +33,7 @@ public class UnitTests {
 		assertEquals(null, t.adjacentTiles);
 	}
 
-	/*
+	
 	@Test
 	public void testFieldClass(){
 		Region field = new Field();
@@ -49,7 +49,7 @@ public class UnitTests {
 	}
 	
 	@Test
-	void testChurchClass(){
+	public void testChurchClass(){
 		Region church = new Church();
 		assertEquals(church.getType(), GameInfo.CHURCH);
 		assertTrue(church instanceof Region);
@@ -61,7 +61,7 @@ public class UnitTests {
 		assertEquals(road.getType(), GameInfo.ROAD);
 		assertTrue(road instanceof Region);
 	}
-*/
+
 	
 	@Test
 	public void testFarmerClass(){

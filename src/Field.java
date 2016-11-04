@@ -1,3 +1,5 @@
+import java.util.List;
+
 /*-----------------------------------------------------------------------------------------------
 |	Field class implements Region.java:
 |  	Contains methods specific to Field Region Type
