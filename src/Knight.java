@@ -27,4 +27,10 @@ public class Knight implements Meeple {
     public Region getRegion() {
         return region;
     }
+
+	@Override
+	public boolean isAvailable() {
+		// TODO Auto-generated method stub
+		return isAvailable;
+	}
 }
