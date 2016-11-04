@@ -1,10 +1,10 @@
 import org.junit.Test;
 
-/*-----------------------------------------------------------------------------------------------	
-|	UnitTests Class:   											
-|  	Contains all Unit Tests for our Program	
+/*-----------------------------------------------------------------------------------------------
+|	UnitTests Class:
+|  	Contains all Unit Tests for our Program
 |	(The better way is to have a Test Class for every actual Class,
-|   and a Test Method per actual Method but for now this will do)		  										
+|   and a Test Method per actual Method but for now this will do)
 -------------------------------------------------------------------------------------------------*/
 
 public class UnitTests {
@@ -17,13 +17,13 @@ public class UnitTests {
 		p.altScore(2);
 		assertEquals(p.getScore(), 2);
 	}
-	
+
 	@Test
 	void testBoardClass(){
 		Board b = new Board();
 		assertEquals(b.checkValid(), false);
 	}
-	
+
 	//Continue Testing Components as desired
 	//.......
 	@Test
@@ -73,10 +73,10 @@ public class UnitTests {
 		assertTrue(monk.isAvailable());
 		assertEquals(null, monk.getRegion());
 
-		Meeple theif = new Theif();
+		Meeple thief = new Thief();
 		assertEquals(field.getType(), GameInfo.ROAD);
-		assertTrue(theif instanceof Meeple);
-		assertTrue(theif.isAvailable());
-		assertEquals(null, theif.getRegion());
+		assertTrue(thief instanceof Meeple);
+		assertTrue(thief.isAvailable());
+		assertEquals(null, thief.getRegion());
 	}
 }
