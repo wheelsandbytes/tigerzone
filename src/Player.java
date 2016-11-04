@@ -13,4 +13,8 @@ public abstract class Player {
 	public void altScore(int score){
 		this.score = score; 
 	}
+
+	public int  getScore(){
+		return score;
+	}
 }
