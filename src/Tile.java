@@ -6,6 +6,7 @@ import java.util.*;
 -------------------------------------------------------------------------------------------------*/
 
 public class Tile {
+	boolean shield;
 	List<Region> innerRegions;
 	List<Tile> adjacentTiles;
 }
