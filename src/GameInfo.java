@@ -7,7 +7,7 @@
 public class GameInfo {
 	
 	//Sides of a Tile... 
-	public static int UP = 1, RIGHT = 2, DOWN = 3, LEFT = 4;
+	public static int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
 	
 	//Types of Regions...
 	public static int ROAD = 1, CITY = 2, FIELD = 3, CHURCH = 4; 
