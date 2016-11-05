@@ -1,4 +1,4 @@
-# Tiger zone backlog
+# Team M - Tiger zone backlog
 
 * Refine core business rules
 * Expand on the Player interface
@@ -9,10 +9,15 @@
         * Board
         * Tile
 
-    * Interfaces
-        * Player (port)
-        * Region
+    * Abstract Classes
         * Meeple
+        * Player
+
+    * Interfaces
+        * ~~Player (port)~~
+        * Translator/Adapter
+        * Region
+        * ~~Meeple~~
 
     * Adapters
         * AI (random or strategic)
