@@ -1,14 +1,9 @@
 /*-----------------------------------------------------------------------------------------------
-|	Monk class implements Meeple.java:
+|	Monk class extends Meeple.java:
 |  	Contains methods specific to Monk Meeple type
 -------------------------------------------------------------------------------------------------*/
 
-public class Monk implements Meeple {
-
-    int type;
-    int score;
-    boolean isAvailable;
-    Region region;
+public class Monk extends Meeple {
 
     public Monk() {
         type = GameInfo.CHURCH;
@@ -16,21 +11,7 @@ public class Monk implements Meeple {
         isAvailable = true;
     }
 
-    public int getType() {
-        return type;
-    }
-
     public int getScore() {
         return score;
     }
-
-    public Region getRegion() {
-        return region;
-    }
-    
-    @Override
-	public boolean isAvailable() {
-		// TODO Auto-generated method stub
-		return isAvailable;
-	}
 }

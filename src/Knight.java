@@ -1,14 +1,9 @@
 /*-----------------------------------------------------------------------------------------------
-|	Knight class implements Meeple.java:
+|	Knight class extends Meeple.java:
 |  	Contains methods specific to Knight Meeple type
 -------------------------------------------------------------------------------------------------*/
 
-public class Knight implements Meeple {
-
-    int type;
-    int score;
-    boolean isAvailable;
-    Region region;
+public class Knight extends Meeple {
 
     public Knight() {
         type = GameInfo.CITY;
@@ -16,21 +11,7 @@ public class Knight implements Meeple {
         isAvailable = true;
     }
 
-    public int getType() {
-        return type;
-    }
-
     public int getScore() {
         return score;
     }
-
-    public Region getRegion() {
-        return region;
-    }
-
-	@Override
-	public boolean isAvailable() {
-		// TODO Auto-generated method stub
-		return isAvailable;
-	}
 }

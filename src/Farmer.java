@@ -1,14 +1,9 @@
 /*-----------------------------------------------------------------------------------------------
-|	Farmer class implements Meeple.java:
+|	Farmer class extends Meeple.java:
 |  	Contains methods specific to Farmer Meeple type
 -------------------------------------------------------------------------------------------------*/
 
-public class Farmer implements Meeple {
-
-    int type;
-    int score;
-    boolean isAvailable;
-    Region region;
+public class Farmer extends Meeple {
 
     public Farmer() {
         type = GameInfo.FIELD;
@@ -16,21 +11,7 @@ public class Farmer implements Meeple {
         isAvailable = true;
     }
 
-    public int getType() {
-        return type;
-    }
-
     public int getScore() {
         return score;
     }
-
-    public Region getRegion() {
-        return region;
-    }
-
-	@Override
-	public boolean isAvailable() {
-		// TODO Auto-generated method stub
-		return isAvailable;
-	}
 }

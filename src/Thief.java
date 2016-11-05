@@ -1,14 +1,9 @@
 /*-----------------------------------------------------------------------------------------------
-|	Thief class implements Meeple.java:
+|	Thief class extends Meeple.java:
 |  	Contains methods specific to Thief Meeple type
 -------------------------------------------------------------------------------------------------*/
 
-public class Thief implements Meeple {
-
-    int type;
-    int score;
-    boolean isAvailable;
-    Region region;
+public class Thief extends Meeple {
 
     public Thief() {
         type = GameInfo.ROAD;
@@ -16,21 +11,7 @@ public class Thief implements Meeple {
         isAvailable = true;
     }
 
-    public int getType() {
-        return type;
-    }
-
     public int getScore() {
         return score;
     }
-
-    public Region getRegion() {
-        return region;
-    }
-    
-    @Override
-	public boolean isAvailable() {
-		// TODO Auto-generated method stub
-		return isAvailable;
-	}
 }

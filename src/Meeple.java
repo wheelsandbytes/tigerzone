@@ -1,11 +1,21 @@
-/*-----------------------------------------------------------------------------------------------	
-|	Meeple Interface:   											
-|  	Contains methods common to all types of Meeples			  										
+/*-----------------------------------------------------------------------------------------------
+|	Meeple abstract class
+|  	Contains methods specific to Meeples
 -------------------------------------------------------------------------------------------------*/
 
-public interface Meeple {
-	int getScore();
-	int getType();
-	boolean isAvailable();
-	Region getRegion(); 
+public abstract class Meeple {
+
+    int type;
+    int score;
+    boolean isAvailable;
+    Region region;
+
+	public abstract int getScore();
+
+    public int getType() { return type; }
+
+    public Region getRegion() { return region; }
+
+	public boolean isAvailable() { return isAvailable; }
+
 }
