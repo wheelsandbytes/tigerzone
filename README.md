@@ -13,6 +13,11 @@
 * Artem Iryshkov
 
 ---
+### [Architectural Design](https://www.gliffy.com/go/share/s8yo6dxqp3tha72iwy0p)
+
+### [UML Diagram](https://www.gliffy.com/go/share/satac75pd0xs1h24vyih)
+
+---
 ### Update from class 11/2/16
 
 * Dave will not be in class Friday 11/4
