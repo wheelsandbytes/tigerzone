@@ -17,6 +17,37 @@
 
 ### [UML Diagram](https://www.gliffy.com/go/share/satac75pd0xs1h24vyih)
 
+
+---
+### Update from class 11/9/16
+
+Things you'll know and need to tell:
+
+* your turn to place a tile and what that tile is
+* Your move must be received within 1 second
+    * Where, orientation, and location of meeple if meeple placed
+* Your move will be confirmed [sent to both players]
+    * Valid
+    * Invalid: illegal tile placement => forfeit
+    * Invalid: illegal meeple placement => forfeit
+    * Invalid: timeout => forfeit
+* If a move caused a scoring event [sent to both players]
+    * Score each player earned
+    * Number of meeples each player gets back
+* If end of game
+    * For each unsecured feature, report score
+    * Report winner and final scores
+
+Tiger Zone theme:
+
+* Jungles == farms
+* Lakes == cities
+* Game trails == roads
+* Dens == monastery
+
+Tiles will be square
+77 tiles total
+
 ---
 ### Update from class 11/2/16
 
