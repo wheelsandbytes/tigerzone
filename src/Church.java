@@ -5,22 +5,21 @@ import java.util.List;
 |  	Contains methods specific to Church Region Type
 -------------------------------------------------------------------------------------------------*/
 
-public class Church implements Region {
-
-    List<Meeple> placedMeeples;
-    int type;
+public class Church extends Region {
 
     public Church() 
     {
         type = GameInfo.CHURCH;
     }
 
-    public List<Meeple> getMeeples()
-    {
-        return placedMeeples;
-    }
+	@Override
+	public int score() {
+		// TODO Auto-generated method stub
+		return 2;
+	}
 
-    public int getType() {
-        return type;
-    }
+	@Override
+	public void merge(Region r) {
+		
+	}
 }

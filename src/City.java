@@ -5,22 +5,20 @@ import java.util.List;
 |  	Contains methods specific to City Region Type
 -------------------------------------------------------------------------------------------------*/
 
-public class City implements Region {
-
-    List<Meeple> placedMeeples;
-    int type;
+public class City extends Region {
 
     public City() 
     {
         type = GameInfo.CITY;
     }
 
-    public List<Meeple> getMeeples()
-    {
-        return placedMeeples;
-    }
+	@Override
+	public int score() {
+		return 0;
+	}
 
-    public int getType() {
-        return type;
-    }
+	@Override
+	public void merge(Region r) {
+		
+	}
 }

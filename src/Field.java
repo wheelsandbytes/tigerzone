@@ -5,22 +5,22 @@ import java.util.List;
 |  	Contains methods specific to Field Region Type
 -------------------------------------------------------------------------------------------------*/
 
-public class Field implements Region {
-
-    List<Meeple> placedMeeples;
-    int type;
-
+public class Field extends Region {
+	
     public Field() 
     {
         type = GameInfo.FIELD;
     }
 
-    public List<Meeple> getMeeples()
-    {
-        return placedMeeples;
-    }
+	@Override
+	public int score() {
+		return 3;
+	}
 
-    public int getType() {
-        return type;
-    }
+	@Override
+	public void merge(Region r) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -5,22 +5,21 @@ import java.util.List;
 |  	Contains methods specific to Road Region Type
 -------------------------------------------------------------------------------------------------*/
 
-public class Road implements Region {
-
-    List<Meeple> placedMeeples;
-    int type;
-
+public class Road extends Region {
+		
     public Road() 
     {
         type = GameInfo.ROAD;
     }
 
-    public List<Meeple> getMeeples()
-    {
-        return placedMeeples;
-    }
+	@Override
+	public int score() {
+		return scoreVar;
+	}
 
-    public int getType() {
-        return type;
-    }
+	@Override
+	public void merge(Region r) {
+		
+	}
+    
 }
