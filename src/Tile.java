@@ -8,7 +8,7 @@ import java.util.*;
 public class Tile {
 
 	// Top, Bottom, Right, Left definitions
-	int TOP,RIGHT,BOTTOM,LEFT;
+	int rotation;
 	boolean shield;
 	// List<Region> innerRegions;
 	List<Tile> adjacentTiles;
@@ -17,12 +17,17 @@ public class Tile {
 	List<Edge> tileEdges;
 
 	// Default constructor
-	public Tile
+	public Tile()
 	{
 		// DEFAULT rotation state is ZERO (0) for new Tile
-		setTileRotationState(0);
 	}
-
+	
+	//Accounts for a given rotation, currently assuming counterclockwise.
+	Edge getEdge(int i){
+		return tileEdges.get((rotation+i)%4);
+	}
+	
+	/*
 	// Define rotation states
 	public void setTileRotationState(int ROT_STATE)
 	{
@@ -55,4 +60,12 @@ public class Tile {
 			LEFT = 2;
 		}
 	}
+	*/
+	
+	/*
+	//Will be called from graph to take care of region merging
+	void place(List<Tile> neighbors){
+		//Will call a region.merge function?
+	}
+	*/
 }
