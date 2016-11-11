@@ -9,9 +9,18 @@ public class Edge {
 	
 	public boolean equals(Edge e){
 		for (int i = 0; i < edges.size(); i++){
-			if(edges.get(i).getType() == e.edges.get(i).getType()) return false;
+			if(!edges.get(i).equals(e.edges.get(i))) return false;
 		}
 		
 		return true;
+	}
+	
+	public void merge(Edge e){
+		for (int i = 0; i < edges.size(); i++){
+			
+			e.edges.get(i).merge(edges.get(i));
+			
+			edges.set(i, e.edges.get(i));
+		}
 	}
 }
