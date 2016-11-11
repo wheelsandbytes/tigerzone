@@ -6,7 +6,18 @@ import java.util.*;
 -------------------------------------------------------------------------------------------------*/
 
 public class Tile {
+	public String type;
 	boolean shield;
 	List<Region> innerRegions;
 	List<Tile> adjacentTiles;
+	
+	Tile(){
+		//Empty..  :(
+	}
+	
+	Tile(String type){
+		this.type = type;
+	}
+	
+	
 }
