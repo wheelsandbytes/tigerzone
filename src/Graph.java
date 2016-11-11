@@ -4,7 +4,7 @@
 -------------------------------------------------------------------------------------------------*/
 
 public interface Graph {
-	//Function should add a new Tile based on two Tile references and their joining sides
+	//Function should add a new Tile based on two Tile references and the side of base Tile
 	//For valid joining sides check GameInfo.java
 	void add(Tile base, int side, Tile newTile);
 	

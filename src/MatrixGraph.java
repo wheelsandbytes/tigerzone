@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------------------------------	
 |	MatrixGraph Class:   											
 |  	Graph implementation using 2D array on a max size. Memory wise this is way more consuming than TreeGraph,
-|	until a point number (approximate max 20MB of memory for this type of allocation), but WAY WAY faster.
+|	until a point (approximate 20MB of memory for this type of allocation), but WAY WAY faster.
 |	Complexity: add(coordinate) O(1), locate(coordinate) O(1), toString() O(n), add(baseTile) O(n) 										
 -------------------------------------------------------------------------------------------------*/
 

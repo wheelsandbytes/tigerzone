@@ -2,7 +2,7 @@
 |	TreeGraph Class:   											
 |  	Graph implementation using Tree Structure. Memory wise it is more efficient than MatrixGraph.
 |	TreeGraph is also slower due to Complexity and lack of Spatial Locality in CPU cache.
-|	Complexity: add(coordinate) O(1), locate(coordinate) O(1), toString() O(n), add(baseTile) O(n)  								
+|	Complexity: add(coordinate) O(n), locate(coordinate) O(n), toString() O(n), add(baseTile) O(n)  								
 -------------------------------------------------------------------------------------------------*/
 
 public class TreeGraph implements Graph{
