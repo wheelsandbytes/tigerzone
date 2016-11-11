@@ -3,7 +3,19 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class TestMatrixGraph {
-
+	
+	protected long getUsedRAM(){
+		 Runtime runtime = Runtime.getRuntime();
+	    // Run the garbage collector
+	    runtime.gc();
+	    // Calculate the used memory
+	    long memory = runtime.totalMemory() - runtime.freeMemory();
+	    System.out.println("Used memory is bytes: " + memory);
+	    System.out.println("Used memory is megabytes: " +  memory / (1024L * 1024L));
+	    return memory / (1024L * 1024L);
+	}
+	
+	
 	@Test
 	public void testMapCoordinates() {
 		Tile root = new Tile("A");
@@ -18,6 +30,7 @@ public class TestMatrixGraph {
 		assertEquals(test2.col, testGraph.mapCoordinates(0, 2).col);
 		assertEquals(test3.row, testGraph.mapCoordinates(-72, 73).row);
 		assertEquals(test3.col, testGraph.mapCoordinates(-72, 73).col);
+		assertTrue(getUsedRAM() < 10);
 	}
 	
 	
@@ -32,6 +45,7 @@ public class TestMatrixGraph {
 		assertEquals(true, testGraph.validCoordinate(test1));
 		assertEquals(false, testGraph.validCoordinate(test2));
 		assertEquals(true, testGraph.validCoordinate(test3));
+		assertTrue(getUsedRAM() < 10);
 	}
 
 	
@@ -42,6 +56,7 @@ public class TestMatrixGraph {
 		
 		assertEquals("A", testGraph.locate(0,0).type);
 		assertEquals("null", testGraph.locate(0,1).type);
+		assertTrue(getUsedRAM() < 10);
 	}
 	
 	
@@ -58,6 +73,7 @@ public class TestMatrixGraph {
 		assertEquals("C", testGraph.locate(1,1).type);
 		assertEquals("D", testGraph.locate(-1,1).type);
 		assertEquals("null", testGraph.locate(3,3).type);
+		assertTrue(getUsedRAM() < 10);
 	}
 	
 	
@@ -71,6 +87,7 @@ public class TestMatrixGraph {
 		
 		testGraph.resetArray(test2);
 		assertArrayEquals(test1, test2);
+		assertTrue(getUsedRAM() < 10);
 	}
 	
 	
@@ -90,5 +107,6 @@ public class TestMatrixGraph {
 		
 //		assertEquals(testGraph.mapCoordinates(0, 1).row, testB[0].row);
 //		assertEquals(testGraph.mapCoordinates(0, 1).col, testB[0].row);
+		assertTrue(getUsedRAM() < 10);
 	}
 }
