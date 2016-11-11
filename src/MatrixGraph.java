@@ -2,7 +2,7 @@
 |	MatrixGraph Class:   											
 |  	Graph implementation using 2D array on a max size. Memory wise this is way more consuming than TreeGraph,
 |	until a point (approximate 20MB of memory for this type of allocation), but WAY WAY faster.
-|	Complexity: add(coordinate) O(1), locate(coordinate) O(1), toString() O(n), add(baseTile) O(n) 										
+|	Complexity: add(coordinate) O(1), locate(coordinate) O(1), toString() O(n^2), add(baseTile) O(n) 										
 -------------------------------------------------------------------------------------------------*/
 
 public class MatrixGraph implements Graph{
@@ -13,7 +13,7 @@ public class MatrixGraph implements Graph{
 	private boolean[][] explored;
 	
 	//Coordinate Object
-	public class Coor{
+	protected class Coor{
 		public int row, col;
 		Coor(int row, int col){this.row = row; this.col = col;};
 	};
@@ -35,14 +35,31 @@ public class MatrixGraph implements Graph{
 	
 	@Override
 	public void add(Tile base, int side, Tile newTile) {
-		
-		Coor[] result = new Coor[1];
 		resetArray(explored);
-		findTile(center, result, base);
-		
+		Coor result = findTile(center, base);
 		//If findFile found the Tile result will not be null
-		if(result[0] != null)
-			matrix[result[0].row][result[0].col] = newTile;
+		if(result == null) return;
+		
+		//Get the coordinate being inserted
+		switch(side){
+			case GameInfo.UP:
+				result.row--; 
+				break;
+			case GameInfo.RIGHT:
+				result.col++;
+				break;
+			case GameInfo.DOWN:
+				result.row++;
+				break;
+			case GameInfo.LEFT:
+				result.col--;
+				break;
+			default:return;
+		}
+		
+		//If valid then add the new tile
+		if(validCoordinate(result) && emptyCoordinate(result))
+			matrix[result.row][result.col] = newTile;
 	}
 
 	
@@ -63,29 +80,35 @@ public class MatrixGraph implements Graph{
 	
 	@Override
 	public Tile locate(int x, int y) {
+		//Get Coordinate and validate it
 		Coor c = mapCoordinates(x, y);
 		if(validCoordinate(c) && !emptyCoordinate(c))
 			return matrix[c.row][c.col];
-		else
-			return new Tile("null");
+		//If nothing found return null Tile
+		else return new Tile("null");
 	}
 	
 	@Override
 	public String toString(){
+		//Adjust the board screen
+		int leftCut = 1, rightCut = 2, base = 3;
+		//Build Board representation
 		StringBuilder graph = new StringBuilder();
 		StringBuilder row = new StringBuilder();
 		
+		//Find all Tiles that are present in the Graph
 		for(int i=0; i<matrix.length; i++){
 			row.setLength(0);
-			for(int j=0; j<matrix[0].length; j++){
+			for(int j=matrix[0].length*leftCut/base; j<matrix[0].length*rightCut/base; j++){
 				if(matrix[i][j] == null)
-					row.append(" ");
+					row.append("  ");
 				else
-					row.append(matrix[i][j].type);
+					row.append("-"+matrix[i][j].type);
 			}
-			graph.append(row.toString()+"/n");
+			if(row.toString().trim().length() > 0)
+				graph.append(row.toString()+"\n");
 		}
-		
+		//Return the String representation
 		return graph.toString();
 	}
 	
@@ -98,12 +121,14 @@ public class MatrixGraph implements Graph{
 		return new Coor(cRow - y, cCol + x);
 	}
 	
+	
 	protected boolean validCoordinate(Coor c){
 		 //Check index out of bounds
 		 if(c.row >= 0 && c.row < matrix.length && c.col >= 0 && c.col < matrix[0].length)
 			return true; 
 		 return false;
 	}
+	
 	
 	protected boolean emptyCoordinate(Coor c){
 		//Check there is a tile present
@@ -112,31 +137,40 @@ public class MatrixGraph implements Graph{
 		 return false;
 	}
 	
-	protected void findTile(Coor root, Coor[] result, Tile toFind){
-		result = new Coor[]{root};
+	
+	protected Coor findTile(Coor root, Tile toFind){
+		//Base case for breath first search
+		explored[root.row][root.col] = true;
+		if(emptyCoordinate(root))
+			return null;
 		
-//		//Base case for breath first search
-//		explored[root.row][root.col] = true;
-//		if(emptyCoordinate(root)){
-//			return;
-//		}
-//		//Check self
-//		if(matrix[root.row][root.col] == toFind){
-//			result = new Coor[]{root};
-//			return;
-//		}
-//		
-//		//Check children
-//		Coor child = new Coor(0,0);
-//		for(int i=0; i<GameInfo.SHIFT.length-1; i+=2){
-//			child.row = root.row + GameInfo.SHIFT[i];
-//			child.col = root.row + GameInfo.SHIFT[i+1]; 
-//			if(!explored[child.row][child.col] && validCoordinate(child))
-//				findTile(child, result, toFind);
-//		}
+		//Check self
+		if(matrix[root.row][root.col] == toFind){
+			return root;
+		}
+		
+		//Check children
+		Coor child = new Coor(cRow,cCol), temp = null;
+		for(int i=0; i<GameInfo.SHIFT.length; i+=2){
+			
+			//Visit all children top, right, bot, left
+			child.row = root.row + GameInfo.SHIFT[i];
+			child.col = root.col + GameInfo.SHIFT[i+1];
+			
+			//If current Child is not out of bounds and has not been visited, go check it
+			if(!explored[child.row][child.col] && validCoordinate(child)){
+				temp = findTile(child, toFind);
+				//If something was found, return the coordinates
+				if(temp != null)
+					return temp;
+			}
+		}
+		return null;
 	}
 	
+	
 	protected void resetArray(boolean[][] A){
+		//Simple array reset
 		for(int i=0; i<A.length; i++){
 			for(int j=0; j<A[0].length; j++){
 				A[i][j] = false;
@@ -144,6 +178,7 @@ public class MatrixGraph implements Graph{
 		}
 	}
 	
+	//Overloaded version
 	protected void resetArray(){
 		resetArray(explored);
 	}

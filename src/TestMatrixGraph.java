@@ -1,17 +1,19 @@
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+/*-----------------------------------------------------------------------------------------------	
+|	TestMatrixGraph Class:   											
+|  	Contains Unit Tests for MatrixGraph Representation and all its internal methods.							
+-------------------------------------------------------------------------------------------------*/
 
 public class TestMatrixGraph {
 	
 	protected long getUsedRAM(){
-		 Runtime runtime = Runtime.getRuntime();
-	    // Run the garbage collector
+		Runtime runtime = Runtime.getRuntime();
 	    runtime.gc();
-	    // Calculate the used memory
+	    //Used memory is bytes: memory
+	    //Used memory is megabytes: memory / (1024L * 1024L))
 	    long memory = runtime.totalMemory() - runtime.freeMemory();
-	    System.out.println("Used memory is bytes: " + memory);
-	    System.out.println("Used memory is megabytes: " +  memory / (1024L * 1024L));
 	    return memory / (1024L * 1024L);
 	}
 	
@@ -67,7 +69,6 @@ public class TestMatrixGraph {
 		testGraph.add(0, 1, new Tile("B"));
 		testGraph.add(1, 1, new Tile("C"));
 		testGraph.add(-1, 1, new Tile("D"));
-		testGraph.add(3, 3, new Tile("E"));
 		
 		assertEquals("B", testGraph.locate(0,1).type);
 		assertEquals("C", testGraph.locate(1,1).type);
@@ -96,17 +97,49 @@ public class TestMatrixGraph {
 		Tile root = new Tile("A"), B = new Tile("B"), C = new Tile("C"), D = new Tile("D");
 		MatrixGraph testGraph = new MatrixGraph(root);
 		MatrixGraph.Coor center = testGraph.mapCoordinates(0, 0);
-		MatrixGraph.Coor[] testB = null, testC = null, testD = null;
-		
+		MatrixGraph.Coor testB, testC, testD;
 		testGraph.add(0, 1, B);
 		testGraph.add(1, 1, C);
 		testGraph.add(-1, 1, D);
-		testGraph.findTile(center, testB, B);	testGraph.resetArray();
-		testGraph.findTile(center, testC, C);	testGraph.resetArray();
-		testGraph.findTile(center, testD, D);	testGraph.resetArray();
+		testB = testGraph.findTile(center, B);	testGraph.resetArray();
+		testC = testGraph.findTile(center, C);	testGraph.resetArray();
+		testD = testGraph.findTile(center, D);	testGraph.resetArray();
 		
-//		assertEquals(testGraph.mapCoordinates(0, 1).row, testB[0].row);
-//		assertEquals(testGraph.mapCoordinates(0, 1).col, testB[0].row);
+		assertEquals(testGraph.mapCoordinates(0, 1).row, testB.row);
+		assertEquals(testGraph.mapCoordinates(0, 1).col, testB.col);
+		assertEquals(testGraph.mapCoordinates(1, 1).row, testC.row);
+		assertEquals(testGraph.mapCoordinates(1, 1).col, testC.col);
+		assertEquals(testGraph.mapCoordinates(-1, 1).row, testD.row);
+		assertEquals(testGraph.mapCoordinates(-1, 1).col, testD.col);
 		assertTrue(getUsedRAM() < 10);
+	}
+	
+	
+	@Test
+	public void testAddByTile(){
+		Tile root = new Tile("A");
+		Tile B = new Tile("B");
+		Tile C = new Tile("C");
+		Tile D = new Tile("D");
+		MatrixGraph testGraph = new MatrixGraph(root);
+		testGraph.add(root, GameInfo.UP, B);
+		testGraph.add(B, GameInfo.RIGHT, C);
+		testGraph.add(C, GameInfo.DOWN, D);
+		
+		assertEquals("B", testGraph.locate(0,1).type);
+		assertEquals("C", testGraph.locate(1,1).type);
+		assertEquals("D", testGraph.locate(1,0).type);
+		assertTrue(getUsedRAM() < 10);
+	}
+	
+	@Test
+	public void testToString() {
+		Tile root = new Tile("A");
+		MatrixGraph testGraph = new MatrixGraph(root);
+		testGraph.add(0, 1, new Tile("B"));
+		testGraph.add(1, 1, new Tile("C"));
+		testGraph.add(-1, 1, new Tile("D"));
+		testGraph.add(1, 0, new Tile("E"));
+		assertTrue(testGraph.toString() != "");
 	}
 }
