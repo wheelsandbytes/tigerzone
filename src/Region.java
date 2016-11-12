@@ -11,6 +11,8 @@ public abstract class Region {
     int type;
     int scoreVar;
     
+    int regionID;  //To take care of merging?
+    
     List<Coor> tiles;
     //List of coordinates?  Useful when merging two regions/keeping score.
     //Can be passed to the graph to "merge" regions?

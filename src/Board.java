@@ -11,7 +11,7 @@ public class Board {
 	private List<Tile> deck;
 	private List<Region> regions;
 	
-	private List<Coor> possibleTiles;  //This could be a Coor to Tile hashmap?
+	private HashMap<Coor, Slot> possibleLocs;  //This could be a Coor to Tile hashmap?
 	
 	//Function places a new Tile on a VALID side of a VALID tile
 	public void placeTile(Tile hostTile, Tile newTile, int side){
@@ -25,25 +25,48 @@ public class Board {
 		return false;
 	}
 	
-	//Finds a set of possible placement Coordinates for a tile.
-	public List<Coor> find(Tile t){
+	//Finds a set of possible placement Coordinates for a tile, for now we don't care about the specific rotation,
+	//as long as at least one fits.
+	public List<Move> find(Tile t){
 		
-		List<Coor> slots;
+		List<Move> locs = new ArrayList<Move>();
 		
-		for(int i = 0; i < 4; i++){
-			t.setRot(i);
-			for(Coor c : possibleTiles){
-				
+		for(Coor c : possibleLocs.keySet()){
+			for(int i = 0; i < 4; i++){
+				t.setRot(i);
+				if(t.checkValid(possibleLocs.get(c).getAdjacent())){ locs.add(new Move(c,i)); }
 			}
 		}
+		
+		return locs;
+
 	}
 	
-	public void place(Tile t, Coor c, int rot){
-		t.setRot(rot);
-		t.setAdj(0, board.getTile(c.x, c.y+1));
-		t.setAdj(1, board.getTile(c.x+1, c.y));
-		t.setAdj(2, board.getTile(c.x, c.y-1));
-		t.setAdj(3, board.getTile(c.x-1, c.y));
-		board.add(c.x, c.y);
+	//Slot Factory goes here, creates a slot with the given coordinates and sets Edges appropriately
+	public Slot newSlot(Coor c){
+		return null;
 	}
+	
+	public void place(Tile t, Coor c){
+		
+		t.setAdj(0, board.locate(c.x, c.y+1));
+		t.setAdj(1, board.locate(c.x+1, c.y));
+		t.setAdj(2, board.locate(c.x, c.y-1));
+		t.setAdj(3, board.locate(c.x-1, c.y));
+		
+		board.add(c.x, c.y);
+		
+		possibleLocs.remove(c);
+		
+		if(t.getAdj(0) == null){ possibleLocs.putIfAbsent(new Coor(c.x, c.y+1), newSlot(new Coor(c.x, c.y+1))); }
+		
+		if(t.getAdj(1) == null){ possibleLocs.putIfAbsent(new Coor(c.x+1, c.y), newSlot(new Coor(c.x+1, c.y))); }
+		
+		if(t.getAdj(2) == null){ possibleLocs.putIfAbsent(new Coor(c.x, c.y-1), newSlot(new Coor(c.x, c.y-1))); }
+		
+		if(t.getAdj(3) == null){ possibleLocs.putIfAbsent(new Coor(c.x-1, c.y), newSlot(new Coor(c.x-1, c.y))); }
+
+	}
+	
+	
 }

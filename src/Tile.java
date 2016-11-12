@@ -40,35 +40,30 @@ public class Tile {
 		rotation = r;
 	}
 	
+	/*
 	//This feels like trash but it works and might be fine
-	boolean[] checkValid(Tile t){
-		
-		boolean[] sides = new boolean[4];
-		
+	//The input tile would come from a Slot object, containing the edges that we would need to match to fit.
+	boolean checkValid(Tile t){
+				
 		for(int i = 0; i < 4; i++){
-			if((t.getAdj(i) == null) && (t.getEdge(i).equals(getEdge((i+2)%4)))){
-				sides[i] = true;
+			if((t.getEdge(i) != null) && (!t.getEdge(i).equals(getEdge(i)))){
+				return false;
 			}
 		}
 		
-		/*  This is an explicit comparison, above is programatic.
-		if((t.getAdj(0) == null) && (t.getEdge(0).equals(getEdge(2)))){
-			sides[0] = true;
+		return true;
+	}
+	*/
+	
+	//Same as above only just passing in an edge list
+	boolean checkValid(List<Edge> e){
+		
+		for(int i = 0; i < 4; i++){
+			if((e.get(i) != null) && (!e.get(i).equals(getEdge(i)))){
+				return false;
+			}
 		}
 		
-		if((t.getAdj(1) == null) && (t.getEdge(1).equals(getEdge(3)))){
-			sides[1] = true;
-		}
-		
-		if((t.getAdj(2) == null) && (t.getEdge(2).equals(getEdge(0)))){
-			sides[2] = true;
-		}
-		
-		if((t.getAdj(3) == null) && (t.getEdge(3).equals(getEdge(1)))){
-			sides[3] = true;
-		}
-		*/
-		
-		return sides;
+		return true;
 	}
 }
