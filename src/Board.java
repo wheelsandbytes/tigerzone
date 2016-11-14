@@ -34,7 +34,7 @@ public class Board {
 		for(Coor c : possibleLocs.keySet()){
 			for(int i = 0; i < 4; i++){
 				t.setRot(i);
-				if(t.checkValid(possibleLocs.get(c).getAdjacent())){ locs.add(new Move(c,i)); }
+				if(t.checkValid(possibleLocs.get(c).getAdjacent())){ locs.add(new Move(c, i, t)); }
 			}
 		}
 		
@@ -54,7 +54,7 @@ public class Board {
 		t.setAdj(2, board.locate(c.x, c.y-1));
 		t.setAdj(3, board.locate(c.x-1, c.y));
 		
-		board.add(c.x, c.y);
+		board.add(c.x, c.y, t);
 		
 		possibleLocs.remove(c);
 		
