@@ -6,6 +6,7 @@ import java.util.*;
 -------------------------------------------------------------------------------------------------*/
 
 public class Tile {
+<<<<<<< HEAD
 
 	// Top, Bottom, Right, Left definitions
 	private int rotation;
@@ -66,4 +67,20 @@ public class Tile {
 		
 		return true;
 	}
+=======
+	public String type;
+	boolean shield;
+	List<Region> innerRegions;
+	List<Tile> adjacentTiles;
+	
+	Tile(){
+		//Empty..  :(
+	}
+	
+	Tile(String type){
+		this.type = type;
+	}
+	
+	
+>>>>>>> master
 }

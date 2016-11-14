@@ -6,7 +6,7 @@ import java.util.*;
 -------------------------------------------------------------------------------------------------*/
 
 public class Board {
-	private Graph<Tile> board;
+	private Graph board;
 	private Player p1, p2;
 	private List<Tile> deck;
 	private List<Region> regions;
