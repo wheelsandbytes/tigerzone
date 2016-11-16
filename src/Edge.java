@@ -15,6 +15,10 @@ public class Edge {
 		return true;
 	}
 	
+	public Region getReg(int i){
+		return edges.get(i);
+	}
+	
 	public void merge(Edge e){
 		for (int i = 0; i < edges.size(); i++){
 			

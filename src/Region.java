@@ -7,17 +7,25 @@ import java.util.*;
 
 public abstract class Region {
 	//Can have multiple Meeples (maybe one yours and one for opposing player)
-	List<Meeple> placedMeeples;
+	Meeple placedMeeples;
+    int prey;
+    int id;
     int type;
-    int scoreVar;
-    
     int regionID;  //To take care of merging?
     
     List<Coor> tiles;
     //List of coordinates?  Useful when merging two regions/keeping score.
     //Can be passed to the graph to "merge" regions?
-
-    public List<Meeple> getMeeples()
+    
+    public int getID(){
+    	return id;
+    }
+    
+    public void setID(int i){
+    	id = i;
+    }
+    
+    public Meeple getMeeples()
     {
         return placedMeeples;
     }
