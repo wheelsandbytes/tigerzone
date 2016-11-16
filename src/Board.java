@@ -54,7 +54,11 @@ public class Board {
 		return s;
 	}
 
-	public void place(Tile t, Coor c){
+	// public void place(Tile t, Coor c){
+	public void place(Move m)
+	{
+		Coor c = m.getLocation() ; // set the coordinates from the passed-in Move
+		Tile t = m.getTile() ; // set the tile from the passed-in Move
 
 		t.setAdj(0, board.locate(c.x, c.y+1));
 		t.setAdj(1, board.locate(c.x+1, c.y));
