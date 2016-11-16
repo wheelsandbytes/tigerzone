@@ -9,10 +9,10 @@ public abstract class Player {
 	private int score;
 	private List<Meeple> currentMeeples;
 
-	// SEND MOVE
+	// PLAY MOVE
 	// Player sends a move object
 	// Move object contains a coordinate, a rotation, and a tile
-	public Move sendMove(Coor c, Rot r, Tile t);
+	public Move playMove(Coor c, Rot r, Tile t);
 	{
 		// method call to send the move to the Board
 		// set the coordinate, rotation first
