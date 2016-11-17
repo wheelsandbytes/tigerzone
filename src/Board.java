@@ -149,7 +149,10 @@ public class Board {
 					case GameInfo.FIELD:
 						RegionComposite<Field> comp = new RegionComposite<Field>(Fields.size()+1);
 						
+						base.getReg(j).setID(Fields.size()+1);
 						comp.add(base.getReg(j));
+						
+						n.getReg(j).setID(Fields.size()+1);
 						comp.add(n.getReg(j));
 						
 						Fields.add(comp);
@@ -158,7 +161,10 @@ public class Board {
 					case GameInfo.CITY:
 						RegionComposite<City> comp1 = new RegionComposite<City>(Cities.size()+1);
 						
+						base.getReg(j).setID(Cities.size()+1);
 						comp1.add(base.getReg(j));
+						
+						n.getReg(j).setID(Cities.size()+1);
 						comp1.add(n.getReg(j));
 						
 						Cities.add(comp1);
@@ -166,7 +172,10 @@ public class Board {
 					case GameInfo.ROAD:
 						RegionComposite<Road> comp2 = new RegionComposite<Road>(Roads.size()+1);
 						
+						base.getReg(j).setID(Roads.size()+1);
 						comp2.add(base.getReg(j));
+						
+						n.getReg(j).setID(Roads.size()+1);
 						comp2.add(n.getReg(j));
 						
 						Roads.add(comp2);
