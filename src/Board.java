@@ -10,9 +10,7 @@ public class Board {
 	private Player p1, p2;
 	private List<Tile> deck;
 	
-	private List<RegionComposite<Field>> Fields;
-	private List<RegionComposite<City>> Cities;
-	private List<RegionComposite<Road>> Roads;
+	private RegionMap map;
 	
 	private HashMap<Coor, Slot> possibleLocs;  //This could be a Coor to Tile hashmap?
 
@@ -91,100 +89,8 @@ public class Board {
 			Edge n = t.getEdge(i);
 		
 			for(int j = 0; j < 3; j++){
-				int bComp = base.getReg(j).getID();
-				int nComp = n.getReg(j).getID();
-				
-				if(bComp != -1 && nComp != -1){
-					if(bComp == nComp) {continue;}
-					
-					switch(n.getReg(j).getType()){
-						case GameInfo.FIELD:
-							Fields.get(bComp).merge(Fields.get(nComp));
-							Fields.remove(nComp);
-							break;
-						case GameInfo.CITY:
-							Cities.get(bComp).merge(Cities.get(nComp));
-							Cities.remove(nComp);
-							break;
-						case GameInfo.ROAD:
-							Roads.get(bComp).merge(Roads.get(nComp));
-							Roads.remove(nComp);
-							break;
-					}
-				}
-				
-				else if(bComp != -1 && nComp == -1){
-					n.getReg(j).setID(bComp);
-					switch(n.getReg(j).getType()){
-					case GameInfo.FIELD:
-						Fields.get(bComp).add( n.getReg(j));
-						break;
-					case GameInfo.CITY:
-						Cities.get(bComp).add( n.getReg(j));
-						break;
-					case GameInfo.ROAD:
-						Roads.get(bComp).add( n.getReg(j));
-						break;
-					}
-				}
-				
-				else if(bComp == -1 && nComp != -1){
-					base.getReg(j).setID(nComp);
-					switch(n.getReg(j).getType()){
-					case GameInfo.FIELD:
-						Fields.get(nComp).add( base.getReg(j));
-						break;
-					case GameInfo.CITY:
-						Cities.get(nComp).add( base.getReg(j));
-						break;
-					case GameInfo.ROAD:
-						Roads.get(nComp).add( base.getReg(j));
-						break;
-					}
-				}
-				
-				else{
-					n.getReg(j).setID(bComp);
-					switch(n.getReg(j).getType()){
-					case GameInfo.FIELD:
-						RegionComposite<Field> comp = new RegionComposite<Field>(Fields.size()+1);
-						
-						base.getReg(j).setID(Fields.size()+1);
-						comp.add(base.getReg(j));
-						
-						n.getReg(j).setID(Fields.size()+1);
-						comp.add(n.getReg(j));
-						
-						Fields.add(comp);
-						break;
-						
-					case GameInfo.CITY:
-						RegionComposite<City> comp1 = new RegionComposite<City>(Cities.size()+1);
-						
-						base.getReg(j).setID(Cities.size()+1);
-						comp1.add(base.getReg(j));
-						
-						n.getReg(j).setID(Cities.size()+1);
-						comp1.add(n.getReg(j));
-						
-						Cities.add(comp1);
-						break;
-					case GameInfo.ROAD:
-						RegionComposite<Road> comp2 = new RegionComposite<Road>(Roads.size()+1);
-						
-						base.getReg(j).setID(Roads.size()+1);
-						comp2.add(base.getReg(j));
-						
-						n.getReg(j).setID(Roads.size()+1);
-						comp2.add(n.getReg(j));
-						
-						Roads.add(comp2);
-						break;
-					}
-				}
+				map.mergeRegion(base.getReg(j), n.getReg(j));
 			}
 		}
 	}
-
-
 }
