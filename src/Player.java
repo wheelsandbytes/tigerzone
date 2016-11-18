@@ -35,7 +35,7 @@ public abstract class Player {
 
 	// Move object contains a coordinate, a rotation, and a tile
 	// This may be overridden based on the type of player!
-	private void setMove(Coor c, Rot r, Tile t)
+	private void setMove(Coor c, int r, Tile t)
 	{
 		move = new Move(c,r,t);
 	}
