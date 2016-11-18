@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoadComposite {
@@ -6,7 +7,12 @@ public class RoadComposite {
 	int score; //maybe
 	List<Road> components;
 	
+	public RoadComposite(){
+		components = new ArrayList<Road>();
+	}
+	
 	public RoadComposite(int i){
+		components = new ArrayList<Road>();
 		compID = i;
 	}
 	
@@ -34,5 +40,13 @@ public class RoadComposite {
 		}
 		
 		return remove;
+	}
+	
+	public String toString(){
+		String s = "Roads:\n";
+		for(Road c : components){
+			s += c.toString();
+		}
+		return s;
 	}
 }

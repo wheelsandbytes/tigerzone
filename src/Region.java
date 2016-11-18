@@ -10,12 +10,7 @@ public abstract class Region {
 	Meeple placedMeeples;
     int prey;
     int id;
-    int type;
-    int regionID;  //To take care of merging?
-    
-    List<Coor> tiles;
-    //List of coordinates?  Useful when merging two regions/keeping score.
-    //Can be passed to the graph to "merge" regions?
+    int type;    
     
     public int getID(){
     	return id;
@@ -29,10 +24,6 @@ public abstract class Region {
     {
         return placedMeeples;
     }
-    
-    public List<Coor> getCoors(){
-    	return tiles;
-    }
 
     public int getType() {
         return type;
@@ -42,17 +33,8 @@ public abstract class Region {
     	return this.type == r.getType();
     }
     
-    public void expand(Coor c){
-    	if(!tiles.contains(c)) tiles.add(c);
-    	//Can be overridden to also change possible score if we decide to score by region.
-    }
+    public String toString(){
+    	return id + " ";
+    }    
     
-    //Union of the two sets of Region coordinates
-    public void merge(Region r){
-    	for(Coor c : r.getCoors()){
-    		expand(c);
-    	}
-    }
-    
-    public abstract int score();
 }

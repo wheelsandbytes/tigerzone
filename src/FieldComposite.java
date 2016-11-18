@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class FieldComposite {
@@ -6,7 +7,12 @@ public class FieldComposite {
 	int score; //maybe
 	List<Field> components;
 	
+	public FieldComposite(){
+		components = new ArrayList<Field>();
+	}
+	
 	public FieldComposite(int i){
+		components = new ArrayList<Field>();
 		compID = i;
 	}
 	
@@ -34,5 +40,13 @@ public class FieldComposite {
 		}
 		
 		return remove;
+	}
+	
+	public String toString(){
+		String s = "Fields:\n";
+		for(Field c : components){
+			s += c.toString();
+		}
+		return s;
 	}
 }

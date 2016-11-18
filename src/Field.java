@@ -6,21 +6,16 @@ import java.util.List;
 -------------------------------------------------------------------------------------------------*/
 
 public class Field extends Region {
-	
+
     public Field() 
     {
         type = GameInfo.FIELD;
+        id = -1;
     }
-
-	@Override
-	public int score() {
-		return 3;
+	
+	public String toString(){
+		return "F" + super.toString();
 	}
 
-	@Override
-	public void merge(Region r) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

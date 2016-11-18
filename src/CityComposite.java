@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class CityComposite {
@@ -6,7 +7,12 @@ public class CityComposite {
 	int score; //maybe
 	List<City> components;
 	
+	public CityComposite(){
+		components = new ArrayList<City>();
+	}
+	
 	public CityComposite(int i){
+		components = new ArrayList<City>();
 		compID = i;
 	}
 	
@@ -34,6 +40,14 @@ public class CityComposite {
 		}
 		
 		return remove;
+	}
+	
+	public String toString(){
+		String s = "Cities:\n";
+		for(City c : components){
+			s += c.toString();
+		}
+		return s;
 	}
 }
 

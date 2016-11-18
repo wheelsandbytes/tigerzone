@@ -6,20 +6,14 @@ import java.util.List;
 -------------------------------------------------------------------------------------------------*/
 
 public class Road extends Region {
-		
+
     public Road() 
     {
         type = GameInfo.ROAD;
+        id = -1;
     }
-
-	@Override
-	public int score() {
-		return scoreVar;
-	}
-
-	@Override
-	public void merge(Region r) {
-		
-	}
     
+	public String toString(){
+		return "R" + super.toString();
+	}
 }

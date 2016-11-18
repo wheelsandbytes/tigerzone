@@ -6,19 +6,15 @@ import java.util.List;
 -------------------------------------------------------------------------------------------------*/
 
 public class City extends Region {
-
+	 
+    
     public City() 
     {
         type = GameInfo.CITY;
+        id = -1;
     }
 
-	@Override
-	public int score() {
-		return 0;
-	}
-
-	@Override
-	public void merge(Region r) {
-		
+	public String toString(){
+		return "C" + super.toString();
 	}
 }
