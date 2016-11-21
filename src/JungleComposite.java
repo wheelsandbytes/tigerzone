@@ -1,30 +1,30 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class FieldComposite {
+public class JungleComposite {
 	int compID; 
 	int prey;
 	int score; //maybe
-	List<Field> components;
+	List<Jungle> components;
 	
-	public FieldComposite(){
-		components = new ArrayList<Field>();
+	public JungleComposite(){
+		components = new ArrayList<Jungle>();
 	}
 	
-	public FieldComposite(int i){
-		components = new ArrayList<Field>();
+	public JungleComposite(int i){
+		components = new ArrayList<Jungle>();
 		compID = i;
 	}
 	
-	public List<Field> getList(){
+	public List<Jungle> getList(){
 		return components;
 	}
 	
-	public void remove(Field region){
+	public void remove(Jungle region){
 		components.remove(region);
 	}
 	
-	public void add(Field region){
+	public void add(Jungle region){
 		components.add(region);
 	}
 	
@@ -32,9 +32,9 @@ public class FieldComposite {
 		return compID;
 	}
 	
-	public int merge(FieldComposite comp){
+	public int merge(JungleComposite comp){
 		int remove = comp.getID();
-		for (Field r : comp.getList()){
+		for (Jungle r : comp.getList()){
 			r.setID(this.getID());
 			this.add(r);
 		}
@@ -44,7 +44,7 @@ public class FieldComposite {
 	
 	public String toString(){
 		String s = "Fields:\n";
-		for(Field c : components){
+		for(Jungle c : components){
 			s += c.toString();
 		}
 		return s;

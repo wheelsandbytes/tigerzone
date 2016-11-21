@@ -1,20 +1,21 @@
 import java.util.List;
 
 /*-----------------------------------------------------------------------------------------------
-|	City class implements Region.java:
-|  	Contains methods specific to City Region Type
+|	Field class implements Region.java:
+|  	Contains methods specific to Field Region Type
 -------------------------------------------------------------------------------------------------*/
 
-public class City extends Region {
-	 
-    
-    public City() 
+public class Jungle extends Region {
+
+    public Jungle() 
     {
-        type = GameInfo.CITY;
+        type = GameInfo.FIELD;
         id = -1;
     }
-
+	
 	public String toString(){
-		return "C" + super.toString();
+		return "F" + super.toString();
 	}
+
+
 }

@@ -1,30 +1,30 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoadComposite {
+public class TrailComposite {
 	int compID; 
 	int prey;
 	int score; //maybe
-	List<Road> components;
+	List<Trail> components;
 	
-	public RoadComposite(){
-		components = new ArrayList<Road>();
+	public TrailComposite(){
+		components = new ArrayList<Trail>();
 	}
 	
-	public RoadComposite(int i){
-		components = new ArrayList<Road>();
+	public TrailComposite(int i){
+		components = new ArrayList<Trail>();
 		compID = i;
 	}
 	
-	public List<Road> getList(){
+	public List<Trail> getList(){
 		return components;
 	}
 	
-	public void remove(Road region){
+	public void remove(Trail region){
 		components.remove(region);
 	}
 	
-	public void add(Road region){
+	public void add(Trail region){
 		components.add(region);
 	}
 	
@@ -32,9 +32,9 @@ public class RoadComposite {
 		return compID;
 	}
 	
-	public int merge(RoadComposite comp){
+	public int merge(TrailComposite comp){
 		int remove = comp.getID();
-		for (Road r : comp.getList()){
+		for (Trail r : comp.getList()){
 			r.setID(this.getID());
 			this.add(r);
 		}
@@ -44,7 +44,7 @@ public class RoadComposite {
 	
 	public String toString(){
 		String s = "Roads:\n";
-		for(Road c : components){
+		for(Trail c : components){
 			s += c.toString();
 		}
 		return s;

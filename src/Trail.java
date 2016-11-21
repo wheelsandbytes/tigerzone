@@ -5,9 +5,9 @@ import java.util.List;
 |  	Contains methods specific to Road Region Type
 -------------------------------------------------------------------------------------------------*/
 
-public class Road extends Region {
+public class Trail extends Region {
 
-    public Road() 
+    public Trail() 
     {
         type = GameInfo.ROAD;
         id = -1;

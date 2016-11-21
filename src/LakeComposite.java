@@ -1,30 +1,30 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class CityComposite {
+public class LakeComposite {
 	int compID; 
 	int prey;
 	int score; //maybe
-	List<City> components;
+	List<Lake> components;
 	
-	public CityComposite(){
-		components = new ArrayList<City>();
+	public LakeComposite(){
+		components = new ArrayList<Lake>();
 	}
 	
-	public CityComposite(int i){
-		components = new ArrayList<City>();
+	public LakeComposite(int i){
+		components = new ArrayList<Lake>();
 		compID = i;
 	}
 	
-	public List<City> getList(){
+	public List<Lake> getList(){
 		return components;
 	}
 	
-	public void remove(City region){
+	public void remove(Lake region){
 		components.remove(region);
 	}
 	
-	public void add(City region){
+	public void add(Lake region){
 		components.add(region);
 	}
 	
@@ -32,9 +32,9 @@ public class CityComposite {
 		return compID;
 	}
 	
-	public int merge(CityComposite comp){
+	public int merge(LakeComposite comp){
 		int remove = comp.getID();
-		for (City r : comp.getList()){
+		for (Lake r : comp.getList()){
 			r.setID(this.getID());
 			this.add(r);
 		}
@@ -44,7 +44,7 @@ public class CityComposite {
 	
 	public String toString(){
 		String s = "Cities:\n";
-		for(City c : components){
+		for(Lake c : components){
 			s += c.toString();
 		}
 		return s;

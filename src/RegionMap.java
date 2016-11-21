@@ -2,25 +2,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegionMap {
-	List<CityComposite> Cities;
-	List<RoadComposite> Roads;
-	List<FieldComposite> Fields;
+	List<LakeComposite> Cities;
+	List<TrailComposite> Roads;
+	List<JungleComposite> Fields;
 	
 	public RegionMap(){
-		Cities = new ArrayList<CityComposite>();
-		Roads = new ArrayList<RoadComposite>();
-		Fields = new ArrayList<FieldComposite>();
+		Cities = new ArrayList<LakeComposite>();
+		Roads = new ArrayList<TrailComposite>();
+		Fields = new ArrayList<JungleComposite>();
 	}
 	
-	List<CityComposite> getCities(){
+	List<LakeComposite> getCities(){
 		return Cities;
 	}
 	
-	List<RoadComposite> getRoads(){
+	List<TrailComposite> getRoads(){
 		return Roads;
 	}
 	
-	List<FieldComposite> getFields(){
+	List<JungleComposite> getFields(){
 		return Fields;
 	}
 	
@@ -53,24 +53,24 @@ public class RegionMap {
 		}
 	}
 
-	void add(Field f, int i){
+	void add(Jungle f, int i){
 		f.setID(i);
 		Fields.get(i).add(f);
 	}
 	
-	void add(City c, int i){
+	void add(Lake c, int i){
 		c.setID(i);
 		Cities.get(i).add(c);
 	}
 	
-	void add(Road r, int i){
+	void add(Trail r, int i){
 		r.setID(i);
 		Roads.get(i).add(r);
 	}
 	
-	void addNew(Field n, Field base){
+	void addNew(Jungle n, Jungle base){
 		int id = Fields.size();
-		FieldComposite comp = new FieldComposite(id);
+		JungleComposite comp = new JungleComposite(id);
 		
 		base.setID(id);
 		comp.add(base);
@@ -81,9 +81,9 @@ public class RegionMap {
 		Fields.add(comp);
 	}
 	
-	void addNew(City n, City base){
+	void addNew(Lake n, Lake base){
 		int id = Cities.size();
-		CityComposite comp = new CityComposite(id);
+		LakeComposite comp = new LakeComposite(id);
 		
 		base.setID(id);
 		comp.add(base);
@@ -94,9 +94,9 @@ public class RegionMap {
 		Cities.add(comp);
 	}
 	
-	void addNew(Road n, Road base){
+	void addNew(Trail n, Trail base){
 		int id = Roads.size();
-		RoadComposite comp = new RoadComposite(id);
+		TrailComposite comp = new TrailComposite(id);
 		
 		base.setID(id);
 		comp.add(base);
@@ -107,18 +107,18 @@ public class RegionMap {
 		Roads.add(comp);
 	}
 	
-	void join(Field n, Field base){
+	void join(Jungle n, Jungle base){
 		System.out.println("Field");
 		int removeID = Fields.get(base.getID()).merge(Fields.get(n.getID()));
 		Fields.remove(removeID);
 	}
 	
-	void join(City n, City base){
+	void join(Lake n, Lake base){
 		int removeID = Cities.get(base.getID()).merge(Cities.get(n.getID()));
 		Cities.remove(removeID);
 	}
 	
-	void join(Road n, Road base){
+	void join(Trail n, Trail base){
 		int removeID = Roads.get(base.getID()).merge(Roads.get(n.getID()));
 		Roads.remove(removeID);
 	}
@@ -132,41 +132,41 @@ public class RegionMap {
 	
 	//Methods to make Java happy, hope these don't fuck anything up.
 	private void addNew(Region n, Region base) {
-		if(n instanceof Field){
-			addNew((Field) n, (Field) base);
+		if(n instanceof Jungle){
+			addNew((Jungle) n, (Jungle) base);
 		}
-		else if(n instanceof City){
-			addNew((City) n, (City) base);
+		else if(n instanceof Lake){
+			addNew((Lake) n, (Lake) base);
 		}
 			
-		else if(n instanceof Road){
-			addNew((Road) n, (Road) base);
+		else if(n instanceof Trail){
+			addNew((Trail) n, (Trail) base);
 		}
 	}
 
 	private void add(Region n, int bComp) {
-		if(n instanceof Field){
-			add((Field) n, bComp);
+		if(n instanceof Jungle){
+			add((Jungle) n, bComp);
 		}
-		else if(n instanceof City){
-			add((City) n, bComp);
+		else if(n instanceof Lake){
+			add((Lake) n, bComp);
 		}
 			
-		else if(n instanceof Road){
-			add((Road) n, bComp);
+		else if(n instanceof Trail){
+			add((Trail) n, bComp);
 		}
 	}
 			
 	private void join(Region n, Region base){
-		if(n instanceof Field){
-			join((Field) n, (Field) base);
+		if(n instanceof Jungle){
+			join((Jungle) n, (Jungle) base);
 		}
-		else if(n instanceof City){
-			join((City) n, (City) base);
+		else if(n instanceof Lake){
+			join((Lake) n, (Lake) base);
 		}
 			
-		else if(n instanceof Road){
-			join((Road) n, (Road) base);
+		else if(n instanceof Trail){
+			join((Trail) n, (Trail) base);
 		}
 	}
 }

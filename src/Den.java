@@ -5,9 +5,9 @@ import java.util.List;
 |  	Contains methods specific to Church Region Type
 -------------------------------------------------------------------------------------------------*/
 
-public class Church extends Region {
+public class Den extends Region {
 
-    public Church() 
+    public Den() 
     {
         type = GameInfo.CHURCH;
     }
