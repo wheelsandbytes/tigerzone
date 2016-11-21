@@ -85,7 +85,7 @@ public class MatrixGraph implements Graph{
 		if(validCoordinate(c) && !emptyCoordinate(c))
 			return matrix[c.row][c.col];
 		//If nothing found return null Tile
-		else return new Tile("null");
+		else return null;
 	}
 	
 	@Override
@@ -103,7 +103,7 @@ public class MatrixGraph implements Graph{
 				if(matrix[i][j] == null)
 					row.append("  ");
 				else
-					row.append("-"+matrix[i][j].type);
+					row.append("-"+matrix[i][j].getType());
 			}
 			if(row.toString().trim().length() > 0)
 				graph.append(row.toString()+"\n");
