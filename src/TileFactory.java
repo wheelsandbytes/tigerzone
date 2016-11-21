@@ -1,58 +1,32 @@
-import java.util.*;
-
 /*-----------------------------------------------------------------------------------------------
-|	Tile Class:
-|  	Contains Tile information, a List of its inner Regions, and linked Tiles (up-to-4)
+|	TileFactory Class:
+|  	Helps create different types of Tiles (For more info on possible types check out GameInfo class)
 -------------------------------------------------------------------------------------------------*/
 
-public class Tile {
+public class TileFactory implements Factory<Tile>{
 
-	// Top, Bottom, Right, Left definitions
-	private String type;
-	private int rotation;
-	boolean den;
-	//prey is zero if it has no prey, 1 if deer, 2 if boar and 3 if buffalo 
-	int prey;
-	// List<Region> innerRegions;
-	private List<Tile> adjacentTiles;
-
-	// List of tile edges within the tile?
-	private List<Edge> tileEdges;
-
-	// Default constructor
-	public Tile(){}
-	
-	// Constructor takes in the type
-	public Tile(String type){
-		this.type = type;
+	@Override
+	public Tile create(String type) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
-	String getType(){
-		return type;
-	}
 	
-	Tile getAdj(int i){
-		return adjacentTiles.get(i);
-	}
 	
-	void setAdj(int i, Tile t){
-		if(t == null) { adjacentTiles.set(i, null); return; }
-		
-		adjacentTiles.set(i, t);
-		
-		getEdge(i).merge(t.getEdge((i+2)%4));
-	}
 	
-	//Accounts for a given rotation, currently assuming counterclockwise.
-	Edge getEdge(int i){
-		return tileEdges.get((rotation+i)%4);
-	}
 	
-	void setRot(int r){
-		rotation = r;
-	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//tile factory, don't know how sever will pass us the order of the deck. most likely this code istrash
     //type of tile represented by string of 5 chars. first char is type of the northen edge, second char is eastern edge ect.
 	//t stands for trail, l stands for lake and j stands for jungle
@@ -95,32 +69,4 @@ public class Tile {
 //		}
 //	
 //	}
-
-	
-	/*
-	//This feels like trash but it works and might be fine
-	//The input tile would come from a Slot object, containing the edges that we would need to match to fit.
-	boolean checkValid(Tile t){
-				
-		for(int i = 0; i < 4; i++){
-			if((t.getEdge(i) != null) && (!t.getEdge(i).equals(getEdge(i)))){
-				return false;
-			}
-		}
-		
-		return true;
-	}
-	*/
-	
-	//Same as above only just passing in an edge list
-	boolean checkValid(List<Edge> e){
-		
-		for(int i = 0; i < 4; i++){
-			if((e.get(i) != null) && (!e.get(i).equals(getEdge(i)))){
-				return false;
-			}
-		}
-		
-		return true;
-	}
 }

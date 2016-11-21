@@ -56,8 +56,8 @@ public class TestMatrixGraph {
 		Tile root = new Tile("A");
 		MatrixGraph testGraph = new MatrixGraph(root);
 		
-		assertEquals("A", testGraph.locate(0,0).type);
-		assertEquals("null", testGraph.locate(0,1).type);
+		assertEquals("A", testGraph.locate(0,0).getType());
+		assertEquals("null", testGraph.locate(0,1).getType());
 		assertTrue(getUsedRAM() < 10);
 	}
 	
@@ -70,10 +70,10 @@ public class TestMatrixGraph {
 		testGraph.add(1, 1, new Tile("C"));
 		testGraph.add(-1, 1, new Tile("D"));
 		
-		assertEquals("B", testGraph.locate(0,1).type);
-		assertEquals("C", testGraph.locate(1,1).type);
-		assertEquals("D", testGraph.locate(-1,1).type);
-		assertEquals("null", testGraph.locate(3,3).type);
+		assertEquals("B", testGraph.locate(0,1).getType());
+		assertEquals("C", testGraph.locate(1,1).getType());
+		assertEquals("D", testGraph.locate(-1,1).getType());
+		assertEquals("null", testGraph.locate(3,3).getType());
 		assertTrue(getUsedRAM() < 10);
 	}
 	
@@ -126,9 +126,9 @@ public class TestMatrixGraph {
 		testGraph.add(B, GameInfo.RIGHT, C);
 		testGraph.add(C, GameInfo.DOWN, D);
 		
-		assertEquals("B", testGraph.locate(0,1).type);
-		assertEquals("C", testGraph.locate(1,1).type);
-		assertEquals("D", testGraph.locate(1,0).type);
+		assertEquals("B", testGraph.locate(0,1).getType());
+		assertEquals("C", testGraph.locate(1,1).getType());
+		assertEquals("D", testGraph.locate(1,0).getType());
 		assertTrue(getUsedRAM() < 10);
 	}
 	
