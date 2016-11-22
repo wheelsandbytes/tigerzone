@@ -6,16 +6,47 @@ import java.util.List;
 -------------------------------------------------------------------------------------------------*/
 
 public class Jungle extends Region {
+	
+	List<Lake> adjLakes;
+	Den den;
 
     public Jungle() 
     {
         type = GameInfo.FIELD;
         id = -1;
     }
+    
+    public Jungle(Lake... lakes)
+    {
+        type = GameInfo.FIELD;
+        id = -1;
+        
+        for(Lake l : lakes){
+        	adjLakes.add(l);
+        }
+    }
+    
+    public Jungle(Den d, Lake... lakes)
+    {
+        type = GameInfo.FIELD;
+        id = -1;
+        
+        den = d;
+        
+        for(Lake l : lakes){
+        	adjLakes.add(l);
+        }
+    }
+    
+    public List<Lake> getLakes(){
+    	return adjLakes;
+    }
 	
 	public String toString(){
 		return "F" + super.toString();
 	}
 
-
+	public Den getDen() {
+		return den;
+	}
 }

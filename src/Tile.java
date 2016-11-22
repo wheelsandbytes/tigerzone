@@ -37,7 +37,6 @@ public class Tile {
 		
 		adjacentTiles.set(i, t);
 		
-		getEdge(i).merge(t.getEdge((i+2)%4));
 	}
 	
 	//Accounts for a given rotation, currently assuming counterclockwise.

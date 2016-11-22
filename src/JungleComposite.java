@@ -4,8 +4,10 @@ import java.util.List;
 public class JungleComposite {
 	int compID; 
 	int prey;
-	int score; //maybe
+	int score;
 	List<Jungle> components;
+	List<Lake> adjLakes;
+	List<Den> adjDens;
 	
 	public JungleComposite(){
 		components = new ArrayList<Jungle>();
@@ -26,6 +28,10 @@ public class JungleComposite {
 	
 	public void add(Jungle region){
 		components.add(region);
+		
+		adjLakes.addAll(region.getLakes());
+		
+		if(region.getDen() != null){ adjDens.add(region.getDen()); }
 	}
 	
 	public int getID(){
@@ -40,6 +46,23 @@ public class JungleComposite {
 		}
 		
 		return remove;
+	}
+	
+	public void score(){
+		List<Integer> ids = new ArrayList<Integer>();
+		for(Lake l : adjLakes){
+			if(ids.contains(l.getID())){
+				if(l.getCompleted()){
+					score += 2;
+				}
+				else{
+					score++;
+				}
+				
+				ids.add(l.getID());
+			}
+		}
+		score *= (1+prey);
 	}
 	
 	public String toString(){
