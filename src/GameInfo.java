@@ -22,10 +22,6 @@ public class GameInfo {
 	public static final int NONE = 0, DEER = 1, BOARD = 2, BUFFALO = 3;
 	
 	//Types of Tiles based on TigerZone rules and Tournament
-	//JJJJ- JJJJX JJTJX TTTT- TJTJ- TJJT- TJTT- 
-	//LLLL- JLLL- LLJJ- JLJL- LJLJ- LJJJ- JLLJ-
-	//TLJT- TLJTP  JLTTB TLTJ- TLTJD TLLL-
-	//TLTT- TLTTP TLLT- TLLTB LJTJ- LJTJD TLLLC
 	public static final String JJJJN="JJJJ-", JJJJX="JJJJX", JJTJX="JJTJX", TTTTN="TTTT-", TJTJN="TJTJ-", TJJTN="TJJT-", TJTTN="TJTT-";
 	public static final String LLLLN="LLLL-", JLLLN="JLLL-", LLJJN="LLJJ-", JLJLN="JLJL-", LJLJN="LJLJ-", LJJJN="LJJJ-", JLLJN="JLLJ-";
 	public static final String TLJTN="TLJT-", TLJTP="TLJTP", JLTTB="JLTTB", JLTTN="JLTT-", TLTJN="TLTJ-", TLTJD="TLTJD", TLLLN="TLLL-";

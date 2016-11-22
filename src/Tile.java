@@ -7,16 +7,12 @@ import java.util.*;
 
 public class Tile {
 
-	// Top, Bottom, Right, Left definitions
+	// Private fields
+	int prey;
 	private String type;
 	private int rotation;
-	boolean den;
-	//prey is zero if it has no prey, 1 if deer, 2 if boar and 3 if buffalo 
-	int prey;
-	// List<Region> innerRegions;
+	private Region[][] regionPositions;
 	private List<Tile> adjacentTiles;
-
-	// List of tile edges within the tile?
 	private List<Edge> tileEdges;
 
 	// Default constructor
