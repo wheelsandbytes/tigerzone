@@ -13,10 +13,12 @@ public class TrailComposite {
 	
 	public TrailComposite(){
 		components = new ArrayList<Trail>();
+		tiles = new ArrayList<Integer>();
 	}
 	
 	public TrailComposite(int i){
 		components = new ArrayList<Trail>();
+		tiles = new ArrayList<Integer>();
 		compID = i;
 	}
 	

@@ -13,11 +13,13 @@ public class LakeComposite {
 	
 	public LakeComposite(){
 		components = new ArrayList<Lake>();
+		tiles = new ArrayList<Integer>();
 		uniquePrey =new boolean[3];
 	}
 	
 	public LakeComposite(int i){
 		components = new ArrayList<Lake>();
+		tiles = new ArrayList<Integer>();
 		compID = i;
 		uniquePrey = new boolean[3];
 	}

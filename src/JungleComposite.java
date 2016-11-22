@@ -11,10 +11,12 @@ public class JungleComposite {
 	
 	public JungleComposite(){
 		components = new ArrayList<Jungle>();
+		adjLakes = new ArrayList<Lake>();
 	}
 	
 	public JungleComposite(int i){
 		components = new ArrayList<Jungle>();
+		adjLakes = new ArrayList<Lake>();
 		compID = i;
 	}
 	

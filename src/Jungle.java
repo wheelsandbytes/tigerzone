@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /*-----------------------------------------------------------------------------------------------
@@ -14,12 +15,14 @@ public class Jungle extends Region {
     {
         type = GameInfo.FIELD;
         id = -1;
+        adjLakes = new ArrayList<Lake>();
     }
     
     public Jungle(Lake... lakes)
     {
         type = GameInfo.FIELD;
         id = -1;
+        adjLakes = new ArrayList<Lake>();
         
         for(Lake l : lakes){
         	adjLakes.add(l);
