@@ -10,7 +10,7 @@ public class GameInfo {
 	public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
 	
 	//Types of Regions...
-	public static final int ROAD = 1, CITY = 2, FIELD = 3, CHURCH = 4;
+	public static final int ROAD = 1, CITY = 2, FIELD = 3, CHURCH = 4, CROSS = 5;
 	
 	//Total tiles
 	public static final int MAX_TILES = 77;
