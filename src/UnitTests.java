@@ -14,7 +14,7 @@ public class UnitTests {
 		assertTrue(p instanceof Player);
 		assertTrue(p instanceof AI);
 		assertEquals(p.getScore(), 0);
-		p.altScore(2);
+		p.updateScore(2);
 		assertEquals(p.getScore(), 2);
 	}
 
@@ -29,8 +29,6 @@ public class UnitTests {
 	@Test
 	public void testTileClass(){
 		Tile t = new Tile();
-		assertEquals(null, t.innerRegions);
-		assertEquals(null, t.adjacentTiles);
 	}
 
 	
@@ -63,51 +61,8 @@ public class UnitTests {
 	}
 
 	
-	@Test
-	public void testFarmerClass(){
-		Meeple farmer = new Farmer();
-		assertEquals(farmer.getType(), GameInfo.FIELD);
-		assertTrue(farmer instanceof Meeple);
-		assertTrue(farmer.isAvailable());
-		assertEquals(null, farmer.getRegion());
-	}
-
-	@Test
-	public void testKnightClass(){
-		Meeple knight = new Knight();
-		assertEquals(knight.getType(), GameInfo.CITY);
-		assertTrue(knight instanceof Meeple);
-		assertTrue(knight.isAvailable());
-		assertEquals(null, knight.getRegion());
-	}
-	
-	@Test
-	public void testMonkClass(){
-		Meeple monk = new Monk();
-		assertEquals(monk.getType(), GameInfo.CHURCH);
-		assertTrue(monk instanceof Meeple);
-		assertTrue(monk.isAvailable());
-		assertEquals(null, monk.getRegion());
-	}
-	
-	@Test
-	public void testThiefClass(){
-		Meeple thief = new Thief();
-		assertEquals(thief.getType(), GameInfo.ROAD);
-		assertTrue(thief instanceof Meeple);
-		assertTrue(thief.isAvailable());
-		assertEquals(null, thief.getRegion());
-	}
-	
-	public void MeepleTests(){
-		testFarmerClass();
-		testKnightClass();
-		testMonkClass();
-		testThiefClass();
-	}
 	
 	public static void main(String args[]){
 		UnitTests t = new UnitTests();
-		t.MeepleTests();
 	}
 }

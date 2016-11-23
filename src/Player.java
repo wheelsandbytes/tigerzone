@@ -30,8 +30,9 @@ Get the score:
 
 public abstract class Player {
 	private int score;
+	private int crocodiles;
 	private Move move;
-	// private List<Meeple> currentMeeples;
+	private List<Tiger> currentTigers;
 
 	// Move object contains a coordinate, a rotation, and a tile
 	// This may be overridden based on the type of player!
@@ -42,10 +43,10 @@ public abstract class Player {
 
 	// The board will call this to get the move from the player
 	// The board passes in a Tile object
-	public Move makeMove(Tile t);
+	public Move makeMove(Tile t)
 	{
-		setMove(Tile t);
-		return move;
+
+		return null;
 	}
 
 	//Any changes to a Players score has to go through this method

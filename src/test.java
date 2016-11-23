@@ -1,6 +1,9 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class test {
 	public static void main(String args[]){
+		
 		RegionMap r = new RegionMap();
 		System.out.println(r);
 		Lake l4 = new Lake(0, 1, false);
@@ -41,6 +44,7 @@ public class test {
 		Trail l = new Trail();
 		e2 = new Edge(f,j,l);
 		System.out.println(e1.equals(e2));
+		
 	}
 	
 }

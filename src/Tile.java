@@ -11,7 +11,7 @@ public class Tile {
 	int prey;
 	private String type;
 	private int rotation;
-	private Region[][] regionPositions;
+	private Region[] regionPositions;
 	private List<Tile> adjacentTiles;
 	private List<Edge> tileEdges;
 
@@ -46,6 +46,10 @@ public class Tile {
 	
 	void setRot(int r){
 		rotation = r;
+	}
+	
+	public void placeTiger(){
+		
 	}
 
 	//tile factory, don't know how sever will pass us the order of the deck. most likely this code istrash

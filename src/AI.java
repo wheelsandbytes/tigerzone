@@ -21,7 +21,7 @@ public class AI extends Player{
 		 Coor loc;
 		 int rot;
 		 // decisions to set loc and rot...
-		move = new Move(loc,rot,t);
+		//move = new Move(loc,rot,t);
 	 }
 
 }
