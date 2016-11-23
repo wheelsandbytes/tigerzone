@@ -29,11 +29,17 @@ public class JungleComposite {
 	}
 	
 	public void add(Jungle region){
+		region.setID(compID);
 		components.add(region);
 		
 		adjLakes.addAll(region.getLakes());
 		
-		if(region.getDen() != null){ adjDens.add(region.getDen()); }
+		if(region.getDen() != null){
+			
+			if(!adjDens.contains(region.getDen())){
+				adjDens.add(region.getDen());
+			}
+		}
 	}
 	
 	public int getID(){
@@ -43,7 +49,6 @@ public class JungleComposite {
 	public int merge(JungleComposite comp){
 		int remove = comp.getID();
 		for (Jungle r : comp.getList()){
-			r.setID(this.getID());
 			this.add(r);
 		}
 		
@@ -55,16 +60,18 @@ public class JungleComposite {
 		for(Lake l : adjLakes){
 			if(ids.contains(l.getID())){
 				if(l.getCompleted()){
-					score += 2;
+					score += 3;
 				}
-				else{
-					score++;
-				}
-				
 				ids.add(l.getID());
 			}
 		}
-		score *= (1+prey);
+		
+		for(Den d : adjDens){
+			if(d.getCompleted()){
+				score += 5;
+			}
+		}
+		
 	}
 	
 	public String toString(){

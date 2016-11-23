@@ -29,6 +29,7 @@ import java.util.List;
 
 
 public class TileFactory  extends GameInfo implements Factory<Tile>{
+	int tileCount = 0;
 
 	@Override
 	//NOTE: edges are being initialized TOP, RIGHT, BOTTOM, LEFT 
@@ -53,8 +54,8 @@ public class TileFactory  extends GameInfo implements Factory<Tile>{
 				edges = new ArrayList<Edge>();
 				//Region Construction
 				//---------------------------------------------------------------
-				r1 = new Jungle();
 				r5 = new Den();
+				r1 = new Jungle((Den) r5);
 				//---------------------------------------------------------------
 				edges.add(new Edge(r1));		//TOP
 				edges.add(new Edge(r1));		//RIGHT
@@ -66,9 +67,9 @@ public class TileFactory  extends GameInfo implements Factory<Tile>{
 				edges = new ArrayList<Edge>();
 				//Region Construction
 				//---------------------------------------------------------------
-				r1 = new Jungle();
 				r2 = new Den();
-				r3 = new Trail();
+				r1 = new Jungle((Den) r2);
+				r3 = new Trail(true, tileCount, false, -1);
 				//---------------------------------------------------------------
 				edges.add(new Edge(r1));		//TOP
 				edges.add(new Edge(r1));		//RIGHT
@@ -81,7 +82,8 @@ public class TileFactory  extends GameInfo implements Factory<Tile>{
 				//Region Construction
 				//------------------------------------------------------------------------
 				r1 = new Jungle(); r3 = new Jungle(); r7 = new Jungle(); r9 = new Jungle();
-				r2 = new Trail(); r4 = new Trail(); r6 = new Trail(); r8 = new Trail();
+				r2 = new Trail(true, tileCount, false, -1); r4 = new Trail(true, tileCount, false, -1);
+				r6 = new Trail(true, tileCount, false, -1); r8 = new Trail(true, tileCount, false, -1);
 				r5 = new Cross();
 				//------------------------------------------------------------------------
 				edges.add(new Edge(r1,r2,r3));	//TOP
@@ -95,7 +97,7 @@ public class TileFactory  extends GameInfo implements Factory<Tile>{
 				//Region Construction
 				//------------------------------------------------------------------------
 				r1 = new Jungle(); r3 = new Jungle();
-				r2 = new Trail();
+				r2 = new Trail(false, tileCount, false, -1);
 				//------------------------------------------------------------------------
 				edges.add(new Edge(r1,r2,r3));	//TOP
 				edges.add(new Edge(r3));		//RIGHT
@@ -108,7 +110,7 @@ public class TileFactory  extends GameInfo implements Factory<Tile>{
 				//Region Construction
 				//------------------------------------------------------------------------
 				r1 = new Jungle(); r3 = new Jungle();
-				r2 = new Trail();
+				r2 = new Trail(false, tileCount, false, -1);
 				//------------------------------------------------------------------------
 				edges.add(new Edge(r1,r2,r3));	//TOP
 				edges.add(new Edge(r3));		//RIGHT
@@ -121,7 +123,8 @@ public class TileFactory  extends GameInfo implements Factory<Tile>{
 				//Region Construction
 				//------------------------------------------------------------------------
 				r1 = new Jungle(); r3 = new Jungle(); r7 = new Jungle();
-				r2 = new Trail(); r4 = new Trail(); r8 = new Trail();
+				r2 = new Trail(true, tileCount, false, -1); r4 = new Trail(true, tileCount, false, -1);
+				r8 = new Trail(true, tileCount, false, -1);
 				r5 = new Cross();
 				//------------------------------------------------------------------------
 				edges.add(new Edge(r1,r2,r3));	//TOP
@@ -141,6 +144,8 @@ public class TileFactory  extends GameInfo implements Factory<Tile>{
 	
 
 	protected Tile assemble(String type, int prey, List<Edge>  tileEdges, Region...regions){
+		tileCount++;
+		
 		List<Tile> adjacentTiles = new ArrayList<Tile>();
 		//This adjacent list may not be accurate with the rotation
 		adjacentTiles.add(null);	//TOP

@@ -6,12 +6,12 @@ public class test {
 		
 		RegionMap r = new RegionMap();
 		System.out.println(r);
-		Lake l4 = new Lake(0, 1, false);
-		Lake l3 = new Lake(0, 1, false);
+		Lake l4 = new Lake(0, 1, 0, false);
+		Lake l3 = new Lake(0, 1, 0, false);
 		r.mergeRegion(l4, l3);
 		
-		Lake l1 = new Lake(0, 1, false);
-		Lake l2 = new Lake(0, 1, false);
+		Lake l1 = new Lake(0, 1, 1, false);
+		Lake l2 = new Lake(0, 1, 1, false);
 		Jungle f = new Jungle(l1, l2);
 		Jungle j = new Jungle();
 		r.mergeRegion(f, j);

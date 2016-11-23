@@ -8,6 +8,7 @@ public class Lake extends Region {
 	private boolean complete;
 	private int caps;
 	private int tileID;
+	private int prey;
 	private boolean crocodile;
     
     public Lake() 
@@ -16,17 +17,23 @@ public class Lake extends Region {
         id = -1;
     }
     
-    public Lake(int initialCaps, int tID, boolean croc) 
+    public Lake(int initialCaps, int tID, int p, boolean croc) 
     {
         type = GameInfo.CITY;
         id = -1;
         caps = initialCaps;
         tileID = tID;
         crocodile = croc;
+        prey = p;
     }
     
     public void addCap(){
     	caps++;
+    }
+    
+    public void setComplete()
+    {
+    	complete = true;
     }
 
 	public String toString(){
@@ -50,6 +57,10 @@ public class Lake extends Region {
 	public Integer getTileID() {
 		// TODO Auto-generated method stub
 		return tileID;
+	}
+	
+	public int getPrey(){
+		return prey;
 	}
 
 }

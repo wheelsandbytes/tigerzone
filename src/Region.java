@@ -8,7 +8,6 @@ import java.util.*;
 public abstract class Region {
 	//Can have multiple Meeples (maybe one yours and one for opposing player)
 	Tiger placedMeeples;
-    int prey;
     int id;
     int type;    
     

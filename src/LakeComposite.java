@@ -8,6 +8,7 @@ public class LakeComposite {
 	int crocodiles;
 	List<Lake> components;
 	List<Integer> tiles;
+	List<Tiger>[] placedTigers;
 	boolean[] uniquePrey; //Used to determine if a prey species has been added
 	boolean complete;
 	
@@ -33,9 +34,11 @@ public class LakeComposite {
 	}
 	
 	public void add(Lake region){
+		region.setID(compID);
+		
 		components.add(region);
 		
-		if(!uniquePrey[region.prey]){ uniquePrey[region.prey] = true; this.prey++; }
+		if(!uniquePrey[region.getPrey()]){ uniquePrey[region.getPrey()] = true; this.prey++; }
 		
 		if(!tiles.contains(region.getTileID())) { tiles.add(region.getTileID()); }
 		
@@ -49,20 +52,21 @@ public class LakeComposite {
 	public int merge(LakeComposite comp){
 		int remove = comp.getID();
 		for (Lake r : comp.getList()){
-			r.setID(this.getID());
 			this.add(r);
 		}
 		
 		return remove;
 	}
 	
-	public void score(){
+	public int score(){
+		int tempScore = 0;
 		int perTile = 1;
 		if(complete){
 			perTile = 2;
 		}
 		
-		score = (perTile*tiles.size()) * (prey-crocodiles);
+		tempScore = (perTile*tiles.size()) * (prey-crocodiles < 0 ? 0 : prey-crocodiles);
+		return tempScore;
 	}
 	
 	public boolean checkComplete(){

@@ -23,16 +23,19 @@ public class TrailComposite {
 	}
 	
 	public void add(Trail region){
+		region.setID(compID);
+		
 		components.add(region);
 		
 		if(region.getEnd()){ 
 			ends++;
 			if(ends == 2) {
 				complete = true;
+				//tiger.getBack(); ???
 			}
 		}
 		
-		if(region.prey != -1){ this.prey++; }
+		if(region.getPrey() != -1){ this.prey++; }
 		
 		if(!tiles.contains(region.getTileID())) { tiles.add(region.getTileID()); }
 		
@@ -54,11 +57,17 @@ public class TrailComposite {
 	public int merge(TrailComposite comp){
 		int remove = comp.getID();
 		for (Trail r : comp.getList()){
-			r.setID(this.getID());
 			this.add(r);
 		}
 		
 		return remove;
+	}
+	
+	public int score(){
+		int tempScore = 0;
+
+		tempScore = tiles.size() + (prey-crocodiles < 0 ? 0 : prey-crocodiles);
+		return tempScore;
 	}
 	
 	public String toString(){

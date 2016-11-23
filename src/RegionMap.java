@@ -54,17 +54,14 @@ public class RegionMap {
 	}
 
 	void add(Jungle f, int i){
-		f.setID(i);
 		Jungles.get(i).add(f);
 	}
 	
 	void add(Lake c, int i){
-		c.setID(i);
 		Lakes.get(i).add(c);
 	}
 	
 	void add(Trail r, int i){
-		r.setID(i);
 		Trails.get(i).add(r);
 	}
 	
@@ -72,10 +69,8 @@ public class RegionMap {
 		int id = Jungles.size();
 		JungleComposite comp = new JungleComposite(id);
 		
-		base.setID(id);
 		comp.add(base);
 		
-		n.setID(id);
 		comp.add(n);
 		
 		Jungles.add(comp);
@@ -85,12 +80,13 @@ public class RegionMap {
 		int id = Lakes.size();
 		LakeComposite comp = new LakeComposite(id);
 		
-		base.setID(id);
+		base.addCap();
 		comp.add(base);
 		
-		n.setID(id);
+		n.addCap();
 		comp.add(n);
 		
+		comp.checkComplete();
 		Lakes.add(comp);
 	}
 	
@@ -98,17 +94,14 @@ public class RegionMap {
 		int id = Trails.size();
 		TrailComposite comp = new TrailComposite(id);
 		
-		base.setID(id);
 		comp.add(base);
 		
-		n.setID(id);
 		comp.add(n);
 		
 		Trails.add(comp);
 	}
 	
 	void join(Jungle n, Jungle base){
-		System.out.println("Field");
 		int removeID = Jungles.get(base.getID()).merge(Jungles.get(n.getID()));
 		Jungles.remove(removeID);
 	}

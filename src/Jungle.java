@@ -18,6 +18,14 @@ public class Jungle extends Region {
         adjLakes = new ArrayList<Lake>();
     }
     
+    public Jungle(Den d) 
+    {
+        type = GameInfo.FIELD;
+        id = -1;
+        adjLakes = new ArrayList<Lake>();
+        den = d;
+    }
+    
     public Jungle(Lake... lakes)
     {
         type = GameInfo.FIELD;
