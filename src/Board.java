@@ -12,7 +12,7 @@ public class Board {
 	
 	private RegionMap map;
 	
-	private HashMap<Coor, Slot> possibleLocs;  //This could be a Coor to Tile hashmap?
+	private HashMap<Coor, Slot> possibleLocs;  //Coor to Slot hashmap
 
 	//Function places a new Tile on a VALID side of a VALID tile
 	public void placeTile(Tile hostTile, Tile newTile, int side){
@@ -46,10 +46,10 @@ public class Board {
 	//Slot Factory goes here, creates a slot with the given coordinates and sets Edges appropriately
 	public Slot newSlot(Coor c){
 		Slot s = new Slot(c);
-		s.setAdjacent(0, board.locate(c.x, c.y+1).getEdge(0));
-		s.setAdjacent(1, board.locate(c.x+1, c.y).getEdge(1));
-		s.setAdjacent(2, board.locate(c.x, c.y-1).getEdge(2));
-		s.setAdjacent(3, board.locate(c.x-1, c.y).getEdge(3));
+		s.setAdjacent(0, board.locate(c.x, c.y+1) == null ? null : board.locate(c.x, c.y+1).getEdge(0));
+		s.setAdjacent(1, board.locate(c.x+1, c.y) == null ? null : board.locate(c.x+1, c.y).getEdge(1));
+		s.setAdjacent(2, board.locate(c.x+1, c.y) == null ? null : board.locate(c.x, c.y-1).getEdge(2));
+		s.setAdjacent(3, board.locate(c.x+1, c.y) == null ? null : board.locate(c.x-1, c.y).getEdge(3));
 
 		return s;
 	}
@@ -58,8 +58,9 @@ public class Board {
 	public void place(Move m)
 	{
 		Coor c = m.getLocation() ; // set the coordinates from the passed-in Move
-		Tile t = m.getTile() ; // set the tile from the passed-in Move
-
+		Tile t = m.getTile(); // set the tile from the passed-in Move
+		t.setRot(m.getRotation());
+		
 		t.setAdj(0, board.locate(c.x, c.y+1));
 		t.setAdj(1, board.locate(c.x+1, c.y));
 		t.setAdj(2, board.locate(c.x, c.y-1));
@@ -69,13 +70,55 @@ public class Board {
 
 		possibleLocs.remove(c);
 
-		if(t.getAdj(0) == null){ possibleLocs.putIfAbsent(new Coor(c.x, c.y+1), newSlot(new Coor(c.x, c.y+1))); }
+		if(t.getAdj(0) == null){
+			Coor cNew = new Coor(c.x, c.y+1);
+			
+			if(possibleLocs.get(cNew) != null){
+				possibleLocs.get(cNew).setAdjacent(2, t.getEdge(0));
+			}
+			
+			else{
+				possibleLocs.put(cNew, newSlot(cNew));
+			}
+			
+		}
 
-		if(t.getAdj(1) == null){ possibleLocs.putIfAbsent(new Coor(c.x+1, c.y), newSlot(new Coor(c.x+1, c.y))); }
+		if(t.getAdj(1) == null){
+			Coor cNew = new Coor(c.x+1, c.y);
+			
+			if(possibleLocs.get(cNew) != null){
+				possibleLocs.get(cNew).setAdjacent(3, t.getEdge(1));
+			}
+			
+			else{
+				possibleLocs.put(cNew, newSlot(cNew));
+			}
+		}
 		
-		if(t.getAdj(2) == null){ possibleLocs.putIfAbsent(new Coor(c.x, c.y-1), newSlot(new Coor(c.x, c.y-1))); }
+		if(t.getAdj(2) == null){
+			Coor cNew = new Coor(c.x, c.y-1);
 
-		if(t.getAdj(3) == null){ possibleLocs.putIfAbsent(new Coor(c.x-1, c.y), newSlot(new Coor(c.x-1, c.y))); }
+			if(possibleLocs.get(cNew) != null){
+				possibleLocs.get(cNew).setAdjacent(0, t.getEdge(2));
+			}
+			
+			else{
+				possibleLocs.put(cNew, newSlot(cNew));
+			}
+		}
+
+		if(t.getAdj(3) == null){
+			Coor cNew = new Coor(c.x-1, c.y);
+			
+			if(possibleLocs.get(cNew) != null){
+				possibleLocs.get(cNew).setAdjacent(1, t.getEdge(3));
+			}
+			
+			else{
+				possibleLocs.put(cNew, newSlot(cNew));
+			}
+		}
+		
 		
 		mergeRegions(t);
 	}

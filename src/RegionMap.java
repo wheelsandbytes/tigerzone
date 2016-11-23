@@ -2,26 +2,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegionMap {
-	List<LakeComposite> Cities;
-	List<TrailComposite> Roads;
-	List<JungleComposite> Fields;
+	List<LakeComposite> Lakes;
+	List<TrailComposite> Trails;
+	List<JungleComposite> Jungles;
 	
 	public RegionMap(){
-		Cities = new ArrayList<LakeComposite>();
-		Roads = new ArrayList<TrailComposite>();
-		Fields = new ArrayList<JungleComposite>();
+		Lakes = new ArrayList<LakeComposite>();
+		Trails = new ArrayList<TrailComposite>();
+		Jungles = new ArrayList<JungleComposite>();
 	}
 	
-	List<LakeComposite> getCities(){
-		return Cities;
+	List<LakeComposite> getLakes(){
+		return Lakes;
 	}
 	
-	List<TrailComposite> getRoads(){
-		return Roads;
+	List<TrailComposite> getTrails(){
+		return Trails;
 	}
 	
-	List<JungleComposite> getFields(){
-		return Fields;
+	List<JungleComposite> getJungles(){
+		return Jungles;
 	}
 	
 	
@@ -55,21 +55,21 @@ public class RegionMap {
 
 	void add(Jungle f, int i){
 		f.setID(i);
-		Fields.get(i).add(f);
+		Jungles.get(i).add(f);
 	}
 	
 	void add(Lake c, int i){
 		c.setID(i);
-		Cities.get(i).add(c);
+		Lakes.get(i).add(c);
 	}
 	
 	void add(Trail r, int i){
 		r.setID(i);
-		Roads.get(i).add(r);
+		Trails.get(i).add(r);
 	}
 	
 	void addNew(Jungle n, Jungle base){
-		int id = Fields.size();
+		int id = Jungles.size();
 		JungleComposite comp = new JungleComposite(id);
 		
 		base.setID(id);
@@ -78,11 +78,11 @@ public class RegionMap {
 		n.setID(id);
 		comp.add(n);
 		
-		Fields.add(comp);
+		Jungles.add(comp);
 	}
 	
 	void addNew(Lake n, Lake base){
-		int id = Cities.size();
+		int id = Lakes.size();
 		LakeComposite comp = new LakeComposite(id);
 		
 		base.setID(id);
@@ -91,11 +91,11 @@ public class RegionMap {
 		n.setID(id);
 		comp.add(n);
 		
-		Cities.add(comp);
+		Lakes.add(comp);
 	}
 	
 	void addNew(Trail n, Trail base){
-		int id = Roads.size();
+		int id = Trails.size();
 		TrailComposite comp = new TrailComposite(id);
 		
 		base.setID(id);
@@ -104,29 +104,29 @@ public class RegionMap {
 		n.setID(id);
 		comp.add(n);
 		
-		Roads.add(comp);
+		Trails.add(comp);
 	}
 	
 	void join(Jungle n, Jungle base){
 		System.out.println("Field");
-		int removeID = Fields.get(base.getID()).merge(Fields.get(n.getID()));
-		Fields.remove(removeID);
+		int removeID = Jungles.get(base.getID()).merge(Jungles.get(n.getID()));
+		Jungles.remove(removeID);
 	}
 	
 	void join(Lake n, Lake base){
-		int removeID = Cities.get(base.getID()).merge(Cities.get(n.getID()));
-		Cities.remove(removeID);
+		int removeID = Lakes.get(base.getID()).merge(Lakes.get(n.getID()));
+		Lakes.remove(removeID);
 	}
 	
 	void join(Trail n, Trail base){
-		int removeID = Roads.get(base.getID()).merge(Roads.get(n.getID()));
-		Roads.remove(removeID);
+		int removeID = Trails.get(base.getID()).merge(Trails.get(n.getID()));
+		Trails.remove(removeID);
 	}
 	
 	
 	
 	public String toString(){
-		return Cities.toString() + "\n" + Fields.toString() + "\n" + Roads.toString() + "\n";
+		return Lakes.toString() + "\n" + Jungles.toString() + "\n" + Trails.toString() + "\n";
 	}
 	
 	
