@@ -31,9 +31,9 @@ public class Lake extends Region {
     	caps++;
     }
     
-    public void setComplete()
+    public void setComplete(boolean c)
     {
-    	complete = true;
+    	complete = c;
     }
 
 	public String toString(){

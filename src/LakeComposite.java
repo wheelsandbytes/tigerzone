@@ -76,6 +76,9 @@ public class LakeComposite {
 			}
 		}
 		complete = true;
+		for(Lake l : components){
+			l.setComplete(true);
+		}
 		return true;
 	}
 	

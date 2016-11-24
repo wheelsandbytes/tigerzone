@@ -39,12 +39,12 @@ public class RegionMap {
 		
 		else if(bComp != -1 && nComp == -1){
 			System.out.println("n into b");
-			this.add(n, bComp);
+			this.add(n, base);
 		}
 		
 		else if(bComp == -1 && nComp != -1){
 			System.out.println("b into n");
-			this.add(base, nComp);
+			this.add(base, n);
 		}
 		
 		else{
@@ -80,10 +80,8 @@ public class RegionMap {
 		int id = Lakes.size();
 		LakeComposite comp = new LakeComposite(id);
 		
-		base.addCap();
 		comp.add(base);
 		
-		n.addCap();
 		comp.add(n);
 		
 		comp.checkComplete();
@@ -123,12 +121,13 @@ public class RegionMap {
 	}
 	
 	
-	//Methods to make Java happy, hope these don't fuck anything up.
 	private void addNew(Region n, Region base) {
 		if(n instanceof Jungle){
 			addNew((Jungle) n, (Jungle) base);
 		}
 		else if(n instanceof Lake){
+			((Lake) n).addCap();
+			((Lake) base).addCap();
 			addNew((Lake) n, (Lake) base);
 		}
 			
@@ -137,11 +136,14 @@ public class RegionMap {
 		}
 	}
 
-	private void add(Region n, int bComp) {
+	private void add(Region n, Region base) {
+		int bComp = base.getID();
 		if(n instanceof Jungle){
 			add((Jungle) n, bComp);
 		}
 		else if(n instanceof Lake){
+			((Lake) n).addCap();
+			((Lake) base).addCap();
 			add((Lake) n, bComp);
 		}
 			
@@ -155,6 +157,8 @@ public class RegionMap {
 			join((Jungle) n, (Jungle) base);
 		}
 		else if(n instanceof Lake){
+			((Lake) n).addCap();
+			((Lake) base).addCap();
 			join((Lake) n, (Lake) base);
 		}
 			
