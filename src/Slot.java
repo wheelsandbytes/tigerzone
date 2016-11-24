@@ -7,10 +7,15 @@ public class Slot {
 
 	public Slot(Coor loc){
 		connections = new ArrayList<Edge>();
+		connections.add(null);
+		connections.add(null);
+		connections.add(null);
+		connections.add(null);
 		this.loc = loc;
 	}
 
 	public Slot(int x, int y){
+		connections = new ArrayList<Edge>(4);
 		loc = new Coor(x, y);
 	}
 
@@ -24,5 +29,9 @@ public class Slot {
 
 	public void setAdjacent(List<Edge> t){
 		connections = t;
+	}
+	
+	public Coor getCoor(){
+		return loc;
 	}
 }

@@ -74,7 +74,9 @@ public class Tile {
 
 	boolean checkValid(List<Edge> e){
 		for(int i = 0; i < 4; i++){
-			if((e.get(i) != null) && (!e.get(i).equals(getEdge(i)))){
+			if(e.get(i) == null) {continue;}
+			
+			if(!e.get(i).equals(getEdge(i))){
 				return false;
 			}
 		}

@@ -8,6 +8,8 @@ import org.junit.Test;
 -------------------------------------------------------------------------------------------------*/
 
 public class UnitTests {
+	TileFactory t = new TileFactory();
+	
 	@Test
 	public void testPlayerClass(){
 		Player p = new AI();
@@ -16,12 +18,6 @@ public class UnitTests {
 		assertEquals(p.getScore(), 0);
 		p.updateScore(2);
 		assertEquals(p.getScore(), 2);
-	}
-
-	@Test
-	public void testBoardClass(){
-		Board b = new Board();
-		assertEquals(b.checkValid(), false);
 	}
 
 	//Continue Testing Components as desired
@@ -59,9 +55,25 @@ public class UnitTests {
 		assertEquals(road.getType(), GameInfo.ROAD);
 		assertTrue(road instanceof Region);
 	}
+	
+	@Test
+	public void placeTest(){
+		Board b = new Board();
+		Tile test1 = t.create("TJTJ-");
+		Tile test2 = t.create("TTTT-");
+		Tile test3 = t.create("TJJT-");
+		Tile test4 = t.create("JJJJ-");
+		b.place(new Move(new Coor(0,0), 0, test1));
+		Move m = b.find(test2).get(0);
+		b.place(m);
+		m = b.find(test3).get(2);
+		b.place(m);
+		System.out.println(b.map.Trails.get(0).score());
+		m = b.find(test4).get(0);
+		b.place(m);
+		b.find(test4);
+	}
 
-	
-	
 	public static void main(String args[]){
 		UnitTests t = new UnitTests();
 	}

@@ -23,12 +23,16 @@ public class Edge {
 	}
 	
 	public Edge(){
-		edges = new ArrayList<Region>(3);
+		edges = new ArrayList<Region>();
+		edges.add(null);
+		edges.add(null);
+		edges.add(null);
 	}
 	
 	public boolean equals(Edge e){
 		for (int i = 0; i < 3; i++){
-			if(!edges.get(i).equals(e.edges.get((i+2)%3))) return false;
+			//System.out.println(edges.get(i) + " " + e.edges.get((i+2)%2));
+			if(!edges.get(i).equals(e.edges.get((i+2)%2))) {return false;}
 		}
 		
 		return true;
@@ -36,5 +40,9 @@ public class Edge {
 	
 	public Region getReg(int i){
 		return edges.get(i);
+	}
+	
+	public String toString(){
+		return edges.toString();
 	}
 }
