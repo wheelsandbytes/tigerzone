@@ -10,35 +10,40 @@ public class Board {
 	private Player p1, p2;
 	private List<Tile> deck;
 	
-	private RegionMap map;
+	RegionMap map;
 	
-	private HashMap<Coor, Slot> possibleLocs;  //Coor to Slot hashmap
-
-	//Function places a new Tile on a VALID side of a VALID tile
-	public void placeTile(Tile hostTile, Tile newTile, int side){
-		//Implementation ....
+	HashMap<String, Slot> possibleLocs;  //Coor to Slot hashmap
+	
+	public Board(){
+		board = new MatrixGraph(null);
+		possibleLocs = new HashMap<String, Slot>();
+		map = new RegionMap();
 	}
-
-	//We may want to input a Move object or some coordinate information
-	//Move object may have this info: Tile hostTile, Tile newTile, int side
-	public boolean checkValid(){
-		//Implementation ....
-		return false;
+	
+	public Board(Tile t){
+		board = new MatrixGraph(t);
+		possibleLocs = new HashMap<String, Slot>();
+		map = new RegionMap();
 	}
 
 	//Finds a set of possible placement Coordinates for a tile, for now we don't care about the specific rotation,
 	//as long as at least one fits.
 	public List<Move> find(Tile t){
 
+		
 		List<Move> locs = new ArrayList<Move>();
 
-		for(Coor c : possibleLocs.keySet()){
+		for(String c : possibleLocs.keySet()){
+			System.out.println(c + " " + possibleLocs.get(c).getAdjacent().toString());
 			for(int i = 0; i < 4; i++){
 				t.setRot(i);
-				if(t.checkValid(possibleLocs.get(c).getAdjacent())){ locs.add(new Move(c, i, t)); }
+				if(t.checkValid(possibleLocs.get(c).getAdjacent())){ locs.add(new Move(possibleLocs.get(c).getCoor(), i, t)); }
 			}
 		}
-
+		
+		for(Move m : locs){
+			System.out.println(m.getLocation().toString() + " Rot: " + m.getRotation());
+		}
 		return locs;
 
 	}
@@ -46,10 +51,10 @@ public class Board {
 	//Slot Factory goes here, creates a slot with the given coordinates and sets Edges appropriately
 	public Slot newSlot(Coor c){
 		Slot s = new Slot(c);
-		s.setAdjacent(0, board.locate(c.x, c.y+1) == null ? null : board.locate(c.x, c.y+1).getEdge(0));
-		s.setAdjacent(1, board.locate(c.x+1, c.y) == null ? null : board.locate(c.x+1, c.y).getEdge(1));
-		s.setAdjacent(2, board.locate(c.x+1, c.y) == null ? null : board.locate(c.x, c.y-1).getEdge(2));
-		s.setAdjacent(3, board.locate(c.x+1, c.y) == null ? null : board.locate(c.x-1, c.y).getEdge(3));
+		s.setAdjacent(0, board.locate(c.x, c.y+1) == null ? null : board.locate(c.x, c.y+1).getEdge(2));
+		s.setAdjacent(1, board.locate(c.x+1, c.y) == null ? null : board.locate(c.x+1, c.y).getEdge(3));
+		s.setAdjacent(2, board.locate(c.x, c.y-1) == null ? null : board.locate(c.x, c.y-1).getEdge(0));
+		s.setAdjacent(3, board.locate(c.x-1, c.y) == null ? null : board.locate(c.x-1, c.y).getEdge(1));
 
 		return s;
 	}
@@ -68,54 +73,69 @@ public class Board {
 		
 		board.add(c.x, c.y, t);
 
-		possibleLocs.remove(c);
+		possibleLocs.remove(c.toString());
 
 		if(t.getAdj(0) == null){
 			Coor cNew = new Coor(c.x, c.y+1);
+			String cString = cNew.toString();
 			
-			if(possibleLocs.get(cNew) != null){
-				possibleLocs.get(cNew).setAdjacent(2, t.getEdge(0));
+			if(possibleLocs.get(cString) != null){
+				Slot tSlot = possibleLocs.get(cString);
+				tSlot.setAdjacent(2, t.getEdge(0));
+				possibleLocs.put(cString, tSlot);
+				
 			}
 			
 			else{
-				possibleLocs.put(cNew, newSlot(cNew));
+				possibleLocs.put(cString, newSlot(cNew));
 			}
 			
 		}
 
 		if(t.getAdj(1) == null){
 			Coor cNew = new Coor(c.x+1, c.y);
+			String cString = cNew.toString();
 			
-			if(possibleLocs.get(cNew) != null){
-				possibleLocs.get(cNew).setAdjacent(3, t.getEdge(1));
+			if(possibleLocs.get(cString) != null){
+				Slot tSlot = possibleLocs.get(cString);
+				tSlot.setAdjacent(3, t.getEdge(1));
+				possibleLocs.put(cString, tSlot);
+				
 			}
 			
 			else{
-				possibleLocs.put(cNew, newSlot(cNew));
+				possibleLocs.put(cString, newSlot(cNew));
 			}
 		}
 		
 		if(t.getAdj(2) == null){
 			Coor cNew = new Coor(c.x, c.y-1);
+			String cString = cNew.toString();
 
-			if(possibleLocs.get(cNew) != null){
-				possibleLocs.get(cNew).setAdjacent(0, t.getEdge(2));
+			if(possibleLocs.get(cString) != null){
+				Slot tSlot = possibleLocs.get(cString);
+				tSlot.setAdjacent(0, t.getEdge(2));
+				possibleLocs.put(cString, tSlot);
+				
 			}
 			
 			else{
-				possibleLocs.put(cNew, newSlot(cNew));
+				possibleLocs.put(cString, newSlot(cNew));
 			}
 		}
 
 		if(t.getAdj(3) == null){
 			Coor cNew = new Coor(c.x-1, c.y);
+			String cString = cNew.toString();
 			
-			if(possibleLocs.get(cNew) != null){
-				possibleLocs.get(cNew).setAdjacent(1, t.getEdge(3));
+			if(possibleLocs.get(cString) != null){
+				Slot tSlot = possibleLocs.get(cString);
+				tSlot.setAdjacent(1, t.getEdge(3));
+				possibleLocs.put(cString, tSlot);
 			}
 			
 			else{
-				possibleLocs.put(cNew, newSlot(cNew));
+				possibleLocs.put(cString, newSlot(cNew));
 			}
 		}
 		

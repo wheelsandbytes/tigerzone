@@ -68,11 +68,11 @@ public class MatrixGraph implements Graph{
 		Coor c = mapCoordinates(x, y);
 		if(validCoordinate(c) && emptyCoordinate(c)){
 			//Check there is a neighbor
-			if(!emptyCoordinate(mapCoordinates(x+1,y)) || !emptyCoordinate(mapCoordinates(x-1,y)) 
-			|| !emptyCoordinate(mapCoordinates(x,y+1)) || !emptyCoordinate(mapCoordinates(x,y-1))){
+			//if(!emptyCoordinate(mapCoordinates(x+1,y)) || !emptyCoordinate(mapCoordinates(x-1,y)) 
+			//|| !emptyCoordinate(mapCoordinates(x,y+1)) || !emptyCoordinate(mapCoordinates(x,y-1))){
 				matrix[c.row][c.col] = newTile;
-			}
-			else System.out.println("Error - No neighbor Tiles available");
+			//}
+			//else System.out.println("Error - No neighbor Tiles available");
 		}
 		else System.out.println("Error - Invalid coordinates");
 	}
