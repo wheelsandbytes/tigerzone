@@ -1,4 +1,8 @@
-
+/*-----------------------------------------------------------------------------------------------	
+|	GameInfo Class:   											
+|  	Contains constant information about the Business Objects accessible publicly
+|	(Feel free to add more, or modify existing constants)		  										
+ --------------------------------------------------------------------------------------------------*/
 
 public class GameInfo {
 	
