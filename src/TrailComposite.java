@@ -27,7 +27,7 @@ public class TrailComposite {
 		
 		components.add(region);
 		
-		if(region.getEnd()){ 
+		if(region.getEnd()){
 			ends++;
 			if(ends == 2) {
 				complete = true;
@@ -35,7 +35,7 @@ public class TrailComposite {
 			}
 		}
 		
-		if(region.getPrey() != -1){ this.prey++; }
+		if(region.getPrey() != GameInfo.NONE){ this.prey++; }
 		
 		if(!tiles.contains(region.getTileID())) { tiles.add(region.getTileID()); }
 		

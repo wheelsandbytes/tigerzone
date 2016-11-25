@@ -12,11 +12,13 @@ public class JungleComposite {
 	public JungleComposite(){
 		components = new ArrayList<Jungle>();
 		adjLakes = new ArrayList<Lake>();
+		adjDens = new ArrayList<Den>();
 	}
 	
 	public JungleComposite(int i){
 		components = new ArrayList<Jungle>();
 		adjLakes = new ArrayList<Lake>();
+		adjDens = new ArrayList<Den>();
 		compID = i;
 	}
 	
@@ -55,10 +57,11 @@ public class JungleComposite {
 		return remove;
 	}
 	
-	public void score(){
+	public int score(){
+		int score = 0;
 		List<Integer> ids = new ArrayList<Integer>();
 		for(Lake l : adjLakes){
-			if(ids.contains(l.getID())){
+			if(!ids.contains(l.getID())){
 				if(l.getCompleted()){
 					score += 3;
 				}
@@ -71,7 +74,7 @@ public class JungleComposite {
 				score += 5;
 			}
 		}
-		
+		return score;
 	}
 	
 	public String toString(){

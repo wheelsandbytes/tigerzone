@@ -1,26 +1,28 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class RegionMap {
-	List<LakeComposite> Lakes;
-	List<TrailComposite> Trails;
-	List<JungleComposite> Jungles;
+	int lakeNum = 0;
+	int trailNum = 0;
+	int jungleNum = 0;
+	HashMap<Integer, LakeComposite> Lakes;
+	HashMap<Integer, TrailComposite> Trails;
+	HashMap<Integer, JungleComposite> Jungles;
 	
 	public RegionMap(){
-		Lakes = new ArrayList<LakeComposite>();
-		Trails = new ArrayList<TrailComposite>();
-		Jungles = new ArrayList<JungleComposite>();
+		Lakes = new HashMap<Integer, LakeComposite>();
+		Trails = new HashMap<Integer, TrailComposite>();
+		Jungles = new HashMap<Integer, JungleComposite>();
 	}
 	
-	List<LakeComposite> getLakes(){
+	HashMap<Integer, LakeComposite> getLakes(){
 		return Lakes;
 	}
 	
-	List<TrailComposite> getTrails(){
+	HashMap<Integer, TrailComposite>  getTrails(){
 		return Trails;
 	}
 	
-	List<JungleComposite> getJungles(){
+	HashMap<Integer, JungleComposite> getJungles(){
 		return Jungles;
 	}
 	
@@ -59,6 +61,8 @@ public class RegionMap {
 	
 	void add(Lake c, int i){
 		Lakes.get(i).add(c);
+		if(c.getCaps() == 4) { Lakes.get(i).checkComplete(); }
+		
 	}
 	
 	void add(Trail r, int i){
@@ -66,37 +70,41 @@ public class RegionMap {
 	}
 	
 	void addNew(Jungle n, Jungle base){
-		int id = Jungles.size();
+		int id = jungleNum;
 		JungleComposite comp = new JungleComposite(id);
 		
 		comp.add(base);
 		
 		comp.add(n);
 		
-		Jungles.add(comp);
+		Jungles.put(id, comp);
+		jungleNum++;
 	}
 	
 	void addNew(Lake n, Lake base){
-		int id = Lakes.size();
+		int id = lakeNum;
 		LakeComposite comp = new LakeComposite(id);
 		
 		comp.add(base);
 		
 		comp.add(n);
 		
-		comp.checkComplete();
-		Lakes.add(comp);
+		if(base.getCaps() == 4 && n.getCaps() == 4) { comp.checkComplete(); }
+		
+		Lakes.put(id, comp);
+		lakeNum++;
 	}
 	
 	void addNew(Trail n, Trail base){
-		int id = Trails.size();
+		int id = trailNum;
 		TrailComposite comp = new TrailComposite(id);
 		
 		comp.add(base);
 		
 		comp.add(n);
 		
-		Trails.add(comp);
+		Trails.put(id, comp);
+		trailNum++;
 	}
 	
 	void join(Jungle n, Jungle base){
@@ -107,6 +115,8 @@ public class RegionMap {
 	void join(Lake n, Lake base){
 		int removeID = Lakes.get(base.getID()).merge(Lakes.get(n.getID()));
 		Lakes.remove(removeID);
+		
+		if(base.getCaps() == 4 && n.getCaps() == 4) { Lakes.get(base.getID()).checkComplete(); }
 	}
 	
 	void join(Trail n, Trail base){
@@ -165,5 +175,23 @@ public class RegionMap {
 		else if(n instanceof Trail){
 			join((Trail) n, (Trail) base);
 		}
+	}
+	
+	public String getScores(){
+		String s = "Lakes: \n";
+		for(LakeComposite l : Lakes.values()){
+			s += l.getID() + " " + l.score() + "\n";
+		}
+		
+		s += "Trails: \n";
+		for(TrailComposite l : Trails.values()){
+			s += l.getID() + " " + l.score() + " " + l.ends + "\n";
+		}
+		
+		s += "Jungles: \n";
+		for(JungleComposite l : Jungles.values()){
+			s += (l.getID() + " " + l.score() + "\n");
+		}
+		return s;
 	}
 }

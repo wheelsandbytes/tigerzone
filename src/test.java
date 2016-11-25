@@ -47,11 +47,15 @@ public class test {
 		System.out.println(e1.equals(e2));
 		*/
 		
-		HashMap<String, Slot> possibleLocs = new HashMap<String, Slot>();
-		String c = new String("0, 1");
+		HashMap<Integer, Slot> possibleLocs = new HashMap<Integer, Slot>();
+		
+		Integer c = new Integer(1);
+		System.out.println(possibleLocs.size());
 		possibleLocs.put(c, new Slot(new Coor(0, 0)));
+		System.out.println(possibleLocs.size());
 		//possibleLocs.put(new Coor(0, 0), new Slot(new Coor(0, 1)));
-		System.out.println(possibleLocs.get(new String("0, 1")));
+		possibleLocs.remove(1);
+		System.out.println(possibleLocs.size());
 
 	}
 	

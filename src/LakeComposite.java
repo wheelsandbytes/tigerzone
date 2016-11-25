@@ -38,7 +38,9 @@ public class LakeComposite {
 		
 		components.add(region);
 		
-		if(!uniquePrey[region.getPrey()]){ uniquePrey[region.getPrey()] = true; this.prey++; }
+		if(region.getPrey() != GameInfo.NONE){
+			if(!uniquePrey[region.getPrey()]){ uniquePrey[region.getPrey()] = true; this.prey++; }
+		}
 		
 		if(!tiles.contains(region.getTileID())) { tiles.add(region.getTileID()); }
 		
@@ -65,7 +67,7 @@ public class LakeComposite {
 			perTile = 2;
 		}
 		
-		tempScore = (perTile*tiles.size()) * (prey-crocodiles < 0 ? 0 : prey-crocodiles);
+		tempScore = (perTile*tiles.size()) * (1+prey-crocodiles < 1 ? 1 : 1+prey-crocodiles);
 		return tempScore;
 	}
 	

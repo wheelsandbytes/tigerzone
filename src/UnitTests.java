@@ -59,18 +59,24 @@ public class UnitTests {
 	@Test
 	public void placeTest(){
 		Board b = new Board();
-		Tile test1 = t.create("TJTJ-");
-		Tile test2 = t.create("TTTT-");
-		Tile test3 = t.create("TJJT-");
-		Tile test4 = t.create("JJJJ-");
+		Tile test1 = t.create("TLTJ-");
+		Tile test2 = t.create("TLJT-");
+		Tile test3 = t.create("TLLL-");
+		Tile test4 = t.create("JJTJX");
 		b.place(new Move(new Coor(0,0), 0, test1));
-		Move m = b.find(test2).get(0);
+		System.out.println(b.map);
+		Move m = b.find(test2).get(4);
 		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
 		m = b.find(test3).get(2);
 		b.place(m);
-		System.out.println(b.map.Trails.get(0).score());
-		m = b.find(test4).get(0);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		m = b.find(test4).get(2);
 		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
 		b.find(test4);
 	}
 
