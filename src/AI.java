@@ -24,4 +24,16 @@ public class AI extends Player{
 		//move = new Move(loc,rot,t);
 	 }
 
+	@Override
+	public Move decideMove() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MeeplePlacement decideMeeple() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

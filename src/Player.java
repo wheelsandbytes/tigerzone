@@ -1,61 +1,87 @@
 import java.util.*;
-
 /*------------------------------------------------------------------------------
 |	Player Class:
-|  	Contains information and behaviours of a Player Object
+|  	Contains information and behaviors of a Player Object
+|	NOTE: Board does not contain players, players contain Board
+|	For more info please visit the UML diagram for the program
 ------------------------------------------------------------------------------*/
 
-/*
-Player's functions:
-
-Set the move:
-	- The player's adapter will call this after having determined
-		the details for the Move object
-	- This method is meant to be overridden based on the type
-		of player that is playing (AI, TCP player, test player, etc)
-
-Make a move:
-	- The board will call this method before placing a tile
-	- The method will return the Player's Move object
-
-Update the score:
-	- The board will send a score to update in the Player
-	- The method is void, and takes in an int
-	- Adds the int to the existing score
-
-Get the score:
-	- The board will call this to retrieve the current score
-	- This method returns an int
-*/
 
 public abstract class Player {
+	private Board mainBoard;
 	private int score;
-	private int crocodiles;
 	private Move move;
+	private int crocodiles;
 	private List<Tiger> currentTigers;
-
-	// Move object contains a coordinate, a rotation, and a tile
-	// This may be overridden based on the type of player!
-	private void setMove(Coor c, int r, Tile t)
-	{
-		move = new Move(c,r,t);
+	
+	//Encapsulates Meeple placement info
+	public class MeeplePlacement{
+		public int type;
+		public int pos;
+		MeeplePlacement(int type, int pos){
+			this.type = type;
+			this.pos = pos;
+		}
+	}
+	
+	
+	//Default Constructor
+	public Player(){}
+	
+	//Fancy Constructor
+	public Player(Board mainBoard){
+		score = 0;
+		this.mainBoard = mainBoard;
+		crocodiles = GameInfo.MAX_CROCS;
+		
+		//Create Tigers
+		for(int i=0; i<GameInfo.MAX_TIGERS; i++){
+			currentTigers.add(new Tiger(this));
+		}
+	}
+	
+	
+	//Different kinds of Players decide to make their Moves in different ways
+	//Tester Player waits for Input, AI decides based on Algorithm, Remote Player (TCP) waits for Server Signal
+	public abstract Move decideMove();
+	public abstract MeeplePlacement decideMeeple();
+	
+	
+	//Makes the Move after it's been decided
+	public void makeMove(Move m){
+		mainBoard.place(m);
+	}
+	
+	
+	//Places the Meeple after it's been decided
+	public void placeMeeple(MeeplePlacement mp, Tile tile){
+		//If Player wants to place a Tiger
+		if(mp.type == GameInfo.TIGER && !tile.hasTiger){
+			
+			//Get the next available Tiger
+			for(Tiger t : currentTigers){
+				if(!t.placed){
+					tile.placeTiger(mp.pos, t);
+					t.placed = true;
+					break;
+				}
+			}
+		}
+		//If Player wants to place a Crocodile
+		else if(mp.type == GameInfo.CROCODILE && !tile.hasCrocodile){
+			if(crocodiles != 0)
+				tile.placeCrocodile();
+		}
 	}
 
-	// The board will call this to get the move from the player
-	// The board passes in a Tile object
-	public Move makeMove(Tile t)
-	{
-
-		return null;
-	}
-
+	
 	//Any changes to a Players score has to go through this method
-	public void updateScore(int n)
-	{
+	public void updateScore(int n){
 		this.score += n;
 	}
 
-	// Board can call this to get the current score
+	
+	//Returns score
 	public int  getScore(){
 		return score;
 	}

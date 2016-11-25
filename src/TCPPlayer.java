@@ -9,4 +9,16 @@ public class TCPPlayer extends Player {
     {
         // code to write to JSON or send network request, etc
     }
+
+	@Override
+	public Move decideMove() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MeeplePlacement decideMeeple() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
