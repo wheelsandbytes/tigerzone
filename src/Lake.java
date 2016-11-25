@@ -17,7 +17,7 @@ public class Lake extends Region {
         id = -1;
     }
     
-    public Lake(int initialCaps, int tID, int p, boolean croc) 
+    public Lake(int initialCaps, int tID, boolean croc, int p) 
     {
         type = GameInfo.CITY;
         id = -1;

@@ -19,7 +19,7 @@ public class GameInfo {
 	public static final int[] SHIFT = {1, 0,  -1, 0,  0, 1,  0,-1};
 	
 	//Preys, zero if it has no prey, 1 if deer, 2 if boar and 3 if buffalo 
-	public static final int NONE = 0, DEER = 1, BOARD = 2, BUFFALO = 3, CROCODILE = 4, TIGER = 5;
+	public static final int NONE = -1, DEER = 0, BOARD = 1, BUFFALO = 2, CROCODILE = 3, TIGER = 4;
 	
 	//Types of Tiles based on TigerZone rules and Tournament
 	public static final String JJJJN="JJJJ-", JJJJX="JJJJX", JJTJX="JJTJX", TTTTN="TTTT-", TJTJN="TJTJ-", TJJTN="TJJT-", TJTTN="TJTT-";
