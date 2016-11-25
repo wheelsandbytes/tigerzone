@@ -69,6 +69,38 @@ public class RegionMap {
 		Trails.get(i).add(r);
 	}
 	
+	private void addNew(Trail n) {
+		int id = trailNum;
+		TrailComposite comp = new TrailComposite(id);
+		
+		comp.add(n);
+		
+		Trails.put(id, comp);
+		trailNum++;
+	}
+
+	private void addNew(Lake n) {
+		int id = lakeNum;
+		LakeComposite comp = new LakeComposite(id);
+				
+		comp.add(n);
+		
+		if(n.getCaps() == 4) { comp.checkComplete(); }
+		
+		Lakes.put(id, comp);
+		lakeNum++;
+	}
+
+	private void addNew(Jungle n) {
+		int id = jungleNum;
+		JungleComposite comp = new JungleComposite(id);
+		
+		comp.add(n);
+		
+		Jungles.put(id, comp);
+		jungleNum++;
+	}
+	
 	void addNew(Jungle n, Jungle base){
 		int id = jungleNum;
 		JungleComposite comp = new JungleComposite(id);
@@ -161,7 +193,20 @@ public class RegionMap {
 			add((Trail) n, bComp);
 		}
 	}
+	
+	public void add(Region n) {
+		if(n instanceof Jungle){
+			addNew((Jungle) n);
+		}
+		else if(n instanceof Lake){
+			addNew((Lake) n);
+		}
 			
+		else if(n instanceof Trail){
+			addNew((Trail) n);
+		}
+	}
+
 	private void join(Region n, Region base){
 		if(n instanceof Jungle){
 			join((Jungle) n, (Jungle) base);

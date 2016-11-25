@@ -13,6 +13,7 @@ public class Board {
 	private List<Tile> deck;
 	
 	RegionMap map;
+	List<Den> dens;
 	
 	HashMap<String, Slot> possibleLocs;  //Coor to Slot hashmap
 	
@@ -20,12 +21,14 @@ public class Board {
 		board = new MatrixGraph(null);
 		possibleLocs = new HashMap<String, Slot>();
 		map = new RegionMap();
+		dens = new ArrayList<Den>();
 	}
 	
 	public Board(Tile t){
 		board = new MatrixGraph(t);
 		possibleLocs = new HashMap<String, Slot>();
 		map = new RegionMap();
+		dens = new ArrayList<Den>();
 	}
 
 	//Finds a set of possible placement Coordinates for a tile, for now we don't care about the specific rotation,
@@ -143,18 +146,46 @@ public class Board {
 		
 		
 		mergeRegions(t);
+		
+		if(t.getRegionAt(4).getType() == GameInfo.CHURCH){
+			((Den) t.getRegionAt(4)).setLoc(m.getLocation());
+			dens.add((Den) t.getRegionAt(4));
+		}
+		
+		this.checkDens();
 	}
 	
 	
 	//This will work eventually when we get region hierarchy together
 	public void mergeRegions(Tile t){
 		for(int i =0; i < 4; i++){
-			if(t.getAdj(i) == null) {continue;}
-			Edge base = t.getAdj(i).getEdge((i+2)%4);
-			Edge n = t.getEdge(i);
+			if(t.getAdj(i) == null) {
+				Edge n = t.getEdge(i);
+				for(int j = 0; j < 3; j++){
+					if(n.getReg(j).getID() == -1){
+						map.add(n.getReg(j));
+					}
+				}
+			}
+			
+			else{
+				Edge base = t.getAdj(i).getEdge((i+2)%4);
+				Edge n = t.getEdge(i);
 		
-			for(int j = 0; j < 3; j++){
-				map.mergeRegion(base.getReg(j), n.getReg(j));
+				for(int j = 0; j < 3; j++){
+					map.mergeRegion(base.getReg(j), n.getReg(j));
+				}
+			}
+		}
+	}
+	
+	//Used for den scoring, it's a bit shit but something that should work for now.
+	private void checkDens(){
+		for(Den d : dens){
+			if(d.getCompleted()) {continue;}
+			Coor c = d.getLoc();
+			if(board.locate(c.x-1, c.y+1) != null && board.locate(c.x, c.y+1) != null && board.locate(c.x+1, c.y+1) != null && board.locate(c.x+1, c.y) != null && board.locate(c.x-1, c.y) != null && board.locate(c.x-1, c.y-1) != null && board.locate(c.x, c.y-1) != null && board.locate(c.x+1, c.y-1) != null){
+				d.setCompleted(true);
 			}
 		}
 	}

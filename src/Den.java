@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Den extends Region {
 	private boolean completed;
+	private Coor loc;
     
 	public Den()
     {
@@ -20,5 +21,17 @@ public class Den extends Region {
 	
 	public void setCompleted(boolean b){
 		completed = b;
+	}
+	
+	public Coor getLoc(){
+		return loc;
+	}
+	
+	public void setLoc(Coor c){
+		loc = c;
+	}
+	
+	public String toString(){
+		return "Den at " + loc.toString();
 	}
 }

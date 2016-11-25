@@ -78,6 +78,7 @@ public class UnitTests {
 		System.out.println(b.map);
 		System.out.println(b.map.getScores());
 		b.find(test4);
+		System.out.println(b.dens.get(0).toString());
 	}
 
 	public static void main(String args[]){
