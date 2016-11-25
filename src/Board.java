@@ -183,10 +183,24 @@ public class Board {
 	private void checkDens(){
 		for(Den d : dens){
 			if(d.getCompleted()) {continue;}
+			int tempScore = 1;
 			Coor c = d.getLoc();
-			if(board.locate(c.x-1, c.y+1) != null && board.locate(c.x, c.y+1) != null && board.locate(c.x+1, c.y+1) != null && board.locate(c.x+1, c.y) != null && board.locate(c.x-1, c.y) != null && board.locate(c.x-1, c.y-1) != null && board.locate(c.x, c.y-1) != null && board.locate(c.x+1, c.y-1) != null){
+			
+			if(board.locate(c.x-1, c.y+1) != null) { tempScore++; }
+			if(board.locate(c.x, c.y+1) != null) { tempScore++; }
+			if(board.locate(c.x+1, c.y+1) != null) { tempScore++; }
+			
+			if(board.locate(c.x+1, c.y) != null) { tempScore++; }
+			if(board.locate(c.x-1, c.y) != null) { tempScore++; }
+			
+			if(board.locate(c.x-1, c.y-1) != null) { tempScore++; }
+			if(board.locate(c.x, c.y-1) != null) { tempScore++; }
+			if(board.locate(c.x+1, c.y-1) != null) { tempScore++; }
+			
+			if(tempScore == 9){
 				d.setCompleted(true);
 			}
+			d.setScore(tempScore);
 		}
 	}
 }
