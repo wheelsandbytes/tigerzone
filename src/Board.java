@@ -6,8 +6,10 @@ import java.util.*;
 -------------------------------------------------------------------------------------------------*/
 
 public class Board {
+//	Board does not contain players, players contain Board
+//	For more info please visit the UML diagram for the program
+//	private Player p1, p2;
 	private Graph board;
-	private Player p1, p2;
 	private List<Tile> deck;
 	
 	RegionMap map;
