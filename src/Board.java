@@ -37,7 +37,7 @@ public class Board {
 
 		
 		List<Move> locs = new ArrayList<Move>();
-
+		System.out.println("Slots:  \n");
 		for(String c : possibleLocs.keySet()){
 			System.out.println(c + " " + possibleLocs.get(c).getAdjacent().toString());
 			for(int i = 0; i < 4; i++){
@@ -46,6 +46,7 @@ public class Board {
 			}
 		}
 		
+		System.out.println("Moves:  \n");
 		for(Move m : locs){
 			System.out.println(m.getLocation().toString() + " Rot: " + m.getRotation());
 		}
