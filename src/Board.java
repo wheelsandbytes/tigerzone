@@ -171,10 +171,16 @@ public class Board {
 			else{
 				Edge base = t.getAdj(i).getEdge((i+2)%4);
 				Edge n = t.getEdge(i);
-		
+				
+				map.mergeRegion(base.getReg(0), n.getReg(2));
+				map.mergeRegion(base.getReg(1), n.getReg(1));
+				map.mergeRegion(base.getReg(2), n.getReg(0));
+				
+				/*
 				for(int j = 0; j < 3; j++){
-					map.mergeRegion(base.getReg(j), n.getReg(j));
+					map.mergeRegion(base.getReg((j+2)%2), n.getReg(j));
 				}
+				*/
 			}
 		}
 	}

@@ -30,10 +30,15 @@ public class Edge {
 	}
 	
 	public boolean equals(Edge e){
+		if(!edges.get(0).equals(e.edges.get(2))) {return false;}
+		if(!edges.get(1).equals(e.edges.get(1))) {return false;}
+		if(!edges.get(2).equals(e.edges.get(0))) {return false;}
+		/*
 		for (int i = 0; i < 3; i++){
 			//System.out.println(edges.get(i) + " " + e.edges.get((i+2)%2));
 			if(!edges.get(i).equals(e.edges.get((i+2)%2))) {return false;}
 		}
+		*/
 		
 		return true;
 	}

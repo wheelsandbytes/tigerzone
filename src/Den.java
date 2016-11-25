@@ -41,6 +41,6 @@ public class Den extends Region {
 	}
 	
 	public String toString(){
-		return "Den at " + loc.toString();
+		return "Den at " + loc.toString() + " Score: " + score;
 	}
 }

@@ -1,4 +1,7 @@
 import static org.junit.Assert.*;
+
+import java.util.Scanner;
+
 import org.junit.Test;
 /*-----------------------------------------------------------------------------------------------
 |	UnitTests Class:
@@ -59,10 +62,21 @@ public class UnitTests {
 	@Test
 	public void placeTest(){
 		Board b = new Board();
+		Scanner s = new Scanner(System.in);
 		Tile test1 = t.create("TLTJ-");
 		Tile test2 = t.create("TLJT-");
 		Tile test3 = t.create("TLLL-");
 		Tile test4 = t.create("JJTJX");
+		Tile test5 = t.create("JLTTB");
+		Tile test6 = t.create("JLLJ-");
+		Tile test7 = t.create("LJJJ-");
+		Tile test8 = t.create("TLTJD");
+		Tile test9 = t.create("TJJT-");
+		Tile test10 = t.create("TLTJD");
+		Tile test11 = t.create("TJJT-");
+		Tile test12 = t.create("TJTT-");
+		Tile test13 = t.create("TLTJD");
+		Tile test14 = t.create("TLJTP");
 		b.place(new Move(new Coor(0,0), 0, test1));
 		System.out.println(b.map);
 		Move m = b.find(test2).get(4);
@@ -77,8 +91,58 @@ public class UnitTests {
 		b.place(m);
 		System.out.println(b.map);
 		System.out.println(b.map.getScores());
-		b.find(test4);
 		System.out.println(b.dens.get(0).toString());
+		m = b.find(test5).get(3);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test6).get(0);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test7).get(6);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test8).get(3);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test9).get(6);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test10).get(8);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test11).get(4);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test12).get(3);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test13).get(2);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test14).get(14);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		
 	}
 
 	public static void main(String args[]){
