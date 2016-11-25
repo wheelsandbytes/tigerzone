@@ -11,9 +11,10 @@ public abstract class Player {
 	private Board mainBoard;
 	private int score;
 	private Move move;
-	private int crocodiles = GameInfo.MAX_CROCS;
+	private int crocodiles;
 	private List<Tiger> currentTigers;
 	
+	//Encapsulates Meeple placement info
 	public class MeeplePlacement{
 		public int type;
 		public int pos;
@@ -22,6 +23,23 @@ public abstract class Player {
 			this.pos = pos;
 		}
 	}
+	
+	
+	//Default Constructor
+	public Player(){}
+	
+	//Fancy Constructor
+	public Player(Board mainBoard){
+		score = 0;
+		this.mainBoard = mainBoard;
+		crocodiles = GameInfo.MAX_CROCS;
+		
+		//Create Tigers
+		for(int i=0; i<GameInfo.MAX_TIGERS; i++){
+			currentTigers.add(new Tiger(this));
+		}
+	}
+	
 	
 	//Different kinds of Players decide to make their Moves in different ways
 	//Tester Player waits for Input, AI decides based on Algorithm, Remote Player (TCP) waits for Server Signal
@@ -37,7 +55,6 @@ public abstract class Player {
 	
 	//Places the Meeple after it's been decided
 	public void placeMeeple(MeeplePlacement mp, Tile tile){
-		
 		//If Player wants to place a Tiger
 		if(mp.type == GameInfo.TIGER && !tile.hasTiger){
 			

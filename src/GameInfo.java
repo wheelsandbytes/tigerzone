@@ -16,7 +16,7 @@ public class GameInfo {
 	public static final int MAX_TILES = 77;
 	
 	//Shift coordinates to visit children of root(0,0)
-	public static final int[] SHIFT = {1, 0,  -1, 0,  0, 1,  0,-1};
+	public static final int[] SHIFT = {1,0,  -1,0,  0,1,  0,-1};
 	
 	//Preys, zero if it has no prey, 1 if deer, 2 if boar and 3 if buffalo 
 	public static final int NONE = -1, DEER = 0, BOARD = 1, BUFFALO = 2, CROCODILE = 3, TIGER = 4;
@@ -27,6 +27,7 @@ public class GameInfo {
 	public static final String TLJTN="TLJT-", TLJTP="TLJTP", JLTTB="JLTTB", JLTTN="JLTT-", TLTJN="TLTJ-", TLTJD="TLTJD", TLLLN="TLLL-";
 	public static final String TLTTN="TLTT-", TLTTP="TLTTP", TLLTN="TLLT-", TLLTB="TLLTB", LJTJN="LJTJ-", LJTJD="LJTJD", TLLLC="TLLLC";
 	
-	public static final int MAX_CROCS = 2;
+	//Maximum number of Meeples allowed per type
+	public static final int MAX_CROCS = 2, MAX_TIGERS = 7;
 }
 
