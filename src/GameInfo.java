@@ -27,7 +27,13 @@ public class GameInfo {
 	public static final String TLJTN="TLJT-", TLJTP="TLJTP", JLTTB="JLTTB", JLTTN="JLTT-", TLTJN="TLTJ-", TLTJD="TLTJD", TLLLN="TLLL-";
 	public static final String TLTTN="TLTT-", TLTTP="TLTTP", TLLTN="TLLT-", TLLTB="TLLTB", LJTJN="LJTJ-", LJTJD="LJTJD", TLLLC="TLLLC";
 	
+	//Array Representation of Tiles
+	public static final String[] allowedTiles = new String[]{
+			"JJJJ-", "JJJJX", "JJTJX", "TTTT-", "TJTJ-", "TJJT-", "TJTT-", "LLLL-", "JLLL-", "LLJJ-", "JLJL-", "LJLJ-", "LJJJ-", "JLLJ-",
+			"TLJT-", "TLJTP", "JLTTB", "JLTT-", "TLTJ-", "TLTJD", "TLLL-", "TLTT-", "TLTTP", "TLLT-", "TLLTB", "LJTJ-", "LJTJD", "TLLLC"
+	};
+	
 	//Maximum number of Meeples allowed per type
-	public static final int MAX_CROCS = 2, MAX_TIGERS = 7;
+	public static final int MAX_CROCS = 2, MAX_TIGERS = 7, MAX_TYPES = 28;
 }
 

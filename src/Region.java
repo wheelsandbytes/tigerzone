@@ -7,9 +7,9 @@ import java.util.*;
 
 public abstract class Region {
 	//Can have multiple Meeples (maybe one yours and one for opposing player)
-	Tiger placedMeeples;
-    int id;
-    int type;    
+	protected Tiger placedMeeples;
+    protected int id;
+    protected int type;    
     
     public int getID(){
     	return id;
@@ -19,10 +19,14 @@ public abstract class Region {
     	id = i;
     }
     
-    public Tiger getMeeples()
-    {
+    public Tiger getMeeples(){
         return placedMeeples;
     }
+    
+    public void setMeeple(Tiger t){
+    	placedMeeples = t;
+    }
+    
 
     public int getType() {
         return type;

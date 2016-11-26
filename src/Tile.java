@@ -74,9 +74,7 @@ public class Tile {
 	
 	public void placeTiger(int pos, Tiger t){
 		hasTiger = true;
-		//Implementation should use getRegionAt(i)
-		//Then Tiger or Crocodile can be place in that region
-		//NOTE: useful to use RotationalMap class
+		getRegionAt(pos).setMeeple(t);
 	}
 	
 	public void placeCrocodile(){
