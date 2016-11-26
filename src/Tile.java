@@ -1,4 +1,5 @@
 import java.util.*;
+import static org.junit.Assert.*;
 
 /*-----------------------------------------------------------------------------------------------
 |	Tile Class:
@@ -7,63 +8,89 @@ import java.util.*;
 
 public class Tile {
 
-	// Top, Bottom, Right, Left definitions
+	// Fields
+	public int prey;
+	public boolean hasCrocodile = false;
+	public boolean hasTiger = false;
+	private String type;
 	private int rotation;
-	boolean shield;
-	// List<Region> innerRegions;
+	private Region[] regionPositions;
 	private List<Tile> adjacentTiles;
-
-	// List of tile edges within the tile?
 	private List<Edge> tileEdges;
+	private final int MAX_REGIONS = 9;
 
 	// Default constructor
 	public Tile(){}
 	
-	Tile getAdj(int i){
+	// Constructor takes in the type
+	public Tile(String type){
+		this.type = type;
+	}
+	
+	// Constructor takes care of setup
+	public Tile(String type, int prey, List<Tile> adjacentTiles, List<Edge> tileEdges, Region[] regionPositions){
+		rotation = 0;
+		this.type = type;
+		this.prey = prey;
+		this.adjacentTiles = adjacentTiles;
+		this.tileEdges = tileEdges;
+		assertEquals(MAX_REGIONS, regionPositions.length);
+		this.regionPositions = regionPositions;
+		if(prey == GameInfo.CROCODILE)
+			hasCrocodile = true;
+	}
+	
+	
+	//Getters
+	public String getType(){
+		return type;
+	}
+	
+	public Tile getAdj(int i){
 		return adjacentTiles.get(i);
 	}
 	
-	void setAdj(int i, Tile t){
-		if(t == null) { adjacentTiles.set(i, null); return; }
-		
-		adjacentTiles.set(i, t);
-		
-		getEdge(i).merge(t.getEdge((i+2)%4));
+	public Region getRegionAt(int i){
+		if(i < MAX_REGIONS)
+			return regionPositions[i];
+		else return null;
 	}
 	
 	//Accounts for a given rotation, currently assuming counterclockwise.
-	Edge getEdge(int i){
+	public Edge getEdge(int i){
 		return tileEdges.get((rotation+i)%4);
 	}
 	
-	void setRot(int r){
+	
+	//Setters
+	public void setAdj(int i, Tile t){
+		if(t == null) { adjacentTiles.set(i, null); return; }
+		adjacentTiles.set(i, t);
+	}
+	
+	public void setRot(int r){
 		rotation = r;
 	}
 	
-	/*
-	//This feels like trash but it works and might be fine
-	//The input tile would come from a Slot object, containing the edges that we would need to match to fit.
-	boolean checkValid(Tile t){
-				
-		for(int i = 0; i < 4; i++){
-			if((t.getEdge(i) != null) && (!t.getEdge(i).equals(getEdge(i)))){
-				return false;
-			}
-		}
-		
-		return true;
+	public void placeTiger(int pos, Tiger t){
+		hasTiger = true;
+		getRegionAt(pos).setMeeple(t);
 	}
-	*/
 	
-	//Same as above only just passing in an edge list
+	public void placeCrocodile(){
+		//Crocodiles dont care about position
+		//They go in that Tile as a whole
+		hasCrocodile = true;
+	}
+
 	boolean checkValid(List<Edge> e){
-		
 		for(int i = 0; i < 4; i++){
-			if((e.get(i) != null) && (!e.get(i).equals(getEdge(i)))){
+			if(e.get(i) == null) {continue;}
+			
+			if(!e.get(i).equals(getEdge(i))){
 				return false;
 			}
 		}
-		
 		return true;
 	}
 }

@@ -1,4 +1,7 @@
 import static org.junit.Assert.*;
+
+import java.util.Scanner;
+
 import org.junit.Test;
 /*-----------------------------------------------------------------------------------------------
 |	UnitTests Class:
@@ -8,20 +11,16 @@ import org.junit.Test;
 -------------------------------------------------------------------------------------------------*/
 
 public class UnitTests {
+	TileFactory t = new TileFactory();
+	
 	@Test
 	public void testPlayerClass(){
 		Player p = new AI();
 		assertTrue(p instanceof Player);
 		assertTrue(p instanceof AI);
 		assertEquals(p.getScore(), 0);
-		p.altScore(2);
+		p.updateScore(2);
 		assertEquals(p.getScore(), 2);
-	}
-
-	@Test
-	public void testBoardClass(){
-		Board b = new Board();
-		assertEquals(b.checkValid(), false);
 	}
 
 	//Continue Testing Components as desired
@@ -29,85 +28,124 @@ public class UnitTests {
 	@Test
 	public void testTileClass(){
 		Tile t = new Tile();
-		assertEquals(null, t.innerRegions);
-		assertEquals(null, t.adjacentTiles);
 	}
 
 	
 	@Test
 	public void testFieldClass(){
-		Region field = new Field();
+		Region field = new Jungle();
 		assertEquals(field.getType(), GameInfo.FIELD);
 		assertTrue(field instanceof Region);
 	}
 
 	@Test
 	public void testCityClass(){
-		Region city = new City();
+		Region city = new Lake();
 		assertEquals(city.getType(), GameInfo.CITY);
 		assertTrue(city instanceof Region);
 	}
 	
 	@Test
 	public void testChurchClass(){
-		Region church = new Church();
+		Region church = new Den();
 		assertEquals(church.getType(), GameInfo.CHURCH);
 		assertTrue(church instanceof Region);
 	}
 	
 	@Test
 	public void testRoadClass(){
-		Region road = new Road();
+		Region road = new Trail();
 		assertEquals(road.getType(), GameInfo.ROAD);
 		assertTrue(road instanceof Region);
 	}
+	
+	@Test
+	public void placeTest(){
+		Board b = new Board();
+		Scanner s = new Scanner(System.in);
+		Tile test1 = t.create("TLTJ-");
+		Tile test2 = t.create("TLJT-");
+		Tile test3 = t.create("TLLL-");
+		Tile test4 = t.create("JJTJX");
+		Tile test5 = t.create("JLTTB");
+		Tile test6 = t.create("JLLJ-");
+		Tile test7 = t.create("LJJJ-");
+		Tile test8 = t.create("TLTJD");
+		Tile test9 = t.create("TJJT-");
+		Tile test10 = t.create("TLTJD");
+		Tile test11 = t.create("TJJT-");
+		Tile test12 = t.create("TJTT-");
+		Tile test13 = t.create("TLTJD");
+		Tile test14 = t.create("TLJTP");
+		b.place(new Move(new Coor(0,0), 0, test1));
+		System.out.println(b.map);
+		Move m = b.find(test2).get(4);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		m = b.find(test3).get(2);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		m = b.find(test4).get(2);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test5).get(3);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test6).get(0);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test7).get(6);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test8).get(3);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test9).get(6);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test10).get(8);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test11).get(4);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test12).get(3);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test13).get(2);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		m = b.find(test14).get(14);
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		System.out.println(b.dens.get(0).toString());
+		
+	}
 
-	
-	@Test
-	public void testFarmerClass(){
-		Meeple farmer = new Farmer();
-		assertEquals(farmer.getType(), GameInfo.FIELD);
-		assertTrue(farmer instanceof Meeple);
-		assertTrue(farmer.isAvailable());
-		assertEquals(null, farmer.getRegion());
-	}
-
-	@Test
-	public void testKnightClass(){
-		Meeple knight = new Knight();
-		assertEquals(knight.getType(), GameInfo.CITY);
-		assertTrue(knight instanceof Meeple);
-		assertTrue(knight.isAvailable());
-		assertEquals(null, knight.getRegion());
-	}
-	
-	@Test
-	public void testMonkClass(){
-		Meeple monk = new Monk();
-		assertEquals(monk.getType(), GameInfo.CHURCH);
-		assertTrue(monk instanceof Meeple);
-		assertTrue(monk.isAvailable());
-		assertEquals(null, monk.getRegion());
-	}
-	
-	@Test
-	public void testThiefClass(){
-		Meeple thief = new Thief();
-		assertEquals(thief.getType(), GameInfo.ROAD);
-		assertTrue(thief instanceof Meeple);
-		assertTrue(thief.isAvailable());
-		assertEquals(null, thief.getRegion());
-	}
-	
-	public void MeepleTests(){
-		testFarmerClass();
-		testKnightClass();
-		testMonkClass();
-		testThiefClass();
-	}
-	
 	public static void main(String args[]){
 		UnitTests t = new UnitTests();
-		t.MeepleTests();
 	}
 }

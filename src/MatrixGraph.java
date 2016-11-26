@@ -68,11 +68,11 @@ public class MatrixGraph implements Graph{
 		Coor c = mapCoordinates(x, y);
 		if(validCoordinate(c) && emptyCoordinate(c)){
 			//Check there is a neighbor
-			if(!emptyCoordinate(mapCoordinates(x+1,y)) || !emptyCoordinate(mapCoordinates(x-1,y)) 
-			|| !emptyCoordinate(mapCoordinates(x,y+1)) || !emptyCoordinate(mapCoordinates(x,y-1))){
+			//if(!emptyCoordinate(mapCoordinates(x+1,y)) || !emptyCoordinate(mapCoordinates(x-1,y)) 
+			//|| !emptyCoordinate(mapCoordinates(x,y+1)) || !emptyCoordinate(mapCoordinates(x,y-1))){
 				matrix[c.row][c.col] = newTile;
-			}
-			else System.out.println("Error - No neighbor Tiles available");
+			//}
+			//else System.out.println("Error - No neighbor Tiles available");
 		}
 		else System.out.println("Error - Invalid coordinates");
 	}
@@ -85,7 +85,7 @@ public class MatrixGraph implements Graph{
 		if(validCoordinate(c) && !emptyCoordinate(c))
 			return matrix[c.row][c.col];
 		//If nothing found return null Tile
-		else return new Tile("null");
+		else return null;
 	}
 	
 	@Override
@@ -103,7 +103,7 @@ public class MatrixGraph implements Graph{
 				if(matrix[i][j] == null)
 					row.append("  ");
 				else
-					row.append("-"+matrix[i][j].type);
+					row.append("-"+matrix[i][j].getType());
 			}
 			if(row.toString().trim().length() > 0)
 				graph.append(row.toString()+"\n");
