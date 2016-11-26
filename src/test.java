@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class test {
-	public static void main(String args[]){
+//	public static void main(String args[]){
 		/*
 		RegionMap r = new RegionMap();
 		System.out.println(r);
@@ -47,16 +47,16 @@ public class test {
 		System.out.println(e1.equals(e2));
 		*/
 		
-		HashMap<Integer, Slot> possibleLocs = new HashMap<Integer, Slot>();
-		
-		Integer c = new Integer(1);
-		System.out.println(possibleLocs.size());
-		possibleLocs.put(c, new Slot(new Coor(0, 0)));
-		System.out.println(possibleLocs.size());
-		//possibleLocs.put(new Coor(0, 0), new Slot(new Coor(0, 1)));
-		possibleLocs.remove(1);
-		System.out.println(possibleLocs.size());
-
-	}
+//		HashMap<Integer, Slot> possibleLocs = new HashMap<Integer, Slot>();
+//		
+//		Integer c = new Integer(1);
+//		System.out.println(possibleLocs.size());
+//		possibleLocs.put(c, new Slot(new Coor(0, 0)));
+//		System.out.println(possibleLocs.size());
+//		//possibleLocs.put(new Coor(0, 0), new Slot(new Coor(0, 1)));
+//		possibleLocs.remove(1);
+//		System.out.println(possibleLocs.size());
+//
+//	}
 	
 }

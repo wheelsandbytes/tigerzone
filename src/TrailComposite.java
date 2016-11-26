@@ -6,10 +6,10 @@ public class TrailComposite {
 	int prey;
 	int crocodiles;
 	int score; //maybe
-	int ends;
+	public int ends;
 	List<Trail> components;
 	List<Integer> tiles;
-	boolean complete;
+	public boolean complete;
 	
 	public TrailComposite(){
 		components = new ArrayList<Trail>();

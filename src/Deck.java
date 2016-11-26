@@ -1,5 +1,6 @@
+import java.util.LinkedList;
 import java.util.List;
-
+import java.util.Random;
 /*------------------------------------------------------------------------------
 |	Deck Class:
 |  	Contains the Common Deck with already shuffled Tiles
@@ -7,8 +8,10 @@ import java.util.List;
 
 public class Deck {
 	private int curr = 0;
-	private List<Tile> deck;
-	private boolean generated = false;;
+	private boolean generated = false;
+	private Random rg = new Random();
+	private TileFactory tf = new TileFactory();
+	private List<Tile> deck = new LinkedList<Tile>();
 	
 	//Ability to set up the Deck after server generates it
 	public void setStandardDeck(List<Tile> deck){
@@ -18,7 +21,12 @@ public class Deck {
 	
 	//Generates a shuffled deck for testing
 	public void generateDeck(){
-		//Implementation here...
+		String type;
+		//Randomize MAX_TILES number of Tile Objects
+		for(int i=0; i<GameInfo.MAX_TILES; i++){
+			type = GameInfo.allowedTiles[rg.nextInt(GameInfo.MAX_TYPES)];
+			deck.add(tf.create(type));
+		}
 		generated = true;
 	}
 	
@@ -38,7 +46,7 @@ public class Deck {
 	//Checks for the end of deck
 	public boolean isDone(){
 		if(generated)
-			return curr < deck.size();
+			return curr >= deck.size();
 		return true;
 	}
 }

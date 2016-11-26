@@ -1,6 +1,5 @@
 import java.util.*;
 import static org.junit.Assert.*;
-
 /*-----------------------------------------------------------------------------------------------
 |	Tile Class:
 |  	Contains Tile information, a List of its inner Regions, and linked Tiles (up-to-4)
@@ -12,8 +11,9 @@ public class Tile {
 	public int prey;
 	public boolean hasCrocodile = false;
 	public boolean hasTiger = false;
+	private int rotation = 0;
+	private int angle = 0;
 	private String type;
-	private int rotation;
 	private Region[] regionPositions;
 	private List<Tile> adjacentTiles;
 	private List<Edge> tileEdges;
@@ -58,8 +58,17 @@ public class Tile {
 	
 	//Accounts for a given rotation, currently assuming counterclockwise.
 	public Edge getEdge(int i){
-		return tileEdges.get((rotation+i)%4);
+		return tileEdges.get(Math.abs((rotation+i)%4));
 	}
+	
+	public int getRotation(){
+		return rotation;
+	}
+	
+	public int getAngle(){
+		return angle;
+	}
+	
 	
 	
 	//Setters
@@ -69,14 +78,13 @@ public class Tile {
 	}
 	
 	public void setRot(int r){
+		angle = r*90;
 		rotation = r;
 	}
 	
 	public void placeTiger(int pos, Tiger t){
 		hasTiger = true;
-		//Implementation should use getRegionAt(i)
-		//Then Tiger or Crocodile can be place in that region
-		//NOTE: useful to use RotationalMap class
+		getRegionAt(pos).setMeeple(t);
 	}
 	
 	public void placeCrocodile(){

@@ -1,6 +1,6 @@
 
 public class Coor {
-	int x, y;
+	public int x, y;
 	
 	public Coor(int x, int y){
 		this.x = x;

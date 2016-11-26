@@ -63,6 +63,7 @@ public class UnitTests {
 	public void placeTest(){
 		Board b = new Board();
 		Scanner s = new Scanner(System.in);
+		
 		Tile test1 = t.create("TLTJ-");
 		Tile test2 = t.create("TLJT-");
 		Tile test3 = t.create("TLLL-");
@@ -143,9 +144,33 @@ public class UnitTests {
 		System.out.println(b.map.getScores());
 		System.out.println(b.dens.get(0).toString());
 		
+		
+		/*
+		Tile test15 = t.create("TJJT-");
+		Tile test16 = t.create("TJJT-");
+		Tile test17 = t.create("TJJT-");
+		Tile test18 = t.create("TJJT-");
+		b.place(new Move(new Coor(0,0), 0, test15));
+		System.out.println(b.map);
+		Move m = b.find(test16).get(s.nextInt());
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		m = b.find(test17).get(s.nextInt());
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		m = b.find(test18).get(s.nextInt());
+		b.place(m);
+		System.out.println(b.map);
+		System.out.println(b.map.getScores());
+		b.find(test18);
+		*/
+		
 	}
 
 	public static void main(String args[]){
 		UnitTests t = new UnitTests();
+		
 	}
 }

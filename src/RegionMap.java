@@ -33,7 +33,15 @@ public class RegionMap {
 		
 		if(bComp != -1 && nComp != -1){
 			
-			if(bComp == nComp) {return;}
+			if(bComp == nComp) {
+				
+				if(!(base instanceof Trail)) { return; }
+				
+				System.out.println("FUCK MY LIFE");
+				Trails.get(bComp).ends = 2;
+				Trails.get(bComp).complete = true;
+				return;
+			}
 			
 			System.out.println("Join");
 			this.join(n, base);
