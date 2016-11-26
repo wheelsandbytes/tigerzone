@@ -1,3 +1,6 @@
+import java.util.Map;
+import java.util.HashMap;
+
 /*-----------------------------------------------------------------------------------------------	
 |	Main Class:   											
 |  	Contains Game Loop and helper functions for a Tester vs Tester simulation of the Game
@@ -13,7 +16,8 @@ public class MainTvT {
 		
 		//Instantiate Board
 		Tile root = deck.getCurrent();
-		Board board = new Board(root);
+		Board board = new Board();
+		board.place(new Move(new Coor(0,0), 0, root));
 		deck.next();
 		
 		//Instantiate Players
@@ -27,17 +31,16 @@ public class MainTvT {
 		Drawer drawer = new Drawer(board.getGraph(), deck);
 		
 		
-		//Game Loop --> NOTE: I had to comment out the validating of Moves bc it was not matching
-		//Validation of Meeple placements not implemented yet
+		//Game Loop --> NOTE: Validation of Meeple placements not implemented yet
 		while(!deck.isDone()){
 			
 			//Player1's Turn
 			//----------------------------------------------------------------------
 			t1 = deck.getCurrent();
 			
-//			do{	//Validate Move
+			do{	//Validate Move
 				m1 = p1.decideMove();
-//			}while(!validMove(m1, board));
+			}while(!validMove(m1, board));
 			
 			//If valid move
 			p1.makeMove(m1);
@@ -59,9 +62,9 @@ public class MainTvT {
 			//-------------------------------------------------------------------
 			t2 = deck.getCurrent();
 			
-//			do{	//Validate Move
+			do{	//Validate Move
 				m2 = p2.decideMove();
-//			}while(!validMove(m2, board));
+			}while(!validMove(m2, board));
 			
 			//If valid move
 			p2.makeMove(m2);
@@ -87,9 +90,11 @@ public class MainTvT {
 		//Check Tiles to be equals
 		if(!m1.getTile().getType().equals(m2.getTile().getType()))
 			return false;
+			
 		//Check rotation to be equals
-		if(m1.getRotation() != m1.getRotation())
+		if(m1.getRotation() != m2.getRotation())
 			return false;
+			
 		//Check Coordinate
 		if(!m1.getLocation().equals(m2.getLocation()))
 			return false;

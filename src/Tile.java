@@ -12,6 +12,7 @@ public class Tile {
 	public boolean hasCrocodile = false;
 	public boolean hasTiger = false;
 	private int rotation = 0;
+	private int angle = 0;
 	private String type;
 	private Region[] regionPositions;
 	private List<Tile> adjacentTiles;
@@ -64,6 +65,11 @@ public class Tile {
 		return rotation;
 	}
 	
+	public int getAngle(){
+		return angle;
+	}
+	
+	
 	
 	//Setters
 	public void setAdj(int i, Tile t){
@@ -72,6 +78,7 @@ public class Tile {
 	}
 	
 	public void setRot(int r){
+		angle = r*90;
 		rotation = r;
 	}
 	

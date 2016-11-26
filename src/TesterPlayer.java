@@ -22,8 +22,9 @@ public class TesterPlayer extends Player{
 		System.out.println("Player: "+this.name+" has turn to move\nPlease enter (x,y) coordinates followed by a Rotation(0 90 180 270)");
 		System.out.print("Input: ");
 		Coor c = new Coor(sc.nextInt(), sc.nextInt());
-		
-		return new Move(c, sc.nextInt(), globalDeck.getCurrent());
+		Tile t = globalDeck.getCurrent();
+		t.setRot(sc.nextInt()/90);
+		return new Move(c, t.getRotation(), t);
 	}
 	
 	

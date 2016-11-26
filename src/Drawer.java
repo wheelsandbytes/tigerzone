@@ -21,7 +21,7 @@ public class Drawer {
 	private Graph board;	
 	private Frame frame;
 	private Screen screen;
-	private final int TILE_WIDTH = 80, TILE_HEIGHT = 80, MENU_WIDTH = 100, ERROR = 1;
+	private final int TILE_WIDTH = 80, TILE_HEIGHT = 80, MENU_WIDTH = 100, ERROR_SPACE = 1;
 	private final int LIMIT_LEFT = -5, LIMIT_RIGHT = 5, LIMIT_UP = 4, LIMIT_DOWN = -4;
 	private final int BOARD_WIDTH = ((-1)*LIMIT_LEFT + LIMIT_RIGHT + 1)*TILE_WIDTH, BOARD_HEIGHT = ((-1)*LIMIT_DOWN + LIMIT_UP + 1)*TILE_HEIGHT;
 	private Map<String, BufferedImage> resources = new HashMap<String, BufferedImage>();
@@ -46,6 +46,7 @@ public class Drawer {
 				for(int x=LIMIT_LEFT; x<=LIMIT_RIGHT; x++){
 					c = getCoordinates(x, y);
 					drawTile(c.x, c.y, board.locate(x, y), g);
+					g.drawString("("+x+","+y+")", c.x+ERROR_SPACE*2, c.y+ERROR_SPACE*12);
 				}
 			}
 			//Draws next Tile and Grid
@@ -56,7 +57,7 @@ public class Drawer {
 		//If Tile is not null, draw it!
 		public void drawTile(int x, int y, Tile t, Graphics g){
 			if(t != null)
-				g.drawImage(rotate(resources.get(t.getType()), t.getRotation()), x, y, TILE_WIDTH, TILE_HEIGHT, null);
+				g.drawImage(rotate(resources.get(t.getType()), t.getAngle()), x, y, TILE_WIDTH, TILE_HEIGHT, null);
 		}
 		
 		//Draws next Tile
@@ -75,6 +76,11 @@ public class Drawer {
 				g.drawLine(0, i, BOARD_WIDTH, i);
 			}
 		}
+		
+//		//Draws coordinates on left top corner of every slot
+//		public void drawCoordinate(Graphics g){
+//			
+//		}
 		
 		//Rotate Tile
 		public BufferedImage rotate(BufferedImage image, int angle){
@@ -131,7 +137,7 @@ public class Drawer {
 		//do some mapping
 		int newX = Math.abs(LIMIT_LEFT)*TILE_WIDTH + x*TILE_WIDTH;
 		int newY = LIMIT_UP*TILE_WIDTH + (-1)*y*TILE_HEIGHT;
-		return new Coor(newX+ERROR, newY+ERROR);
+		return new Coor(newX+ERROR_SPACE, newY+ERROR_SPACE);
 	}
 	
 	
