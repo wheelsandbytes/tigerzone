@@ -42,6 +42,7 @@ public class MainTvT {
 			//If valid move
 			p1.makeMove(m1);
 			deck.next();
+			drawer.refresh();
 			
 			do{	//Validate Meeple placement
 				mp1 = p1.decideMeeple();
@@ -49,6 +50,7 @@ public class MainTvT {
 			
 			//If valid Meeple placement
 			p1.placeMeeple(mp1, t1);
+			drawer.refresh();
 			System.out.println("\n");
 			
 			
@@ -64,6 +66,7 @@ public class MainTvT {
 			//If valid move
 			p2.makeMove(m2);
 			deck.next();
+			drawer.refresh();
 			
 			do{	//Validate Meeple placement
 				mp2 = p2.decideMeeple();
@@ -72,6 +75,7 @@ public class MainTvT {
 			//If valid Meeple placement
 			p2.placeMeeple(mp2, t2);
 			System.out.println("\n");
+			drawer.refresh();
 		}
 	}
 	

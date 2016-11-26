@@ -20,6 +20,7 @@ public class Drawer {
 	private Deck deck;
 	private Graph board;	
 	private Frame frame;
+	private Screen screen;
 	private final int TILE_WIDTH = 80, TILE_HEIGHT = 80, MENU_WIDTH = 100, ERROR = 1;
 	private final int LIMIT_LEFT = -5, LIMIT_RIGHT = 5, LIMIT_UP = 4, LIMIT_DOWN = -4;
 	private final int BOARD_WIDTH = ((-1)*LIMIT_LEFT + LIMIT_RIGHT + 1)*TILE_WIDTH, BOARD_HEIGHT = ((-1)*LIMIT_DOWN + LIMIT_UP + 1)*TILE_HEIGHT;
@@ -85,6 +86,12 @@ public class Drawer {
 			
 			return op.filter(image, null);
 		}
+		
+		//Refresh/Repaint
+		public void refresh(){
+			revalidate();
+			repaint();
+		}
 	}
 	
 	private class Frame extends JFrame{
@@ -113,8 +120,9 @@ public class Drawer {
 		loadResources();
 		this.board = board;
 		this.deck = deck;
+		screen = new Screen();
 		frame = new Frame();
-		frame.init(new Screen());
+		frame.init(screen);
 	}
 	
 	
@@ -124,6 +132,11 @@ public class Drawer {
 		int newX = Math.abs(LIMIT_LEFT)*TILE_WIDTH + x*TILE_WIDTH;
 		int newY = LIMIT_UP*TILE_WIDTH + (-1)*y*TILE_HEIGHT;
 		return new Coor(newX+ERROR, newY+ERROR);
+	}
+	
+	
+	public void refresh(){
+		screen.refresh();
 	}
 	
 	

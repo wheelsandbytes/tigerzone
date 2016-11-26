@@ -57,7 +57,7 @@ public class Tile {
 	
 	//Accounts for a given rotation, currently assuming counterclockwise.
 	public Edge getEdge(int i){
-		return tileEdges.get((rotation+i)%4);
+		return tileEdges.get(Math.abs((rotation+i)%4));
 	}
 	
 	public int getRotation(){
