@@ -32,13 +32,13 @@ public class TesterPlayer extends Player{
 	public MeeplePlacement decideMeeple() {
 		System.out.println("\nSelect what kind of Meeple to place followed by a position. example: t 2 (Tiger in region 2)");
 		System.out.println("Input: ");
-		char type = (char) sc.nextInt();
+		char type = sc.next().charAt(0);
 		
 		if(type == 't')
 			type = GameInfo.TIGER;
 		else if(type == 'c')
 			type = GameInfo.CROCODILE;
 		
-		return new MeeplePlacement((int) type, sc.nextInt());
+		return new MeeplePlacement(type, sc.nextInt());
 	}
 }

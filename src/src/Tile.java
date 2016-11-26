@@ -11,8 +11,8 @@ public class Tile {
 	public int prey;
 	public boolean hasCrocodile = false;
 	public boolean hasTiger = false;
+	private int rotation = 0;
 	private String type;
-	private int rotation;
 	private Region[] regionPositions;
 	private List<Tile> adjacentTiles;
 	private List<Edge> tileEdges;
@@ -58,6 +58,10 @@ public class Tile {
 	//Accounts for a given rotation, currently assuming counterclockwise.
 	public Edge getEdge(int i){
 		return tileEdges.get((rotation+i)%4);
+	}
+	
+	public int getRotation(){
+		return rotation;
 	}
 	
 	
