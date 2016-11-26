@@ -1,6 +1,5 @@
 import java.util.*;
 import static org.junit.Assert.*;
-
 /*-----------------------------------------------------------------------------------------------
 |	Tile Class:
 |  	Contains Tile information, a List of its inner Regions, and linked Tiles (up-to-4)

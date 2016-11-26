@@ -11,23 +11,10 @@ public abstract class Player {
 	//Data used by Player object
 	public String name;
 	protected Deck globalDeck;
-	private Board mainBoard;
-	private int score;
-	private Move move;
-	private int crocodiles;
-	private List<Tiger> currentTigers;
-	
-	
-	//Encapsulates Meeple placement info
-	public class MeeplePlacement{
-		public int type;
-		public int pos;
-		MeeplePlacement(int type, int pos){
-			this.type = type;
-			this.pos = pos;
-		}
-	}
-	
+	protected Board mainBoard;
+	protected int score;
+	protected int crocodiles;
+	protected List<Tiger> currentTigers;
 	
 	//Default Constructor
 	public Player(){}
@@ -39,6 +26,7 @@ public abstract class Player {
 		this.globalDeck = deck;
 		this.mainBoard = mainBoard;
 		crocodiles = GameInfo.MAX_CROCS;
+		currentTigers = new LinkedList<Tiger>();
 		
 		//Create Tigers
 		for(int i=0; i<GameInfo.MAX_TIGERS; i++){

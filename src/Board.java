@@ -30,7 +30,15 @@ public class Board {
 		map = new RegionMap();
 		dens = new ArrayList<Den>();
 	}
-
+	
+	
+	//Temporal for testing output
+	//Later we will replace this with a Drawer object
+	Graph getGraph(){
+		return board;
+	}
+	
+	
 	//Finds a set of possible placement Coordinates for a tile, for now we don't care about the specific rotation,
 	//as long as at least one fits.
 	public List<Move> find(Tile t){

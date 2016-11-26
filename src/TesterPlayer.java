@@ -9,10 +9,17 @@ import java.util.Scanner;
 public class TesterPlayer extends Player{
 	Scanner sc = new Scanner(System.in);
 	
+	//Public constructors
+	public TesterPlayer(){};
+	public TesterPlayer(Board mainBoard, String name, Deck deck){
+		super(mainBoard, name, deck);
+	}
+	
+	
 	//Tester Player gets input from console input
 	@Override
 	public Move decideMove() {
-		System.out.println("Player: "+this.name+" has turn to move\nPlease enter x,y coordinates followed by a Rotation(0 90 180 270)");
+		System.out.println("Player: "+this.name+" has turn to move\nPlease enter (x,y) coordinates followed by a Rotation(0 90 180 270)");
 		System.out.print("Input: ");
 		Coor c = new Coor(sc.nextInt(), sc.nextInt());
 		
