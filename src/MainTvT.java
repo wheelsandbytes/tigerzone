@@ -55,7 +55,9 @@ public class MainTvT {
 			p1.placeMeeple(mp1, t1);
 			drawer.refresh();
 			System.out.println("\n");
-			
+			System.out.println(board.map);
+			System.out.println(board.map.getScores());
+
 			
 			
 			//Player2's Turn
@@ -79,6 +81,8 @@ public class MainTvT {
 			p2.placeMeeple(mp2, t2);
 			System.out.println("\n");
 			drawer.refresh();
+			System.out.println(board.map);
+			System.out.println(board.map.getScores());
 		}
 	}
 	
