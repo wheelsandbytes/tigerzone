@@ -76,7 +76,15 @@ public class TigerzoneClient {
             System.exit(1);
         }
 
-        if (DEBUG) System.out.println(args);
+        if (DEBUG)
+        {
+            for (int i = 0; i < args.length; i++)
+                System.out.println(args[i]);
+        }
+
+        String tournamentPassword = args[2];
+        String username = args[3];
+        String password = args[4];
 
         // Connect to the server and establish the I/O streams for communication
         connectToServer ( args[0] , Integer.parseInt( args[1] ) ) ;
@@ -94,7 +102,12 @@ public class TigerzoneClient {
 
         // Possible states
         int WAITING = 0;
-        int MAKEMOVE = 1;
+        int JOIN_TOURNAMENT = 1;
+        int JOIN_GAME = 2;
+        int CREATE_OPPONENT = 3;
+        int START_TILE = 4;
+        int CREATE_DECK = 5;
+        int MAKE_MOVE = 9;
         int state = WAITING;
 
         /*
@@ -111,7 +124,7 @@ public class TigerzoneClient {
             System.out.println("Server: " + fromServer);
 
             // Split the message
-            String delims = "[ ]+";
+            String delims = "[\\[ \\]]+";
             String[] tokens = fromServer.split(delims);
 
             if (DEBUG)
@@ -120,29 +133,22 @@ public class TigerzoneClient {
                     System.out.println(tokens[i]);
             }
 
-            // PARSING
             if (fromServer.equals("THANK YOU FOR PLAYING! GOODBYE")) // termination message from server
                 break;
 
             if(fromServer.equals("THIS IS SPARTA!"))
             {
-                sendMessage(joinTournament(args[2]));
-                state  = WAITING;
+                state = JOIN_TOURNAMENT;
             }
             else if (fromServer.equals("HELLO!"))
             {
-                sendMessage(joinGame(args[3],args[4]));
-                state  = WAITING;
-            }
-            else if (fromServer.equals("Knock! Knock!")) //ignore this for now
-            {
-                System.out.println(getUserInput());
-                break;
+                state = JOIN_GAME;
             }
             else if (tokens[0].equals("WELCOME"))
             {
                 // this is the welcome message
                 // we sit and wait
+                state = WAITING;
             }
             else if (tokens[0].equals("NEW") && tokens[1].equals("CHALLENGE"))
             {
@@ -150,6 +156,7 @@ public class TigerzoneClient {
                 //  0      1       2    3    4    5     6       7
                 cid = Integer.parseInt(tokens[2]);
                 rounds = Integer.parseInt(tokens[6]);
+                state = WAITING;
 
                 if (DEBUG) System.out.println("cid = " + cid + " and rounds = " + rounds);
             }
@@ -158,6 +165,7 @@ public class TigerzoneClient {
                 // BEGIN ROUND <rid> OF <rounds>
                 //   0     1     2    3    4
                 rid = Integer.parseInt(tokens[2]);
+                state = WAITING;
 
                 if (DEBUG) System.out.println("rid = " + rid);
             }
@@ -166,6 +174,7 @@ public class TigerzoneClient {
                 // YOUR OPPONENT IS PLAYER <pid>
                 //   0     1      2    3     4
                 opponent = tokens[4];
+                state = CREATE_OPPONENT;
 
                 if (DEBUG) System.out.println("opponent = " + opponent);
             }
@@ -178,11 +187,65 @@ public class TigerzoneClient {
                 int y = Integer.parseInt(tokens[6]);
                 int orientation = Integer.parseInt(tokens[7]);
 
+                state = START_TILE;
+
                 if (DEBUG) System.out.println("tile = " + tile + "and x,y,orientation = " + x + " " + y + " " + orientation);
             }
+            else if (tokens[0].equals("THE") && tokens[1].equals("REMAINING"))
+            {
+                // THE REMAINING <number_tiles> TILES ARE [ <tiles> ]
+                //  0      1            2         3    4       5 ... n
+                int noTiles = Integer.parseInt(tokens[2]);
+
+                if (DEBUG) System.out.println("no. of tiles = "+ noTiles);
+
+                String[] tiles = null; // won't compile without putting this in...
+                for (int i = 5; i < tokens.length; i++)
+                {
+                    tiles[i-5] = tokens[i];
+                    if (DEBUG) System.out.println("tiles["+(i-5)+"] = " + "tokens["+i+"] = " +tokens[i]);
+                }
+            }
+            else
+            {
+                state = WAITING;
+            }
+
+
+            // ACTIONS
+            if (state == WAITING)
+            {
+                // do nothing, we are just waiting for the server
+                if (DEBUG) System.out.println("Just waiting for the server...");
+            }
+            else if (state == JOIN_TOURNAMENT)
+            {
+                sendMessage(joinTournament(tournamentPassword));
+            }
+            else if (state == JOIN_GAME)
+            {
+                sendMessage(joinGame(username,password));
+            }
+            else if (state == CREATE_OPPONENT)
+            {
+                // create the opponent player here with the name from the server
+                if (DEBUG) System.out.println("Creating opponent player...");
+            }
+            else if (state == START_TILE)
+            {
+                // set up and place the first tile here
+                if (DEBUG) System.out.println("placing starting tile...");
+            }
+            else if (state == CREATE_DECK)
+            {
+                // create the deck here using the String array of tiles
+                if (DEBUG) System.out.println("Creating the deck...");
+            }
+
         }
     }
 
+    // only if absolutely necessary
     private static String getUserInput()
     {
         String fromUser;
@@ -197,7 +260,7 @@ public class TigerzoneClient {
             System.err.println("BAD INPUT");
             System.exit(1);
         }
-        return "";
+        return null;
     }
 
 }
