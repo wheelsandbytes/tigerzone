@@ -49,4 +49,8 @@ public class Move {
 	public Tile getTile() { return tile; }
 	
 	public Tiger getTiger() { return tiger; }
+	
+	public String toString(){
+		return tile.getType() + " AT " + loc.x + " " + loc.y + " " + (rot*90);
+	}
 }

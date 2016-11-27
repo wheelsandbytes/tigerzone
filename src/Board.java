@@ -56,7 +56,7 @@ public class Board {
 		
 		System.out.println("Moves:  \n");
 		for(Move m : locs){
-			System.out.println(m.getLocation().toString() + " Rot: " + m.getRotation());
+			System.out.println(m);
 		}
 		return locs;
 
