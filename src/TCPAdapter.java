@@ -11,7 +11,7 @@ import java.net.*;
 
 public class TCPAdapter {
 
-    private static final boolean DEBUG = true; // easy on/off debug messages
+    private static final boolean DEBUG = false; // easy on/off debug messages
 
     private String hostName;
     private int portNumber;
