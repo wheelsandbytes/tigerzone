@@ -43,8 +43,8 @@ public class AI extends Player{
 	}
 
 	@Override
-	public MeeplePlacement decideMeeple(Tile t) {
-		
+	public MeeplePlacement decideMeeple() {
+		Tile t = globalDeck.getCurrent();
 		if(t.getRegionAt(4) instanceof Den){ return new MeeplePlacement(GameInfo.TIGER, 5); }
 		
 		int optimum = -1;
