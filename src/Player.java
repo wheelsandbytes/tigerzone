@@ -40,6 +40,33 @@ public abstract class Player {
 	public abstract Move decideMove();
 	public abstract MeeplePlacement decideMeeple();
 	
+	public void placeTiger(Tiger t, Coor c){
+		
+		for(Region r : mainBoard.getGraph().locate(c.x, c.y).getRegions()){
+			if(r.getMeeples() != null){
+				r.setMeeple(t);
+				return;
+			}
+		}
+	}
+	
+	public Tiger getTiger(){
+		for(Tiger t : currentTigers){
+			if(!t.placed){
+				return t;
+			}
+		}
+		return null;
+	}
+	
+	public void removeTiger(Coor c){
+		for(Region r : mainBoard.getGraph().locate(c.x, c.y).getRegions()){
+			if(!r.getMeeples().isEmpty()){
+				r.removeMeeple(r.getMeeples().get(0));
+				return;
+			}
+		}
+	}
 	
 	//Makes the Move after it's been decided
 	public void makeMove(Move m){
