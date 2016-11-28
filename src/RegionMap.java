@@ -40,6 +40,7 @@ public class RegionMap {
 				System.out.println("FUCK MY LIFE");
 				Trails.get(bComp).ends = 2;
 				Trails.get(bComp).complete = true;
+				Trails.get(bComp).returnTigers();
 				return;
 			}
 			
