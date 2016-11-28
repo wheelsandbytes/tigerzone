@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TrailComposite {
@@ -7,24 +8,29 @@ public class TrailComposite {
 	int crocodiles;
 	int score; //maybe
 	public int ends;
+	int totalTigers = 0;
+	HashMap<Player, Integer> tigerCount = new HashMap<Player, Integer>();
 	List<Trail> components;
 	List<Integer> tiles;
+	List<Tiger> placedTigers;
 	public boolean complete;
 	
 	public TrailComposite(){
 		components = new ArrayList<Trail>();
 		tiles = new ArrayList<Integer>();
+		placedTigers = new ArrayList<Tiger>();
 	}
 	
 	public TrailComposite(int i){
 		components = new ArrayList<Trail>();
 		tiles = new ArrayList<Integer>();
+		placedTigers = new ArrayList<Tiger>();
 		compID = i;
 	}
 	
 	public void add(Trail region){
 		region.setID(compID);
-		
+		region.setComp(this);
 		components.add(region);
 		
 		if(region.getEnd()){
@@ -68,6 +74,18 @@ public class TrailComposite {
 
 		tempScore = tiles.size() + (prey-crocodiles < 0 ? 0 : prey-crocodiles);
 		return tempScore;
+	}
+	
+	public void placeTiger(Tiger t){
+		totalTigers++;
+		tigerCount.put(t.getPlayer(), tigerCount.get(t.getPlayer()).intValue()+1);
+	}
+	
+	public void returnTigers(){
+		for(Tiger t : placedTigers){
+			t.getBack();
+			placedTigers.remove(t);
+		}
 	}
 	
 	public String toString(){

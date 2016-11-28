@@ -28,7 +28,8 @@ public class GameInfo {
 	//Frame's proportions for UI
 	public static final int WIDTH = 800, HEIGHT = 800;
 	
-	
+	//RotationalMap for Tiger placement
+	public static final RotationalMap TIGERZONE = new RotationalMap();
 	
 	//TILES
 	//----------------------------------------------------------------------------------------------------------------------------------

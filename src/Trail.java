@@ -12,6 +12,7 @@ public class Trail extends Region {
 	private boolean crocodile;
 	private boolean end;
 	private int prey;
+	private TrailComposite myComp;
 	
     public Trail() 
     {
@@ -48,4 +49,12 @@ public class Trail extends Region {
 	public int getPrey(){
 		return prey;
 	}
+	
+	 public TrailComposite getComp(){
+		 return myComp;
+	 }
+	    
+	 public void setComp(TrailComposite j){
+		 myComp = j;
+	 }
 }

@@ -9,6 +9,7 @@ public class Den extends Region {
 	private boolean completed;
 	private int score;
 	private Coor loc;
+	List<Tiger> placedTigers;
     
 	public Den()
     {
@@ -38,6 +39,17 @@ public class Den extends Region {
 	
 	public int score(){
 		return score;
+	}
+	
+	public void placeTiger(Tiger t){
+		
+	}
+	
+	public void returnTigers(){
+		for(Tiger t : placedTigers){
+			t.getBack();
+			placedTigers.remove(t);
+		}
 	}
 	
 	public String toString(){

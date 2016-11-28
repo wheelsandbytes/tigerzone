@@ -57,7 +57,7 @@ public class MainTvT {
 			System.out.println("\n");
 			System.out.println(board.map);
 			System.out.println(board.map.getScores());
-
+			System.out.println(board.dens.toString());
 			
 			
 			//Player2's Turn
@@ -83,6 +83,7 @@ public class MainTvT {
 			drawer.refresh();
 			System.out.println(board.map);
 			System.out.println(board.map.getScores());
+			System.out.println(board.dens.toString());
 		}
 	}
 	

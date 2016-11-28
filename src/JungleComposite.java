@@ -1,22 +1,28 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class JungleComposite {
 	int compID; 
 	int prey;
 	int score;
+	int totalTigers = 0;
+	HashMap<Player, Integer> tigerCount = new HashMap<Player, Integer>();
+	List<Tiger> placedTigers;
 	List<Jungle> components;
 	List<Lake> adjLakes;
 	List<Den> adjDens;
 	
 	public JungleComposite(){
 		components = new ArrayList<Jungle>();
+		placedTigers = new ArrayList<Tiger>();
 		adjLakes = new ArrayList<Lake>();
 		adjDens = new ArrayList<Den>();
 	}
 	
 	public JungleComposite(int i){
 		components = new ArrayList<Jungle>();
+		placedTigers = new ArrayList<Tiger>();
 		adjLakes = new ArrayList<Lake>();
 		adjDens = new ArrayList<Den>();
 		compID = i;
@@ -32,6 +38,7 @@ public class JungleComposite {
 	
 	public void add(Jungle region){
 		region.setID(compID);
+		region.setComp(this);
 		components.add(region);
 		
 		adjLakes.addAll(region.getLakes());
@@ -75,6 +82,18 @@ public class JungleComposite {
 			}
 		}
 		return score;
+	}
+	
+	public void placeTiger(Tiger t){
+		totalTigers++;
+		tigerCount.put(t.getPlayer(), tigerCount.get(t.getPlayer()).intValue()+1);
+	}
+	
+	public void returnTigers(){
+		for(Tiger t : placedTigers){
+			t.getBack();
+			placedTigers.remove(t);
+		}
 	}
 	
 	public String toString(){

@@ -10,6 +10,7 @@ public class Jungle extends Region {
 	
 	List<Lake> adjLakes;
 	Den den;
+	JungleComposite myComp = null;
 
     public Jungle() 
     {
@@ -51,6 +52,14 @@ public class Jungle extends Region {
     
     public List<Lake> getLakes(){
     	return adjLakes;
+    }
+    
+    public JungleComposite getComp(){
+    	return myComp;
+    }
+    
+    public void setComp(JungleComposite j){
+    	myComp = j;
     }
 	
 	public String toString(){

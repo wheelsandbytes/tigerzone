@@ -10,6 +10,7 @@ public class Lake extends Region {
 	private int tileID;
 	private int prey;
 	private boolean crocodile;
+	LakeComposite myComp = null;
     
     public Lake() 
     {
@@ -62,5 +63,13 @@ public class Lake extends Region {
 	public int getPrey(){
 		return prey;
 	}
+	
+	 public LakeComposite getComp(){
+	    	return myComp;
+	 }
+	    
+	 public void setComp(LakeComposite j){
+	    	myComp = j;
+	 }
 
 }
