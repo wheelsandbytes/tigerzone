@@ -35,7 +35,7 @@ public class AI extends Player{
 	@Override
 	public Move decideMove() {
 	 	List<Move> possibleMoves = mainBoard.find(globalDeck.getCurrent());
-	 	if(possibleMoves.isEmpty()) { return null; }
+	 	if(possibleMoves.isEmpty()) { return unplaceableDecide(); }
 	 	Random rand = new Random();
 	 	int randomInt = rand.nextInt(possibleMoves.size());
 		// TODO Auto-generated method stub
@@ -81,6 +81,33 @@ public class AI extends Player{
 		}
 		if(pos == -1) { return null; }
 		else { return new MeeplePlacement(GameInfo.TIGER, pos); }
+	}
+	
+	private Move unplaceableDecide(){
+		int c = 0;
+		for(LakeComposite l : mainBoard.map.Lakes.values()){
+			c = l.tigerCount.get(this) == null ? 0 : l.tigerCount.get(this);
+			int j =l.totalTigers - c;
+			if(j != 0){
+				if(j < l.tigerCount.get(this));
+			}
+		}
+		
+		for(JungleComposite l : mainBoard.map.Jungles.values()){
+			c = l.tigerCount.get(this) == null ? 0 : l.tigerCount.get(this);
+			int i =l.totalTigers - c;
+			if(i != 0){
+				
+			}
+		}
+		
+		for(TrailComposite l : mainBoard.map.Trails.values()){
+			c = l.tigerCount.get(this) == null ? 0 : l.tigerCount.get(this);
+			int k =l.totalTigers - c;
+			if(k != 0){
+				
+			}
+		}
 	}
 
 }

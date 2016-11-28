@@ -43,6 +43,7 @@ public class TigerzoneClient {
         String tournamentPassword = args[2];
         String username = args[3];
         String password = args[4];
+        String[] gids = {null, null};
 
         // Create a TCPAdapter to communicate with the server
         TCPAdapter adapter = new TCPAdapter(host,port);
@@ -116,6 +117,7 @@ public class TigerzoneClient {
             if (fromServer.equals("THANK YOU FOR PLAYING! GOODBYE"))
             {
                 state = GAME_END;
+                
             }
             else if (fromServer.equals("THIS IS SPARTA!"))
             {
@@ -195,7 +197,7 @@ public class TigerzoneClient {
                     tiles[i-5] = tokens[i];
                     if (DEBUG) System.out.println("tiles["+(i-5)+"] = " + tiles[i-5] + "tokens["+i+"] = " +tokens[i]);
                 }
-                adapter.sendMessage("");
+                //adapter.sendMessage("");
             }
             else if (tokens[0].equals("MATCH") && tokens[1].equals("BEGINS"))
             {
@@ -205,7 +207,8 @@ public class TigerzoneClient {
                 // n SECONDS TO PREP FOR THE MATCH
 
                 // Generate the starting tile
-                startTile = tf.create(startingTile);
+                Tile startTileA = tf.create(startingTile);
+                Tile startTileB = tf.create(startingTile);
 
                 if (DEBUG) System.out.println("startTile created");
 
@@ -239,12 +242,13 @@ public class TigerzoneClient {
                 if (DEBUG) System.out.println("TCP players created, boards passed in");
 
                 // PLACE THE STARTING TILE ON BOTH BOARDS
-                move = new Move(new Coor(x,y),orientation/90,startTile);
+                move = new Move(new Coor(x,y),orientation/90,startTileA);
                 BoardA.place(move);
+                move = new Move(new Coor(x,y),orientation/90,startTileB);
                 BoardB.place(move);
 
                 if (DEBUG) System.out.println("startTile placed on both boards");
-                adapter.sendMessage("");
+                //adapter.sendMessage("");
             }
             else if (tokens[0].equals("MAKE") && tokens[1].equals("YOUR"))
             {
@@ -253,6 +257,9 @@ public class TigerzoneClient {
                 gid = tokens[5];
                 moveNumber = Integer.parseInt(tokens[10]);
                 tile = tokens[12];
+                
+                if(gids[0] == null) { gids[0] = gid; }
+                else if(gids[1] == null) { gids[1] = gid; }
 
                 if (DEBUG) System.out.println("gid: " + gid);
                 if (DEBUG) System.out.println("moveNumber: " + moveNumber);
@@ -268,18 +275,16 @@ public class TigerzoneClient {
                 // GAME <gid> MOVE <#> TILE <tile> UNPLACEABLE ADD ANOTHER TIGER TO <x> <y>
                 // toServer = "GAME " + gid + " MOVE " + moveNumber + " TILE " + tile + " UNPLACEABLE PASS";
 
-                if (gid.equals("A"))
+                if (gid.equals(gids[0]))
                 {
                     // AIplayerA makes the move in BoardA
                     move = AIplayerA.decideMove();
-
-                    // player makes the move
-                    AIplayerA.makeMove(move);
-
-                    MeeplePlacement meep = AIplayerA.decideMeeple();
                     
                     if (move != null)
                     {
+                    	AIplayerA.makeMove(move);
+                    	MeeplePlacement meep = AIplayerA.decideMeeple();
+                    	
                     	if (meep != null)
                     	{
                     		if (meep.type == GameInfo.TIGER)
@@ -290,7 +295,9 @@ public class TigerzoneClient {
                             {
                                 toServer = "GAME " + gid + " MOVE " + moveNumber + " PLACE " + move.toString() + " CROCODILE";
                             }
-                    	} 
+                    		
+                    		AIplayerA.placeMeeple(meep, move.getTile());
+                    	}
                         else
                         {
                             toServer = "GAME " + gid + " MOVE " + moveNumber + " PLACE " + move.toString() + " NONE";
@@ -305,19 +312,16 @@ public class TigerzoneClient {
                     deckA.next();
                 }
 
-                if (gid.equals("B"))
+                if (gid.equals(gids[1]))
                 {
                     // AIplayerB makes the move in BoardB
                     move = AIplayerB.decideMove();
-
-                    // player makes the move
-                    AIplayerB.makeMove(move);
                     
-                    MeeplePlacement meep = AIplayerB.decideMeeple();
-
-
                     if (move != null)
                     {
+                    	AIplayerB.makeMove(move);
+                    	MeeplePlacement meep = AIplayerB.decideMeeple();
+                    	
                     	if (meep != null)
                     	{
                     		if (meep.type == GameInfo.TIGER)
@@ -328,7 +332,9 @@ public class TigerzoneClient {
                             {
                                 toServer = "GAME " + gid + " MOVE " + moveNumber + " PLACE " + move.toString() + " CROCODILE";
                             }
-                    	} 
+                    		
+                    		AIplayerB.placeMeeple(meep, move.getTile());
+                    	}
                         else
                         {
                             toServer = "GAME " + gid + " MOVE " + moveNumber + " PLACE " + move.toString() + " NONE";
@@ -354,7 +360,9 @@ public class TigerzoneClient {
 
                 gid = tokens[1];
                 pid = tokens[5];
-
+                if(gids[0] == null) { gids[0] = gid; }
+                else if(gids[1] == null) { gids[1] = gid; }
+                
                 if (DEBUG) System.out.println("pid: "+pid);
 
                 if (pid != username) // make sure it's not us who just played
@@ -366,51 +374,59 @@ public class TigerzoneClient {
                     orientation = Integer.parseInt(tokens[11]);
                     meeple = tokens[12];
 
-                    if (gid.equals("A"))
+                    if (gid.equals(gids[0]))
                     {
                         // tcpA makes the move in BoardA
                     	if (meeple.equals("NONE"))
                         {
                             move = new Move(new Coor(x,y),orientation/90,deckA.getCurrent());
+                            tcpA.makeMove(move);
                         }
 
-                        if (meeple.equals("TIGER"))
+                    	else if (meeple.equals("TIGER"))
                         {
                             zone = Integer.parseInt(tokens[13]);
-                            move = new Move(new Coor(x,y),orientation/90,deckA.getCurrent());
+                            move = new Move(new Coor(x,y),orientation/90, deckA.getCurrent());
+                            tcpA.makeMove(move);
+                            tcpA.placeMeeple(new MeeplePlacement(GameInfo.TIGER, zone), deckA.getCurrent());
                         }
 
-                        if (meeple.equals("CROCODILE"))
+                    	else if (meeple.equals("CROCODILE"))
                         {
-                            move = new Move(new Coor(x,y),orientation/90,deckA.getCurrent(),true);
+                            move = new Move(new Coor(x,y),orientation/90,deckA.getCurrent());
+                            tcpA.makeMove(move);
+                            tcpA.placeMeeple(new MeeplePlacement(GameInfo.CROCODILE, -1), deckA.getCurrent());
                         }
-                        tcpA.makeMove(move);
                         deckA.next();
                     }
 
-                    if (gid.equals("B"))
+                    if (gid.equals(gids[1]))
                     {
                         // tcpB makes the move in BoardB
                     	if (meeple.equals("NONE"))
                         {
                             move = new Move(new Coor(x,y),orientation/90,deckB.getCurrent());
+                            tcpB.makeMove(move);
                         }
 
-                        if (meeple.equals("TIGER"))
+                    	else if (meeple.equals("TIGER"))
                         {
                             zone = Integer.parseInt(tokens[13]);
                             move = new Move(new Coor(x,y),orientation/90,deckB.getCurrent());
+                            tcpB.makeMove(move);
+                            tcpB.placeMeeple(new MeeplePlacement(GameInfo.TIGER, zone), deckB.getCurrent());
                         }
 
-                        if (meeple.equals("CROCODILE"))
+                    	else if (meeple.equals("CROCODILE"))
                         {
                             move = new Move(new Coor(x,y),orientation/90,deckB.getCurrent(),true);
+                            tcpB.makeMove(move);
+                            tcpB.placeMeeple(new MeeplePlacement(GameInfo.CROCODILE, -1), deckB.getCurrent());
                         }
-                        tcpB.makeMove(move);
                         deckB.next();
                     }
                 }
-                adapter.sendMessage("");
+                //adapter.sendMessage("");
             }
             else if (tokens[0].equals("GAME") && tokens[6].equals("TILE"))
             {
@@ -455,30 +471,31 @@ public class TigerzoneClient {
                         PASS = true;
                     }
 
-                    if (gid.equals("A") && !PASS)
+                    if (gid.equals(gids[0]))
                     {
                         if (tokens[9].equals("RETRIEVED"))
                         {
-                            BoardA.removeTiger(new Coor(x,y));
+                            tcpA.removeTiger(new Coor(x,y));
                         }
-                        else
+                        else if(tokens[9].equals("ADDED"))
                         {
-//                            BoardA.placeTiger(tcpA., c);
+                            tcpA.placeTiger(tcpA.getTiger(), new Coor(x,y));
                         }
                         deckA.next();
                     }
-                    if (gid.equals("B") && !PASS)
+                    else if (gid.equals(gids[1]))
                     {
-                        if (tokens[9].equals("RETRIEVED"))
+                    	if (tokens[9].equals("RETRIEVED"))
                         {
-                            BoardB.removeTiger(new Coor(x,y));
+                            tcpB.removeTiger(new Coor(x,y));
                         }
-                        else
+                        else if(tokens[9].equals("ADDED"))
                         {
-                            // place tiger
+                            tcpB.placeTiger(tcpB.getTiger(), new Coor(x,y));
                         }
                         deckB.next();
                     }
+                    
 
                 }
                 adapter.sendMessage("");
@@ -489,7 +506,7 @@ public class TigerzoneClient {
                 // GAME <gid> MOVE <#> PLAYER <pid> FORFEITED: ILLEGAL TILE PLACEMENT
                 //  0     1    2    3    4      5      6         7       8     9
                 // just waiting here...
-                adapter.sendMessage("");
+            	adapter.sendMessage("");
             }
             else if (tokens[0].equals("GAME") && tokens[2].equals("OVER"))
             {
@@ -506,7 +523,10 @@ public class TigerzoneClient {
                 // END OF ROUND <rid> OF <rounds> PLEASE WAIT FOR THE NEXT MATCH
                 // END OF CHALLENGES
                 // PLEASE WAIT FOR THE NEXT CHALLENGE TO BEGIN
-
+            	gids[0] = null;
+            	gids[1] = null;
+            	
+            	tf = new TileFactory();
                 // Just wait here too...
                 adapter.sendMessage("");
             }
