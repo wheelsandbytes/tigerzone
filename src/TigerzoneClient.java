@@ -405,7 +405,7 @@ public class TigerzoneClient {
                         {
                             move = new Move(new Coor(x,y),orientation/90,deckA.getCurrent());
                             tcpA.makeMove(move);
-                            //tcpA.placeMeeple(new MeeplePlacement(GameInfo.CROCODILE, -1), deckA.getCurrent());
+                            tcpA.placeMeeple(new MeeplePlacement(GameInfo.CROCODILE, -1), deckA.getCurrent());
                         }
                         deckA.next();
                         System.out.println("A: " + BoardA.map);
