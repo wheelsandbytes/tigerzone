@@ -10,7 +10,7 @@ public class Jungle extends Region {
 	
 	List<Lake> adjLakes;
 	Den den;
-	JungleComposite myComp = null;
+	JungleComposite myComp;
 
     public Jungle() 
     {
