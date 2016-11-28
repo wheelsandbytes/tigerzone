@@ -52,7 +52,7 @@ public class AI extends Player{
 		for(int i = 1; i < 10; i++){
 			Region temp = t.getRegionAt(GameInfo.TIGERZONE.getZone(t.getRotation(), i));
 			
-			if(temp.getMeeples() == null ) {
+			if(temp.getMeeples().isEmpty()) {
 				int pScore;
 				if(temp instanceof Lake) {
 					pScore = ((Lake) temp).getComp().score();
