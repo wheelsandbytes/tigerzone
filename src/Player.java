@@ -12,7 +12,7 @@ public abstract class Player {
 	public String name;
 	protected Deck globalDeck;
 	protected Board mainBoard;
-	protected int score;
+	protected int score = 0;
 	protected int crocodiles;
 	protected List<Tiger> currentTigers;
 	

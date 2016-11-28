@@ -62,7 +62,7 @@ public class JungleComposite {
 		}
 		
 		for(Player p : comp.tigerCount.keySet()){
-			tigerCount.put(p, tigerCount.get(p) == null ? comp.tigerCount.get(p).intValue() : tigerCount.get(p).intValue()+comp.tigerCount.get(p));
+			tigerCount.put(p, tigerCount.get(p) == null ? comp.tigerCount.get(p).intValue() : tigerCount.get(p).intValue()+comp.tigerCount.get(p).intValue());
 		}
 		
 		return remove;
@@ -89,15 +89,21 @@ public class JungleComposite {
 	}
 	
 	public void placeTiger(Tiger t){
+		placedTigers.add(t);
 		totalTigers++;
 		tigerCount.put(t.getPlayer(), tigerCount.get(t.getPlayer()) == null ? 1 : tigerCount.get(t.getPlayer()).intValue()+1);
 	}
 	
 	public void returnTigers(){
+		Player max = null;
+		int m = -1;
 		for(Tiger t : placedTigers){
+			if(tigerCount.get(t.getPlayer()) > m) { max = t.getPlayer(); }
 			t.getBack();
-			placedTigers.remove(t);
 		}
+		placedTigers.clear();
+		
+		if(max != null) { max.updateScore(this.score()); }
 		tigerCount.clear();
 	}
 	

@@ -222,7 +222,7 @@ public class Board {
 	//Used for den scoring, it's a bit shit but something that should work for now.
 	private void checkDens(){
 		for(Den d : dens){
-			if(d.getCompleted()) {continue;}
+			if(d.getCompleted()) { continue; }
 			int tempScore = 1;
 			Coor c = d.getLoc();
 			
