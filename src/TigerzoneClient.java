@@ -197,7 +197,7 @@ public class TigerzoneClient {
                     tiles[i-5] = tokens[i];
                     if (DEBUG) System.out.println("tiles["+(i-5)+"] = " + tiles[i-5] + "tokens["+i+"] = " +tokens[i]);
                 }
-                //adapter.sendMessage("");
+                adapter.sendMessage("");
             }
             else if (tokens[0].equals("MATCH") && tokens[1].equals("BEGINS"))
             {
