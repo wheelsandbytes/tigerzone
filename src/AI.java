@@ -33,8 +33,8 @@ public class AI extends Player{
 	 }
 
 	@Override
-	public Move decideMove(Tile t) {
-	 	List<Move> possibleMoves = mainBoard.find(t);
+	public Move decideMove() {
+	 	List<Move> possibleMoves = mainBoard.find(globalDeck.getCurrent());
 	 	Random rand = new Random();
 	 	int randomInt = rand.nextInt(possibleMoves.size());
 		// TODO Auto-generated method stub
