@@ -159,13 +159,13 @@ public class Drawer {
 		map = new HashMap<Integer, Coor>();
 		map.put(0, new Coor(5,5));
 		map.put(1, new Coor(TILE_WIDTH/2-MEEPLE_SIZE/2,5));
-		map.put(2, new Coor(TILE_WIDTH-5,5));
+		map.put(2, new Coor(TILE_WIDTH-3*MEEPLE_SIZE/2,5));
 		map.put(3, new Coor(5,TILE_HEIGHT/2-MEEPLE_SIZE/2));
 		map.put(4, new Coor(TILE_WIDTH/2-MEEPLE_SIZE/2,TILE_HEIGHT/2-MEEPLE_SIZE/2));
-		map.put(5, new Coor(TILE_WIDTH-5,TILE_HEIGHT/2-MEEPLE_SIZE/2));
-		map.put(6, new Coor(5,TILE_HEIGHT-5));
-		map.put(7, new Coor(TILE_WIDTH/2-MEEPLE_SIZE/2,TILE_HEIGHT-5));
-		map.put(8, new Coor(TILE_WIDTH-5,TILE_HEIGHT-5));
+		map.put(5, new Coor(TILE_WIDTH-3*MEEPLE_SIZE/2,TILE_HEIGHT/2-MEEPLE_SIZE/2));
+		map.put(6, new Coor(5,TILE_HEIGHT-3*MEEPLE_SIZE));
+		map.put(7, new Coor(TILE_WIDTH/2-MEEPLE_SIZE/2,TILE_HEIGHT-3*MEEPLE_SIZE));
+		map.put(8, new Coor(TILE_WIDTH-3*MEEPLE_SIZE,TILE_HEIGHT-3*MEEPLE_SIZE));
 		
 	}
 	
