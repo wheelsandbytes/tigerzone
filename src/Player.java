@@ -61,11 +61,21 @@ public abstract class Player {
 				}
 			}
 		}
+		
 		//If Player wants to place a Crocodile
 		else if(mp.type == GameInfo.CROCODILE && !tile.hasCrocodile){
 			if(crocodiles != 0)
 				tile.placeCrocodile();
 		}
+		
+		for(Region r : tile.getRegions()){
+			if(r instanceof Lake && ((Lake) r).getCompleted()) { ((Lake) r).getComp().returnTigers(); }
+			
+			else if(r instanceof Trail && ((Trail) r).getComp().complete) { ((Trail) r).getComp().returnTigers(); }
+		}
+		
+		
+		
 	}
 
 	

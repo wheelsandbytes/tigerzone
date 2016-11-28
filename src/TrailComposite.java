@@ -37,7 +37,6 @@ public class TrailComposite {
 			ends++;
 			if(ends == 2) {
 				complete = true;
-				//tiger.getBack(); ???
 			}
 		}
 		
@@ -62,8 +61,13 @@ public class TrailComposite {
 	
 	public int merge(TrailComposite comp){
 		int remove = comp.getID();
+		
 		for (Trail r : comp.getList()){
 			this.add(r);
+		}
+		
+		for(Player p : comp.tigerCount.keySet()){
+			tigerCount.put(p, tigerCount.get(p) == null ? comp.tigerCount.get(p).intValue() : tigerCount.get(p).intValue()+comp.tigerCount.get(p));
 		}
 		
 		return remove;
@@ -78,7 +82,7 @@ public class TrailComposite {
 	
 	public void placeTiger(Tiger t){
 		totalTigers++;
-		tigerCount.put(t.getPlayer(), tigerCount.get(t.getPlayer()) == null ? 0 : tigerCount.get(t.getPlayer()).intValue()+1);
+		tigerCount.put(t.getPlayer(), tigerCount.get(t.getPlayer()) == null ? 1 : tigerCount.get(t.getPlayer()).intValue()+1);
 	}
 	
 	public void returnTigers(){
@@ -86,6 +90,7 @@ public class TrailComposite {
 			t.getBack();
 			placedTigers.remove(t);
 		}
+		tigerCount.clear();
 	}
 	
 	public String toString(){

@@ -45,7 +45,7 @@ public class AI extends Player{
 		int optimum = -1;
 		int pos = -1;
 		for(int i = 1; i < 10; i++){
-			Region temp = t.getRegionAt(GameInfo.TIGERZONE.getZone(t.getAngle(), i));
+			Region temp = t.getRegionAt(GameInfo.TIGERZONE.getZone(t.getRotation(), i));
 			
 			if(temp.getMeeples() == null ) {
 				int pScore;

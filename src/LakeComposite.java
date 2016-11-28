@@ -62,6 +62,10 @@ public class LakeComposite {
 			this.add(r);
 		}
 		
+		for(Player p : comp.tigerCount.keySet()){
+			tigerCount.put(p, tigerCount.get(p) == null ? comp.tigerCount.get(p).intValue() : tigerCount.get(p).intValue()+comp.tigerCount.get(p));
+		}
+		
 		return remove;
 	}
 	
@@ -86,13 +90,12 @@ public class LakeComposite {
 		for(Lake l : components){
 			l.setComplete(true);
 		}
-		returnTigers();
 		return true;
 	}
 	
 	public void placeTiger(Tiger t){
 		totalTigers++;
-		tigerCount.put(t.getPlayer(), tigerCount.get(t.getPlayer()) == null ? 0 : tigerCount.get(t.getPlayer()).intValue()+1);
+		tigerCount.put(t.getPlayer(), tigerCount.get(t.getPlayer()) == null ? 1 : tigerCount.get(t.getPlayer()).intValue()+1);
 	}
 	
 	public void returnTigers(){
@@ -100,6 +103,7 @@ public class LakeComposite {
 			t.getBack();
 			placedTigers.remove(t);
 		}
+		tigerCount.clear();
 	}
 	
 	public void returnTiger(Tiger t) {
