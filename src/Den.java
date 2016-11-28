@@ -45,9 +45,15 @@ public class Den extends Region {
 	}
 	
 	public void returnTigers(){
+		Tiger temp = null;
 		for(Tiger t : placedMeeples){
+			temp = t;
 			t.getBack();
 			placedMeeples.remove(t);
+		}
+		
+		if(temp != null){
+			temp.getPlayer().updateScore(score);
 		}
 	}
 	

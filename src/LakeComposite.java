@@ -77,6 +77,7 @@ public class LakeComposite {
 		}
 		
 		tempScore = (perTile*tiles.size()) * (1+prey-crocodiles < 1 ? 1 : 1+prey-crocodiles);
+		score = tempScore;
 		return tempScore;
 	}
 	
@@ -94,14 +95,22 @@ public class LakeComposite {
 	}
 	
 	public void placeTiger(Tiger t){
+		placedTigers.add(t);
 		totalTigers++;
 		tigerCount.put(t.getPlayer(), tigerCount.get(t.getPlayer()) == null ? 1 : tigerCount.get(t.getPlayer()).intValue()+1);
 	}
 	
 	public void returnTigers(){
+		Player max = null;
+		int m = -1;
 		for(Tiger t : placedTigers){
+			if(tigerCount.get(t.getPlayer()).intValue() > m) { max = t.getPlayer(); }
 			t.getBack();
-			placedTigers.remove(t);
+		}
+		placedTigers.clear();
+		if(max != null) { 
+			System.out.println("SCORING FOR PLAYER " + max);
+			max.updateScore(this.score()); 
 		}
 		tigerCount.clear();
 	}

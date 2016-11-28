@@ -40,6 +40,6 @@ public class TesterPlayer extends Player{
 		else if(type == 'c')
 			type = GameInfo.CROCODILE;
 		
-		return new MeeplePlacement(type, GameInfo.TIGERZONE.getZone(t.getRotation(), sc.nextInt()));
+		return new MeeplePlacement(type, sc.nextInt());
 	}
 }

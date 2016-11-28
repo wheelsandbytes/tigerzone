@@ -84,7 +84,7 @@ public class Tile {
 	
 	public void placeTiger(int pos, Tiger t){
 		hasTiger = true;
-		getRegionAt(pos).setMeeple(t);
+		getRegionAt(GameInfo.TIGERZONE.getZone(rotation, pos)).setMeeple(t);
 	}
 	
 	public void placeCrocodile(){

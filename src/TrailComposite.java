@@ -81,14 +81,25 @@ public class TrailComposite {
 	}
 	
 	public void placeTiger(Tiger t){
+		placedTigers.add(t);
 		totalTigers++;
 		tigerCount.put(t.getPlayer(), tigerCount.get(t.getPlayer()) == null ? 1 : tigerCount.get(t.getPlayer()).intValue()+1);
 	}
 	
 	public void returnTigers(){
+		Player max = null;
+		int m = -1;
+		System.out.println("RETURNING");
 		for(Tiger t : placedTigers){
+			System.out.println(t.getPlayer());
+			if(tigerCount.get(t.getPlayer()).intValue() > m) { System.out.println("MAXIMUM"); max = t.getPlayer(); }
 			t.getBack();
-			placedTigers.remove(t);
+		}
+		placedTigers.clear();
+		
+		if(max != null) { 
+			System.out.println("SCORING FOR PLAYER " + max);
+			max.updateScore(this.score()); 
 		}
 		tigerCount.clear();
 	}
