@@ -2,6 +2,11 @@ import java.net.*;
 import java.io.*;
 
 public class testServer {
+	
+//	private class Game{
+//		
+//	}
+	
     public static void main(String[] args) throws IOException {
 
         if (args.length != 1) {
