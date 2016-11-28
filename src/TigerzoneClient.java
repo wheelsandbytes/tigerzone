@@ -426,7 +426,7 @@ public class TigerzoneClient {
                         deckB.next();
                     }
                 }
-                //adapter.sendMessage("");
+                adapter.sendMessage("");
             }
             else if (tokens[0].equals("GAME") && tokens[6].equals("TILE"))
             {
