@@ -1,78 +1,33 @@
 /*
 
-- This class communicates with the tournament server directly
+TigerZone Main Client
+
+This is the class connects to the tournament server,
+parses incoming server strings,
+passes in the appropriate actions to the players,
+and is able to play two simultaneous games of TigerZone.
 
 */
 
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 public class TigerzoneClient {
 
     private static final boolean DEBUG = true; // for easy on/off debug messages
-
-    // Client connection parameters
-    private static String hostName;
-    private static int portNumber;
-    private static Socket tzSocket;
-    private static PrintWriter out;
-    private static BufferedReader in;
-
-    // establish connection to the server
-    private static void connectToServer(String host, int port)
-    {
-        hostName = host;
-        portNumber = port;
-        try {
-            tzSocket = new Socket(hostName, portNumber);
-            out = new PrintWriter(tzSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(tzSocket.getInputStream()));
-        } catch (UnknownHostException e) {
-            System.err.println("Don't know about host " + hostName);
-            System.exit(1);
-        } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to " +
-            hostName);
-            System.exit(1);
-        }
-        if (DEBUG){
-            System.out.println("Connection established successfully");
-            System.out.println("I/O established successfully");
-        }
-
-    }
-
-    private static void sendMessage(String m)
-    {
-        System.out.println(m);
-        out.println(m);
-    }
-
-    private static String joinTournament(String password)
-    {
-        String joinMessage = "JOIN " + password;
-        if (DEBUG) System.out.println(joinMessage);
-        return joinMessage;
-    }
-
-    private static String joinGame(String username, String password)
-    {
-        String joinMessage = "I AM " + username + " " + password;
-        if (DEBUG) System.out.println(joinMessage);
-        return joinMessage;
-    }
 
     private static String playMove()
     {
         return "GAME <gid> PLACE <tile> AT <x> <y> <orientation> <meeple type>";
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         // check to make sure we're specifying what server to connect to
         if (args.length != 5) {
             System.err.println(
-            "Usage: java TigerZoneClient <host name> <port number> <tournament password> <team username> <password>");
+            "Usage: java TigerzoneClient <host name> <port number> <tournament password> <team username> <password>");
             System.exit(1);
         }
 
@@ -82,73 +37,91 @@ public class TigerzoneClient {
                 System.out.println(args[i]);
         }
 
+        // Parse the arguments here:
+        String host = args[0];
+        int port = Integer.parseInt(args[1]);
         String tournamentPassword = args[2];
         String username = args[3];
         String password = args[4];
 
-        // Connect to the server and establish the I/O streams for communication
-        connectToServer ( args[0] , Integer.parseInt( args[1] ) ) ;
+        // Create a TCPAdapter to communicate with the server
+        TCPAdapter adapter = new TCPAdapter(host,port);
 
-        String fromServer; // string that holds the server messages
-        String toServer = ""; // string that will be sent to the server
+        // Declare strings for messages exchanged with server:
+        String fromServer;
+        String toServer;
 
-        // Initialize tournament details:
+        // Declare tournament details:
         int challenges; // number of challenges given by the server
         int rounds; // number of rounds given by the server
         int rid; // current round ID
         int cid; // current challenge ID
-        String opponent; // opponent player name
         String gid; // game ID when parsing server messages
+        int moveNumber;
 
         // Possible states
+        // the integer values are arbitrary, this is just for clarity
         int WAITING = 0;
-        int JOIN_TOURNAMENT = 1;
-        int JOIN_GAME = 2;
-        int CREATE_OPPONENT = 3;
-        int START_TILE = 4;
-        int CREATE_DECK = 5;
-        int MAKE_MOVE = 9;
+        int MAKEMOVE = 1;
+        int GAME_END = 9;
         int state = WAITING;
 
-        /*
-            Initialize game boards here:
-            // BoardA
-            // BoardB
-        */
+        // Declare opponent variables
+        String opponentName;
+        String opponentMove;
 
-        // -----------------------THIS IS THE MAIN LOOP-------------------------
+        // Declare the boards here
+        Board BoardA;
+        Board BoardB;
 
-        while ((fromServer = in.readLine()) != null)
-        { // wait for a message from the server
+        // Declare board components
+        TileFactory tf;
+        List<Tile> deckA;
+        List<Tile> deckB;
 
-            System.out.println("Server: " + fromServer);
+        // Declare players
+        AI AIplayerA;
+        AI AIplayerB;
+        TCPPlayer tcpA;
+        TCPPlayer tcpB;
 
-            // Split the message
+        // Declare preliminary placement details
+        String startingTile;
+        int x;
+        int y;
+        int orientation;
+        Move move;
+
+        while (state != GAME_END)
+        {
+            // Wait for a message from the server:
+            fromServer = adapter.receiveMessage();
+
+            // Split the message for parsing:
             String delims = "[\\[ \\]]+";
             String[] tokens = fromServer.split(delims);
 
             if (DEBUG)
+            { for (int i = 0; i < tokens.length; i++) System.out.println(tokens[i]);}
+
+            if (fromServer.equals("THANK YOU FOR PLAYING! GOODBYE"))
             {
-                for (int i = 0; i < tokens.length; i++)
-                    System.out.println(tokens[i]);
+                state = GAME_END;
             }
-
-            if (fromServer.equals("THANK YOU FOR PLAYING! GOODBYE")) // termination message from server
-                break;
-
-            if(fromServer.equals("THIS IS SPARTA!"))
+            else if (fromServer.equals("THIS IS SPARTA!"))
             {
-                state = JOIN_TOURNAMENT;
+                toServer = "JOIN " + tournamentPassword;
+                adapter.sendMessage(toServer);
             }
             else if (fromServer.equals("HELLO!"))
             {
-                state = JOIN_GAME;
+                toServer = "I AM " + username + " " + password;
+                adapter.sendMessage(toServer);
             }
             else if (tokens[0].equals("WELCOME"))
             {
-                // this is the welcome message
+                // WELCOME <pid> PLEASE WAIT FOR THE NEXT CHALLENGE
                 // we sit and wait
-                state = WAITING;
             }
             else if (tokens[0].equals("NEW") && tokens[1].equals("CHALLENGE"))
             {
@@ -156,7 +129,6 @@ public class TigerzoneClient {
                 //  0      1       2    3    4    5     6       7
                 cid = Integer.parseInt(tokens[2]);
                 rounds = Integer.parseInt(tokens[6]);
-                state = WAITING;
 
                 if (DEBUG) System.out.println("cid = " + cid + " and rounds = " + rounds);
             }
@@ -165,7 +137,6 @@ public class TigerzoneClient {
                 // BEGIN ROUND <rid> OF <rounds>
                 //   0     1     2    3    4
                 rid = Integer.parseInt(tokens[2]);
-                state = WAITING;
 
                 if (DEBUG) System.out.println("rid = " + rid);
             }
@@ -173,94 +144,162 @@ public class TigerzoneClient {
             {
                 // YOUR OPPONENT IS PLAYER <pid>
                 //   0     1      2    3     4
-                opponent = tokens[4];
-                state = CREATE_OPPONENT;
+                opponentName = tokens[4];
 
-                if (DEBUG) System.out.println("opponent = " + opponent);
+                if (DEBUG) System.out.println("opponent = " + opponentName);
             }
             else if (tokens[0].equals("STARTING") && tokens[1].equals("TILE"))
             {
                 // STARTING TILE IS <tile> AT <x> <y> <orientation>
                 //    0      1   2   3     4   5   6       7
-                String tile = tokens[3];
-                int x = Integer.parseInt(tokens[5]);
-                int y = Integer.parseInt(tokens[6]);
-                int orientation = Integer.parseInt(tokens[7]);
+                startingTile = tokens[3];
+                x = Integer.parseInt(tokens[5]);
+                y = Integer.parseInt(tokens[6]);
+                orientation = Integer.parseInt(tokens[7]);
 
-                state = START_TILE;
-
-                if (DEBUG) System.out.println("tile = " + tile + "and x,y,orientation = " + x + " " + y + " " + orientation);
+                if (DEBUG) System.out.println("starting tile = " + startingTile + "and x,y,orientation = " + x + " " + y + " " + orientation);
             }
             else if (tokens[0].equals("THE") && tokens[1].equals("REMAINING"))
             {
                 // THE REMAINING <number_tiles> TILES ARE [ <tiles> ]
-                //  0      1            2         3    4       5 ... n
+                //  0      1            2         3    4       5 ... tokens.length
                 int noTiles = Integer.parseInt(tokens[2]);
 
                 if (DEBUG) System.out.println("no. of tiles = "+ noTiles);
 
-                String[] tiles = null; // won't compile without putting this in...
+                // Array of tiles to be sent to TileFactory later
+                String[] tiles = new String[noTiles];
+
+                // Parse for the tiles
                 for (int i = 5; i < tokens.length; i++)
                 {
                     tiles[i-5] = tokens[i];
-                    if (DEBUG) System.out.println("tiles["+(i-5)+"] = " + "tokens["+i+"] = " +tokens[i]);
+                    if (DEBUG) System.out.println("tiles["+(i-5)+"] = " + tile[i-5] + "tokens["+i+"] = " +tokens[i]);
                 }
             }
-            else
+            else if (tokens[0].equals("MATCH") && tokens[1].equals("BEGINS"))
             {
-                state = WAITING;
+                // MATCH BEGINS IN <timeplan> SECONDS
+                //  0      1    2     3         4
+
+                // 10 SECONDS TO PREP FOR THE MATCH
+
+                // Here we will create a TileFactory, generate the Tiles,
+                // and create two separate decks and initialize the two boards
+
+                tf = new TileFactory();
+                deckA = new LinkedList<Tile>();
+                deckB = new LinkedList<Tile>();
+
+                // Create the two decks
+                for (int j = 0; i < tiles.length; i++)
+                {
+                    // Passing each tile string into TileFactory to make the tiles
+                    // then adding the returned Tile to the deck
+                    deckA.add( tf.create ( tiles[i] ) );
+                    deckB.add( tf.create ( tiles[i] ) );
+                }
+
+                BoardA = new Board();
+                BoardB = new Board();
+
+                AIplayerA = new Player(BoardA,username,deckA);
+                AIplayerB = new Player(BoardB,username,deckB);
+
+                tcpA = new Player(BoardA,opponentName,deckA);
+                tcpB = new Player(BoardB,opponentName,deckB);
+
+                // PLACE THE STARTING TILE ON BOTH BOARDS
+                move = new Move(new Coor(x,y),orientation/90,startingTile);
+                BoardA.place(move);
+                BoardB.place(move);
+            }
+            else if (tokens[0].equals("MAKE") && tokens[1].equals("YOUR"))
+            {
+                // MAKE YOUR MOVE IN GAME <gid> WITHIN <timemove> SECOND: MOVE <#> PLACE <tile>
+                //  0    1    2   3   4     5     6        7        8      9   10   11    12
+                gid = tokens[5];
+                moveNumber = tokens[10];
+                String tile = tokens[12];
+
+                if (DEBUG) System.out.println("gid: " + gid);
+
+                if (gid.equals("A"))
+                {
+                    // AIplayerA makes the move in BoardA
+
+                    // GAME <gid> MOVE <#> PLACE <tile> AT <x> <y> <orientation> NONE
+                    toServer = "GAME " + gid + " MOVE " + moveNumber + " PLACE " + move.toString() + "NONE";
+                }
+
+                if (gid.equals("B"))
+                {
+                    // AIplayerB makes the move in BoardB
+                }
+            }
+            else if (tokens[0].equals("GAME") && tokens[6].equals("PLACED"))
+            {
+                // GAME <gid> MOVE <#> PLAYER <pid> PLACED <tile> AT <x> <y> <orientation> NONE
+                //  0     1    2    3    4      5    6       7    8   9   10    11          12
+
+                // One of the TCP players will have to make a move here
+                state = MAKEMOVE;
+            }
+            else if (tokens[0].equals("GAME") && tokens[6].equals("TILE"))
+            {
+                // GAME <gid> MOVE <#> PLAYER <pid> TILE <tile> UNPLACEABLE PASSED
+                //  0     1    2    3    4      5     6    7       8          9
+
+                // GAME <gid> MOVE <#> PLAYER <pid> TILE <tile> UNPLACEABLE RETRIEVED TIGER AT <x> <y>
+                //  0     1    2    3    4      5     6    7       8          9        10   11  12  13
+
+                // GAME <gid> MOVE <#> PLAYER <pid> TILE <tile> UNPLACEABLE ADDED ANOTHER TIGER TO <x> <y>
+                //  0     1    2    3    4      5     6    7       8          9     10     11   12  13  14
+
+                state = MAKEMOVE;
+            }
+            else if (tokens[0].equals("GAME") && tokens[6].equals("FORFEITED:"))
+            {
+                // GAME <gid> MOVE <#> PLAYER <pid> FORFEITED: ILLEGAL TILE PLACEMENT
+                //  0     1    2    3    4      5      6         7       8     9
+                // just waiting here...
+            }
+            else if (tokens[0].equals("GAME") && tokens[2].equals("OVER"))
+            {
+                // GAME <gid> OVER PLAYER <pid> <score> PLAYER <pid> <score>
+                //  0     1    2     3     4      5       6      7      8
+                // GAME OVER, just waiting here...
+            }
+            else if (tokens[0].equals("END") || tokens[0].equals("PLEASE"))
+            {
+                // END OF ROUND <rid> OF <rounds>
+                // END OF ROUND <rid> OF <rounds> PLEASE WAIT FOR THE NEXT MATCH
+                // END OF CHALLENGES
+                // PLEASE WAIT FOR THE NEXT CHALLENGE TO BEGIN
+
+                // Just wait here too...
             }
 
 
             // ACTIONS
-            if (state == WAITING)
+            if (state == GAME_END)
+            {
+                break;
+            }
+            else if (state == WAITING)
             {
                 // do nothing, we are just waiting for the server
                 if (DEBUG) System.out.println("Just waiting for the server...");
             }
-            else if (state == JOIN_TOURNAMENT)
+            else if (state == MAKEMOVE)
             {
-                sendMessage(joinTournament(tournamentPassword));
-            }
-            else if (state == JOIN_GAME)
-            {
-                sendMessage(joinGame(username,password));
-            }
-            else if (state == CREATE_OPPONENT)
-            {
-                // create the opponent player here with the name from the server
-                if (DEBUG) System.out.println("Creating opponent player...");
-            }
-            else if (state == START_TILE)
-            {
-                // set up and place the first tile here
-                if (DEBUG) System.out.println("placing starting tile...");
-            }
-            else if (state == CREATE_DECK)
-            {
-                // create the deck here using the String array of tiles
-                if (DEBUG) System.out.println("Creating the deck...");
+                // Logic to make a move here
+
+                if (DEBUG) System.out.println("Making a move...");
+
+                state = WAITING; // after the move has been made
             }
 
         }
     }
-
-    // only if absolutely necessary
-    private static String getUserInput()
-    {
-        String fromUser;
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            fromUser = br.readLine();
-            if (fromUser != null) {
-                System.out.println("Client: " + fromUser);
-                return fromUser;
-            }
-        } catch (IOException e) {
-            System.err.println("BAD INPUT");
-            System.exit(1);
-        }
-        return null;
-    }
-
 }
