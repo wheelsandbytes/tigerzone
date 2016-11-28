@@ -53,6 +53,30 @@ public class UnitTests {
 	}
 	
 	@Test
+	public void testRotationalMap(){
+		
+		assertEquals(GameInfo.TIGERZONE.getZone(0, 5), 4);
+		assertEquals(GameInfo.TIGERZONE.getZone(1, 5), 4);
+		assertEquals(GameInfo.TIGERZONE.getZone(2, 5), 4);
+		assertEquals(GameInfo.TIGERZONE.getZone(3, 5), 4);
+		
+		assertEquals(GameInfo.TIGERZONE.getZone(0, 1), 0);
+		assertEquals(GameInfo.TIGERZONE.getZone(1, 1), 2);
+		assertEquals(GameInfo.TIGERZONE.getZone(2, 1), 8);
+		assertEquals(GameInfo.TIGERZONE.getZone(3, 1), 6);
+		
+		assertEquals(GameInfo.TIGERZONE.getZone(0, 6), 5);
+		assertEquals(GameInfo.TIGERZONE.getZone(1, 6), 7);
+		assertEquals(GameInfo.TIGERZONE.getZone(2, 6), 3);
+		assertEquals(GameInfo.TIGERZONE.getZone(3, 6), 1);
+		
+		assertEquals(GameInfo.TIGERZONE.getZone(0, 2), 1);
+		assertEquals(GameInfo.TIGERZONE.getZone(1, 2), 5);
+		assertEquals(GameInfo.TIGERZONE.getZone(2, 2), 7);
+		assertEquals(GameInfo.TIGERZONE.getZone(3, 2), 3);
+	}
+	
+	@Test
 	public void testRoadClass(){
 		Region road = new Trail();
 		assertEquals(road.getType(), GameInfo.ROAD);

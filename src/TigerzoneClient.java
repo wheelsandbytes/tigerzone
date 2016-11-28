@@ -174,7 +174,7 @@ public class TigerzoneClient {
                 for (int i = 5; i < tokens.length; i++)
                 {
                     tiles[i-5] = tokens[i];
-                    if (DEBUG) System.out.println("tiles["+(i-5)+"] = " + tile[i-5] + "tokens["+i+"] = " +tokens[i]);
+                    if (DEBUG) System.out.println("tiles["+(i-5)+"] = " + tiles[i-5] + "tokens["+i+"] = " +tokens[i]);
                 }
             }
             else if (tokens[0].equals("MATCH") && tokens[1].equals("BEGINS"))
@@ -192,7 +192,7 @@ public class TigerzoneClient {
                 deckB = new LinkedList<Tile>();
 
                 // Create the two decks
-                for (int j = 0; i < tiles.length; i++)
+                for (int i = 0; i < tiles.length; i++)
                 {
                     // Passing each tile string into TileFactory to make the tiles
                     // then adding the returned Tile to the deck

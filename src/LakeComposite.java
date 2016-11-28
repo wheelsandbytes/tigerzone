@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class LakeComposite {
@@ -6,21 +7,25 @@ public class LakeComposite {
 	int prey;
 	int score;
 	int crocodiles;
+	int totalTigers = 0;
+	HashMap<Player, Integer> tigerCount = new HashMap<Player, Integer>();
 	List<Lake> components;
 	List<Integer> tiles;
-	List<Tiger>[] placedTigers;
+	List<Tiger> placedTigers;
 	boolean[] uniquePrey; //Used to determine if a prey species has been added
 	boolean complete;
 	
 	public LakeComposite(){
 		components = new ArrayList<Lake>();
 		tiles = new ArrayList<Integer>();
+		placedTigers = new ArrayList<Tiger>();
 		uniquePrey =new boolean[3];
 	}
 	
 	public LakeComposite(int i){
 		components = new ArrayList<Lake>();
 		tiles = new ArrayList<Integer>();
+		placedTigers = new ArrayList<Tiger>();
 		compID = i;
 		uniquePrey = new boolean[3];
 	}
@@ -35,7 +40,7 @@ public class LakeComposite {
 	
 	public void add(Lake region){
 		region.setID(compID);
-		
+		region.setComp(this);
 		components.add(region);
 		
 		if(region.getPrey() != GameInfo.NONE){
@@ -81,7 +86,20 @@ public class LakeComposite {
 		for(Lake l : components){
 			l.setComplete(true);
 		}
+		returnTigers();
 		return true;
+	}
+	
+	public void placeTiger(Tiger t){
+		totalTigers++;
+		tigerCount.put(t.getPlayer(), tigerCount.get(t.getPlayer()).intValue()+1);
+	}
+	
+	public void returnTigers(){
+		for(Tiger t : placedTigers){
+			t.getBack();
+			placedTigers.remove(t);
+		}
 	}
 	
 	public String toString(){

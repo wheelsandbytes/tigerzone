@@ -153,15 +153,22 @@ public class Board {
 			}
 		}
 		
+		//Place meeple here?
 		
 		mergeRegions(t);
+		
+		//Place meeple here?
 		
 		if(t.getRegionAt(4).getType() == GameInfo.CHURCH){
 			((Den) t.getRegionAt(4)).setLoc(m.getLocation());
 			dens.add((Den) t.getRegionAt(4));
 		}
 		
+		//Place meeple here?
+		
 		this.checkDens();
+		
+		//Place meeple here?
 	}
 	
 	
@@ -194,6 +201,20 @@ public class Board {
 		}
 	}
 	
+	public void placeTiger(Tiger t,  Coor c){
+		for(Region r : board.locate(c.x, c.y).getRegions()){
+			if(r.getMeeples() != null){
+				if(r instanceof Lake){ ((Lake) r).getComp().placeTiger(t); }
+				
+				else if(r instanceof Jungle){ ((Jungle) r).getComp().placeTiger(t); }
+				
+				else if(r instanceof Trail){ ((Trail) r).getComp().placeTiger(t); }
+				
+				else if(r instanceof Den){ ((Den) r).placeTiger(t); }
+			}
+		}
+	}
+	
 	//Used for den scoring, it's a bit shit but something that should work for now.
 	private void checkDens(){
 		for(Den d : dens){
@@ -212,10 +233,11 @@ public class Board {
 			if(board.locate(c.x, c.y-1) != null) { tempScore++; }
 			if(board.locate(c.x+1, c.y-1) != null) { tempScore++; }
 			
+			d.setScore(tempScore);
 			if(tempScore == 9){
 				d.setCompleted(true);
+				d.returnTigers();
 			}
-			d.setScore(tempScore);
 		}
 	}
 }

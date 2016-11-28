@@ -103,4 +103,8 @@ public class Tile {
 		}
 		return true;
 	}
+
+	public Region[] getRegions() {
+		return regionPositions;
+	}
 }

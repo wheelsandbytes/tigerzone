@@ -5,6 +5,8 @@ public class RegionComposite<T extends Region> {
 	int prey;
 	int score; //maybe
 	List<T> components;
+	List<Tiger> tigers;
+	int[] tigerCounts = {0, 0};
 	
 	public RegionComposite(int i){
 		compID = i;
