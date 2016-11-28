@@ -88,8 +88,12 @@ public class Tile {
 	}
 	
 	public void placeCrocodile(){
-		//Crocodiles dont care about position
-		//They go in that Tile as a whole
+		for(Region r : regionPositions){
+			if(r instanceof Lake) { ((Lake) r).getComp().crocodiles++; }
+			
+			else if(r instanceof Trail) { ((Trail) r).getComp().crocodiles++; }
+		}
+		
 		hasCrocodile = true;
 	}
 

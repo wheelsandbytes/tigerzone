@@ -101,6 +101,13 @@ public class JungleComposite {
 		for(Jungle c : components){
 			s += c.toString();
 		}
+		s += tigerCount.toString();
 		return s;
+	}
+
+	public void returnTiger(Tiger t) {
+		totalTigers--;
+		tigerCount.put(t.getPlayer(), tigerCount.get(t.getPlayer()).intValue()-1);
+		placedTigers.get(placedTigers.indexOf(t)).getBack();
 	}
 }

@@ -48,7 +48,7 @@ public class MainTvT {
 			drawer.refresh();
 			
 			do{	//Validate Meeple placement
-				mp1 = p1.decideMeeple();
+				mp1 = p1.decideMeeple(t1);
 			}while(!validMeeple(mp1, board));
 			
 			//If valid Meeple placement
@@ -74,7 +74,7 @@ public class MainTvT {
 			drawer.refresh();
 			
 			do{	//Validate Meeple placement
-				mp2 = p2.decideMeeple();
+				mp2 = p2.decideMeeple(t2);
 			}while(!validMeeple(mp2, board));
 			
 			//If valid Meeple placement

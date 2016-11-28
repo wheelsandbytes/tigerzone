@@ -102,11 +102,18 @@ public class LakeComposite {
 		}
 	}
 	
+	public void returnTiger(Tiger t) {
+		totalTigers--;
+		tigerCount.put(t.getPlayer(), tigerCount.get(t.getPlayer()).intValue()-1);
+		placedTigers.get(placedTigers.indexOf(t)).getBack();
+	}
+	
 	public String toString(){
 		String s = "Cities:\n";
 		for(Lake c : components){
 			s += c.toString();
 		}
+		s += tigerCount.toString();
 		return s;
 	}
 }

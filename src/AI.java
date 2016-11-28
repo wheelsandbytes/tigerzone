@@ -31,9 +31,44 @@ public class AI extends Player{
 	}
 
 	@Override
-	public MeeplePlacement decideMeeple() {
-		// TODO Auto-generated method stub
-		return null;
+	public MeeplePlacement decideMeeple(Tile t) {
+		
+		if(t.getRegionAt(4) instanceof Den){ return new MeeplePlacement(GameInfo.TIGER, 5); }
+		
+		int optimum = -1;
+		int pos = -1;
+		for(int i = 1; i < 10; i++){
+			Region temp = t.getRegionAt(GameInfo.TIGERZONE.getZone(t.getAngle(), i));
+			
+			if(temp.getMeeples() == null ) {
+				int pScore;
+				if(temp instanceof Lake) {
+					pScore = ((Lake) temp).getComp().score();
+					if(pScore > optimum){
+						optimum = pScore;
+						pos = i;
+					}
+				}
+				
+				else if(temp instanceof Jungle) {  
+					pScore = ((Jungle) temp).getComp().score();
+					if(pScore > optimum){
+						optimum = pScore;
+						pos = i;
+					}
+				}
+				
+				else if(temp instanceof Trail) {
+					pScore = ((Trail) temp).getComp().score();
+					if(pScore > optimum){
+						optimum = pScore;
+						pos = i;
+					}
+				}
+			}
+		}
+		if(pos == -1) { return null; }
+		else { return new MeeplePlacement(GameInfo.TIGER, pos); }
 	}
 
 }

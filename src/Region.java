@@ -7,7 +7,7 @@ import java.util.*;
 
 public abstract class Region {
 	//Can have multiple Meeples (maybe one yours and one for opposing player)
-	protected Tiger placedMeeples;
+	protected List<Tiger> placedMeeples = new ArrayList<Tiger>();
     protected int id;
     protected int type;    
     
@@ -19,12 +19,12 @@ public abstract class Region {
     	id = i;
     }
     
-    public Tiger getMeeples(){
+    public List<Tiger> getMeeples(){
         return placedMeeples;
     }
     
     public void setMeeple(Tiger t){
-    	placedMeeples = t;
+    	placedMeeples.add(t);
     }
     
 
@@ -39,6 +39,10 @@ public abstract class Region {
     
     public String toString(){
     	return id + " ";
-    }    
+    }
+
+	public void removeMeeple(Tiger t) {
+		placedMeeples.remove(placedMeeples.indexOf(t));
+	}  
     
 }

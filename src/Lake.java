@@ -71,5 +71,15 @@ public class Lake extends Region {
 	 public void setComp(LakeComposite j){
 	    	myComp = j;
 	 }
+	 
+	 public void setMeeple(Tiger t){
+	    	placedMeeples.add(t);
+	    	myComp.placeTiger(t);
+	 }
+	 
+	 public void removeMeeple(Tiger t) {
+			placedMeeples.remove(placedMeeples.indexOf(t));
+			myComp.returnTiger(t);
+	}
 
 }

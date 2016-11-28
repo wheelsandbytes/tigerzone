@@ -38,7 +38,7 @@ public abstract class Player {
 	//Different kinds of Players decide to make their Moves in different ways
 	//Tester Player waits for Input, AI decides based on Algorithm, Remote Player (TCP) waits for Server Signal
 	public abstract Move decideMove();
-	public abstract MeeplePlacement decideMeeple();
+	public abstract MeeplePlacement decideMeeple(Tile t);
 	
 	
 	//Makes the Move after it's been decided

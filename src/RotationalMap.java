@@ -4,7 +4,6 @@ import java.util.Map;
 public class RotationalMap {
 	//Rotation Mapping (Works like an Adaptor between server and our internal system)
 	private Map<Integer, Integer> zoneToIndex = new HashMap<Integer, Integer>();
-	private Map<Integer, Integer> indexToZone = new HashMap<Integer, Integer>();
 	
 	public RotationalMap(){
 	

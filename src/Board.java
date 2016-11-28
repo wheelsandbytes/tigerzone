@@ -204,13 +204,17 @@ public class Board {
 	public void placeTiger(Tiger t,  Coor c){
 		for(Region r : board.locate(c.x, c.y).getRegions()){
 			if(r.getMeeples() != null){
-				if(r instanceof Lake){ ((Lake) r).getComp().placeTiger(t); }
-				
-				else if(r instanceof Jungle){ ((Jungle) r).getComp().placeTiger(t); }
-				
-				else if(r instanceof Trail){ ((Trail) r).getComp().placeTiger(t); }
-				
-				else if(r instanceof Den){ ((Den) r).placeTiger(t); }
+				r.setMeeple(t);
+				return;
+			}
+		}
+	}
+	
+	public void removeTiger(Coor c){
+		for(Region r : board.locate(c.x, c.y).getRegions()){
+			if(!r.getMeeples().isEmpty()){
+				r.removeMeeple(r.getMeeples().get(0));
+				return;
 			}
 		}
 	}

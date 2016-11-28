@@ -42,7 +42,7 @@ public class Den extends Region {
 	}
 	
 	public void placeTiger(Tiger t){
-		
+		placedTigers.add(t);
 	}
 	
 	public void returnTigers(){
@@ -50,6 +50,14 @@ public class Den extends Region {
 			t.getBack();
 			placedTigers.remove(t);
 		}
+	}
+	
+	public void setMeeple(Tiger t){
+    	placeTiger(t);
+	}
+	
+	public void removeMeeple(Tiger t) {
+		placedMeeples.remove(placedMeeples.indexOf(t));
 	}
 	
 	public String toString(){
