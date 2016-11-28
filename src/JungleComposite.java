@@ -86,7 +86,7 @@ public class JungleComposite {
 	
 	public void placeTiger(Tiger t){
 		totalTigers++;
-		tigerCount.put(t.getPlayer(), tigerCount.get(t.getPlayer()).intValue()+1);
+		tigerCount.put(t.getPlayer(), tigerCount.get(t.getPlayer()) == null ? 0 : tigerCount.get(t.getPlayer()).intValue()+1);
 	}
 	
 	public void returnTigers(){
