@@ -15,7 +15,7 @@ import java.util.*;
 
 public class TigerzoneClient {
 
-    private static final boolean DEBUG = true; // for easy on/off debug messages
+    private static final boolean DEBUG = false; // for easy on/off debug messages
 
     private static String playMove()
     {
@@ -57,6 +57,7 @@ public class TigerzoneClient {
         int rid; // current round ID
         int cid; // current challenge ID
         String gid; // game ID when parsing server messages
+        String pid; // player ID when parsing
         int moveNumber;
 
         // Possible states
@@ -67,30 +68,35 @@ public class TigerzoneClient {
         int state = WAITING;
 
         // Declare opponent variables
-        String opponentName;
-        String opponentMove;
+        String opponentName = null;
+        String opponentMove = null;
 
         // Declare the boards here
-        Board BoardA;
-        Board BoardB;
+        Board BoardA = null;
+        Board BoardB = null;
 
         // Declare board components
-        TileFactory tf;
-        List<Tile> deckA;
-        List<Tile> deckB;
+        TileFactory tf = new TileFactory();
+        List<Tile> deckA = null;
+        List<Tile> deckB = null;
 
         // Declare players
         AI AIplayerA;
         AI AIplayerB;
-        TCPPlayer tcpA;
-        TCPPlayer tcpB;
+        TCPPlayer tcpA = null;
+        TCPPlayer tcpB = null;
 
         // Declare preliminary placement details
-        String startingTile;
-        int x;
-        int y;
-        int orientation;
-        Move move;
+        String startingTile = null;
+        Tile startTile;
+        String tile;
+        String[] tiles = null;
+        int x = 0;
+        int y = 0;
+        int orientation = 0;
+        Move move = null;
+        int zone;
+        String meeple;
 
         while (state != GAME_END)
         {
@@ -168,13 +174,13 @@ public class TigerzoneClient {
                 if (DEBUG) System.out.println("no. of tiles = "+ noTiles);
 
                 // Array of tiles to be sent to TileFactory later
-                String[] tiles = new String[noTiles];
+                tiles = new String[noTiles];
 
                 // Parse for the tiles
                 for (int i = 5; i < tokens.length; i++)
                 {
                     tiles[i-5] = tokens[i];
-                    if (DEBUG) System.out.println("tiles["+(i-5)+"] = " + tile[i-5] + "tokens["+i+"] = " +tokens[i]);
+                    if (DEBUG) System.out.println("tiles["+(i-5)+"] = " + tiles[i-5] + "tokens["+i+"] = " +tokens[i]);
                 }
             }
             else if (tokens[0].equals("MATCH") && tokens[1].equals("BEGINS"))
@@ -187,30 +193,33 @@ public class TigerzoneClient {
                 // Here we will create a TileFactory, generate the Tiles,
                 // and create two separate decks and initialize the two boards
 
-                tf = new TileFactory();
+                
                 deckA = new LinkedList<Tile>();
                 deckB = new LinkedList<Tile>();
+                
+                // Generate the starting tile
+                startTile = tf.create(startingTile);
 
                 // Create the two decks
-                for (int j = 0; i < tiles.length; i++)
+                for (int j = 0; j < tiles.length; j++)
                 {
                     // Passing each tile string into TileFactory to make the tiles
                     // then adding the returned Tile to the deck
-                    deckA.add( tf.create ( tiles[i] ) );
-                    deckB.add( tf.create ( tiles[i] ) );
+                    deckA.add( tf.create ( tiles[j] ) );
+                    deckB.add( tf.create ( tiles[j] ) );
                 }
 
                 BoardA = new Board();
                 BoardB = new Board();
 
-                AIplayerA = new Player(BoardA,username,deckA);
-                AIplayerB = new Player(BoardB,username,deckB);
+                AIplayerA = new AI(BoardA,username,deckA);
+                AIplayerB = new AI(BoardB,username,deckB);
 
-                tcpA = new Player(BoardA,opponentName,deckA);
-                tcpB = new Player(BoardB,opponentName,deckB);
+                tcpA = new TCPPlayer(BoardA,opponentName,deckA);
+                tcpB = new TCPPlayer(BoardB,opponentName,deckB);
 
                 // PLACE THE STARTING TILE ON BOTH BOARDS
-                move = new Move(new Coor(x,y),orientation/90,startingTile);
+                move = new Move(new Coor(x,y),orientation/90,startTile);
                 BoardA.place(move);
                 BoardB.place(move);
             }
@@ -219,8 +228,8 @@ public class TigerzoneClient {
                 // MAKE YOUR MOVE IN GAME <gid> WITHIN <timemove> SECOND: MOVE <#> PLACE <tile>
                 //  0    1    2   3   4     5     6        7        8      9   10   11    12
                 gid = tokens[5];
-                moveNumber = tokens[10];
-                String tile = tokens[12];
+                moveNumber = Integer.parseInt(tokens[10]);
+                tile = tokens[12];
 
                 if (DEBUG) System.out.println("gid: " + gid);
 
@@ -229,7 +238,16 @@ public class TigerzoneClient {
                     // AIplayerA makes the move in BoardA
 
                     // GAME <gid> MOVE <#> PLACE <tile> AT <x> <y> <orientation> NONE
-                    toServer = "GAME " + gid + " MOVE " + moveNumber + " PLACE " + move.toString() + "NONE";
+                    // GAME <gid> MOVE <#> PLACE <tile> AT <x> <y> <orientation> CROCODILE
+                    // GAME <gid> MOVE <#> PLACE <tile> AT <x> <y> <orientation> TIGER <zone>
+                    // toServer = "GAME " + gid + " MOVE " + moveNumber + " PLACE " + move.toString() + "NONE";
+
+                    // GAME <gid> MOVE <#> TILE <tile> UNPLACEABLE PASS
+                    // GAME <gid> MOVE <#> TILE <tile> UNPLACEABLE RETRIEVE TIGER AT <x> <y>
+                    // GAME <gid> MOVE <#> TILE <tile> UNPLACEABLE ADD ANOTHER TIGER TO <x> <y>
+                    // toServer = "GAME " + gid + " MOVE " + moveNumber + " TILE " + tile + " UNPLACEABLE PASS";
+
+                    // adapter.sendMessage(toServer);
                 }
 
                 if (gid.equals("B"))
@@ -239,14 +257,57 @@ public class TigerzoneClient {
             }
             else if (tokens[0].equals("GAME") && tokens[6].equals("PLACED"))
             {
-                // GAME <gid> MOVE <#> PLAYER <pid> PLACED <tile> AT <x> <y> <orientation> NONE
-                //  0     1    2    3    4      5    6       7    8   9   10    11          12
+                // SERVER SENDS WHAT HAS BEEN PLAYED
 
-                // One of the TCP players will have to make a move here
-                state = MAKEMOVE;
+                // GAME <gid> MOVE <#> PLAYER <pid> PLACED <tile> AT <x> <y> <orientation> NONE
+                //  0     1    2    3     4     5     6      7    8   9  10       11        12
+
+                gid = tokens[1];
+                pid = tokens[5];
+
+                if (pid != username) // make sure it's not us who just played
+                {
+                    moveNumber = Integer.parseInt(tokens[3]);
+                    tile = tokens[5];
+                    Tile tfTile = tf.create(tile);
+                    x = Integer.parseInt(tokens[9]);
+                    y = Integer.parseInt(tokens[10]);
+                    orientation = Integer.parseInt(tokens[11]);
+                    meeple = tokens[12];
+
+                    if (meeple.equals("NONE"))
+                    {
+                        move = new Move(new Coor(x,y),orientation/90,tfTile);
+                    }
+
+                    if (meeple.equals("TIGER"))
+                    {
+                        zone = Integer.parseInt(tokens[13]);
+                        move = new Move(new Coor(x,y),orientation/90,tfTile);
+                    }
+
+                    if (meeple.equals("CROCODILE"))
+                    {
+                        move = new Move(new Coor(x,y),orientation/90,tfTile,true);
+                    }
+
+                    if (gid.equals("A"))
+                    {
+                        // tcpA makes the move in BoardA
+                        tcpA.makeMove(move);
+                    }
+
+                    if (gid.equals("B"))
+                    {
+                        // tcpB makes the move in BoardB
+                        tcpB.makeMove(move);
+                    }
+                }
             }
             else if (tokens[0].equals("GAME") && tokens[6].equals("TILE"))
             {
+                // SERVER SENDS WHAT HAS BEEN PLAYED
+
                 // GAME <gid> MOVE <#> PLAYER <pid> TILE <tile> UNPLACEABLE PASSED
                 //  0     1    2    3    4      5     6    7       8          9
 
@@ -256,7 +317,21 @@ public class TigerzoneClient {
                 // GAME <gid> MOVE <#> PLAYER <pid> TILE <tile> UNPLACEABLE ADDED ANOTHER TIGER TO <x> <y>
                 //  0     1    2    3    4      5     6    7       8          9     10     11   12  13  14
 
-                state = MAKEMOVE;
+                // gid = tokens[1];
+                // pid = tokens[5];
+                //
+                // if (pid != username) // make sure it's not us who just played
+                // {
+                //     moveNumber = Integer.parseInt(tokens[3]);
+                //     tile = tokens[5];
+                //     x = Integer.parseInt(tokens[9]);
+                //     y = Integer.parseInt(tokens[10]);
+                //     orientation = Integer.parseInt(tokens[11]);
+                //     meeple = tokens[12];
+                //
+                //
+                // }
+
             }
             else if (tokens[0].equals("GAME") && tokens[6].equals("FORFEITED:"))
             {
@@ -280,8 +355,6 @@ public class TigerzoneClient {
                 // Just wait here too...
             }
 
-
-            // ACTIONS
             if (state == GAME_END)
             {
                 break;
@@ -291,15 +364,6 @@ public class TigerzoneClient {
                 // do nothing, we are just waiting for the server
                 if (DEBUG) System.out.println("Just waiting for the server...");
             }
-            else if (state == MAKEMOVE)
-            {
-                // Logic to make a move here
-
-                if (DEBUG) System.out.println("Making a move...");
-
-                state = WAITING; // after the move has been made
-            }
-
         }
     }
 }

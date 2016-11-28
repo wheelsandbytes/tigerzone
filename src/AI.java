@@ -14,6 +14,13 @@ Everything the base Player can do plus:
 */
 public class AI extends Player{
 
+	public AI (Board board, String pid, List<Tile> deck)
+	{
+		
+	}
+	
+	public AI () {}
+	
 	// this method overrides setMove
 	// this is where the decision making happens
 	 private void setMove(Tile t)
