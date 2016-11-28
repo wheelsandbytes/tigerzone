@@ -23,13 +23,13 @@ public class Drawer {
 	private Graph board;	
 	private Frame frame;
 	private Screen screen;
-	private final int TILE_WIDTH = 80, TILE_HEIGHT = 80, MENU_WIDTH = 100, ERROR_SPACE = 1, MEEPLE_SIZE = 5;
+	private final int TILE_WIDTH = 80, TILE_HEIGHT = 80, MENU_WIDTH = 100, ERROR_SPACE = 1, MEEPLE_SIZE = 10;
 	private final int LIMIT_LEFT = -5, LIMIT_RIGHT = 5, LIMIT_UP = 4, LIMIT_DOWN = -4;
 	private final int BOARD_WIDTH = ((-1)*LIMIT_LEFT + LIMIT_RIGHT + 1)*TILE_WIDTH, BOARD_HEIGHT = ((-1)*LIMIT_DOWN + LIMIT_UP + 1)*TILE_HEIGHT;
 	private Map<String, BufferedImage> resources = new HashMap<String, BufferedImage>();
 	private BufferedImage tiger;
 	private BufferedImage crocodile;
-	
+	private Map<Integer, Coor> map;
 	
 	//Inner Classes
 	//-------------------------------------------------------------------------------
@@ -50,7 +50,8 @@ public class Drawer {
 				for(int x=LIMIT_LEFT; x<=LIMIT_RIGHT; x++){
 					c = getCoordinates(x, y);
 					drawTile(c.x, c.y, board.locate(x, y), g);
-					g.drawString("("+x+","+y+")", c.x+ERROR_SPACE*2, c.y+ERROR_SPACE*12);
+					if(board.locate(x, y) == null)
+						g.drawString("("+x+","+y+")", c.x+ERROR_SPACE*2, c.y+ERROR_SPACE*12);
 				}
 			}
 			//Draws next Tile and Grid
@@ -63,12 +64,12 @@ public class Drawer {
 			if(t != null){
 				g.drawImage(rotate(resources.get(t.getType()), t.getAngle()), x, y, TILE_WIDTH, TILE_HEIGHT, null);
 				if(t.hasCrocodile){
-					g.drawImage(crocodile, x+5, y+5, MEEPLE_SIZE, MEEPLE_SIZE, null);
+					g.drawImage(crocodile, x+10, y+10, MEEPLE_SIZE, MEEPLE_SIZE, null);
 					System.out.println(t.hasCrocodile);
 				}
-				for(int i=1; i<=GameInfo.MAX_ZONES; i++){
-					if(t.getRegionAt(i).getMeeples() != null){
-						drawTiger(x, y, i, tiger, g);
+				for(int i=0; i<GameInfo.MAX_ZONES; i++){
+					if(!t.getRegionAt(i).getMeeples().isEmpty() && t.getRegionAt(i).getMeeples().get(0) != null){
+						drawTiger(x, y, GameInfo.TIGERZONE.getZone(t.getRotation(), i+1), tiger, g);
 						break;
 					}
 						
@@ -96,35 +97,7 @@ public class Drawer {
 		//Draws coordinates on left top corner of every slot
 		
 		public void drawTiger(int x, int y, int pos, BufferedImage image, Graphics g){
-			int DISP = 2;
-			switch(pos){
-				case 1:
-					g.drawImage(image, x+DISP, y+DISP, MEEPLE_SIZE, MEEPLE_SIZE, null);
-					break;
-				case 2:
-					g.drawImage(image, x+DISP+TILE_WIDTH/3, y+DISP, MEEPLE_SIZE, MEEPLE_SIZE, null);
-					break;
-				case 3:
-					g.drawImage(image, x+DISP+(TILE_WIDTH/3)*2, y+DISP, MEEPLE_SIZE, MEEPLE_SIZE, null);
-					break;
-				case 4:
-					g.drawImage(image, x+DISP, y+DISP+(TILE_WIDTH/3), MEEPLE_SIZE, MEEPLE_SIZE, null);
-					break;
-				case 5:
-					g.drawImage(image, x+DISP+TILE_WIDTH/3, y+DISP+(TILE_WIDTH/3), MEEPLE_SIZE, MEEPLE_SIZE, null);
-					break;
-				case 6:
-					g.drawImage(image, x+DISP+(TILE_WIDTH/3)*2, y+DISP+(TILE_WIDTH/3), MEEPLE_SIZE, MEEPLE_SIZE, null);
-					break;
-				case 7:
-					g.drawImage(image, x+DISP, y+DISP+(TILE_WIDTH/3)*2, MEEPLE_SIZE, MEEPLE_SIZE, null);
-					break;
-				case 8:
-					g.drawImage(image, x+DISP+TILE_WIDTH/3, y+DISP+(TILE_WIDTH/3)*2, MEEPLE_SIZE, MEEPLE_SIZE, null);
-					break;
-				case 9:
-					g.drawImage(image, x+DISP+(TILE_WIDTH/3)*2, y+DISP+(TILE_WIDTH/3)*2, MEEPLE_SIZE, MEEPLE_SIZE, null);
-			}
+			g.drawImage(image, x+map.get(pos).x, y+map.get(pos).y, MEEPLE_SIZE, MEEPLE_SIZE, null);
 		}
 		
 		//Rotate Tile
@@ -183,6 +156,17 @@ public class Drawer {
 		screen = new Screen();
 		frame = new Frame();
 		frame.init(screen);
+		map = new HashMap<Integer, Coor>();
+		map.put(0, new Coor(5,5));
+		map.put(1, new Coor(TILE_WIDTH/2-MEEPLE_SIZE/2,5));
+		map.put(2, new Coor(TILE_WIDTH-5,5));
+		map.put(3, new Coor(5,TILE_HEIGHT/2-MEEPLE_SIZE/2));
+		map.put(4, new Coor(TILE_WIDTH/2-MEEPLE_SIZE/2,TILE_HEIGHT/2-MEEPLE_SIZE/2));
+		map.put(5, new Coor(TILE_WIDTH-5,TILE_HEIGHT/2-MEEPLE_SIZE/2));
+		map.put(6, new Coor(5,TILE_HEIGHT-5));
+		map.put(7, new Coor(TILE_WIDTH/2-MEEPLE_SIZE/2,TILE_HEIGHT-5));
+		map.put(8, new Coor(TILE_WIDTH-5,TILE_HEIGHT-5));
+		
 	}
 	
 	
@@ -207,7 +191,7 @@ public class Drawer {
 			try{
 				image = ImageIO.read(getClass().getResourceAsStream("/"+GameInfo.allowedTiles[i]+".PNG"));
 			}
-			catch(IOException e){
+			catch(Exception e){
 				e.printStackTrace();
 				image = null;
 			}

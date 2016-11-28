@@ -21,4 +21,10 @@ public class TCPPlayer extends Player {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public MeeplePlacement decideMeeple(Tile t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
