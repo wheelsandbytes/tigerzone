@@ -6,9 +6,6 @@
 
 public class GameInfo {
 	
-	//Players references
-	public Player player1, player2;
-	
 	//Sides of a Tile... 
 	public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
 	

@@ -15,7 +15,7 @@ import java.util.*;
 
 public class TigerzoneClient {
 
-    private static final boolean DEBUG = false; // for easy on/off debug messages
+    private static final boolean DEBUG = true; // for easy on/off debug messages
 
     private static String playMove()
     {
@@ -64,6 +64,7 @@ public class TigerzoneClient {
         // the integer values are arbitrary, this is just for clarity
         int WAITING = 0;
         int MAKEMOVE = 1;
+        int RECEIVED = 2;
         int GAME_END = 9;
         int state = WAITING;
 
@@ -77,8 +78,10 @@ public class TigerzoneClient {
 
         // Declare board components
         TileFactory tf = new TileFactory();
-        List<Tile> deckA = null;
-        List<Tile> deckB = null;
+        List<Tile> deckA = new LinkedList<Tile>();
+        List<Tile> deckB = new LinkedList<Tile>();
+
+        deckB = new LinkedList<Tile>();
 
         // Declare players
         AI AIplayerA;
@@ -101,6 +104,7 @@ public class TigerzoneClient {
         while (state != GAME_END)
         {
             // Wait for a message from the server:
+            if (DEBUG) System.out.println("adapter.receiverMessage()");
             fromServer = adapter.receiveMessage();
 
             // Split the message for parsing:
@@ -119,6 +123,11 @@ public class TigerzoneClient {
                 toServer = "JOIN " + tournamentPassword;
                 adapter.sendMessage(toServer);
             }
+            else if (tokens[0].equals("THIS") && tokens[1].equals("IS") && tokens[2].equals("SPARTA!"))
+            {
+                toServer = "JOIN " + tournamentPassword;
+                adapter.sendMessage(toServer);
+            }
             else if (fromServer.equals("HELLO!"))
             {
                 toServer = "I AM " + username + " " + password;
@@ -128,6 +137,7 @@ public class TigerzoneClient {
             {
                 // WELCOME <pid> PLEASE WAIT FOR THE NEXT CHALLENGE
                 // we sit and wait
+                adapter.sendMessage("");
             }
             else if (tokens[0].equals("NEW") && tokens[1].equals("CHALLENGE"))
             {
@@ -137,6 +147,7 @@ public class TigerzoneClient {
                 rounds = Integer.parseInt(tokens[6]);
 
                 if (DEBUG) System.out.println("cid = " + cid + " and rounds = " + rounds);
+                adapter.sendMessage("");
             }
             else if (tokens[0].equals("BEGIN") && tokens[1].equals("ROUND"))
             {
@@ -145,6 +156,7 @@ public class TigerzoneClient {
                 rid = Integer.parseInt(tokens[2]);
 
                 if (DEBUG) System.out.println("rid = " + rid);
+                adapter.sendMessage("");
             }
             else if (tokens[0].equals("YOUR") && tokens[1].equals("OPPONENT"))
             {
@@ -153,6 +165,7 @@ public class TigerzoneClient {
                 opponentName = tokens[4];
 
                 if (DEBUG) System.out.println("opponent = " + opponentName);
+                adapter.sendMessage("");
             }
             else if (tokens[0].equals("STARTING") && tokens[1].equals("TILE"))
             {
@@ -164,6 +177,7 @@ public class TigerzoneClient {
                 orientation = Integer.parseInt(tokens[7]);
 
                 if (DEBUG) System.out.println("starting tile = " + startingTile + "and x,y,orientation = " + x + " " + y + " " + orientation);
+                adapter.sendMessage("");
             }
             else if (tokens[0].equals("THE") && tokens[1].equals("REMAINING"))
             {
@@ -182,23 +196,19 @@ public class TigerzoneClient {
                     tiles[i-5] = tokens[i];
                     if (DEBUG) System.out.println("tiles["+(i-5)+"] = " + tiles[i-5] + "tokens["+i+"] = " +tokens[i]);
                 }
+                adapter.sendMessage("");
             }
             else if (tokens[0].equals("MATCH") && tokens[1].equals("BEGINS"))
             {
                 // MATCH BEGINS IN <timeplan> SECONDS
                 //  0      1    2     3         4
 
-                // 10 SECONDS TO PREP FOR THE MATCH
+                // n SECONDS TO PREP FOR THE MATCH
 
-                // Here we will create a TileFactory, generate the Tiles,
-                // and create two separate decks and initialize the two boards
-
-                
-                deckA = new LinkedList<Tile>();
-                deckB = new LinkedList<Tile>();
-                
                 // Generate the starting tile
                 startTile = tf.create(startingTile);
+
+                if (DEBUG) System.out.println("startTile created");
 
                 // Create the two decks
                 for (int j = 0; j < tiles.length; j++)
@@ -209,19 +219,30 @@ public class TigerzoneClient {
                     deckB.add( tf.create ( tiles[j] ) );
                 }
 
+                if (DEBUG) System.out.println("Decks created");
+
                 BoardA = new Board();
                 BoardB = new Board();
+
+                if (DEBUG) System.out.println("Boards initialized");
 
                 AIplayerA = new AI(BoardA,username,deckA);
                 AIplayerB = new AI(BoardB,username,deckB);
 
+                if (DEBUG) System.out.println("AI players created, Boards passed in");
+
                 tcpA = new TCPPlayer(BoardA,opponentName,deckA);
                 tcpB = new TCPPlayer(BoardB,opponentName,deckB);
+
+                if (DEBUG) System.out.println("TCP players created, boards passed in");
 
                 // PLACE THE STARTING TILE ON BOTH BOARDS
                 move = new Move(new Coor(x,y),orientation/90,startTile);
                 BoardA.place(move);
                 BoardB.place(move);
+
+                if (DEBUG) System.out.println("startTile placed on both boards");
+                adapter.sendMessage("");
             }
             else if (tokens[0].equals("MAKE") && tokens[1].equals("YOUR"))
             {
@@ -232,6 +253,8 @@ public class TigerzoneClient {
                 tile = tokens[12];
 
                 if (DEBUG) System.out.println("gid: " + gid);
+                if (DEBUG) System.out.println("moveNumber: " + moveNumber);
+                if (DEBUG) System.out.println("tile: " + tile);
 
                 if (gid.equals("A"))
                 {
@@ -254,6 +277,7 @@ public class TigerzoneClient {
                 {
                     // AIplayerB makes the move in BoardB
                 }
+                adapter.sendMessage("HERE'S MY MOVE");
             }
             else if (tokens[0].equals("GAME") && tokens[6].equals("PLACED"))
             {
@@ -303,9 +327,11 @@ public class TigerzoneClient {
                         tcpB.makeMove(move);
                     }
                 }
+                adapter.sendMessage("");
             }
             else if (tokens[0].equals("GAME") && tokens[6].equals("TILE"))
             {
+
                 // SERVER SENDS WHAT HAS BEEN PLAYED
 
                 // GAME <gid> MOVE <#> PLAYER <pid> TILE <tile> UNPLACEABLE PASSED
@@ -331,28 +357,40 @@ public class TigerzoneClient {
                 //
                 //
                 // }
-
+                adapter.sendMessage("");
             }
             else if (tokens[0].equals("GAME") && tokens[6].equals("FORFEITED:"))
             {
+
                 // GAME <gid> MOVE <#> PLAYER <pid> FORFEITED: ILLEGAL TILE PLACEMENT
                 //  0     1    2    3    4      5      6         7       8     9
                 // just waiting here...
+                adapter.sendMessage("");
             }
             else if (tokens[0].equals("GAME") && tokens[2].equals("OVER"))
             {
+
                 // GAME <gid> OVER PLAYER <pid> <score> PLAYER <pid> <score>
                 //  0     1    2     3     4      5       6      7      8
                 // GAME OVER, just waiting here...
+                adapter.sendMessage("");
             }
             else if (tokens[0].equals("END") || tokens[0].equals("PLEASE"))
             {
+
                 // END OF ROUND <rid> OF <rounds>
                 // END OF ROUND <rid> OF <rounds> PLEASE WAIT FOR THE NEXT MATCH
                 // END OF CHALLENGES
                 // PLEASE WAIT FOR THE NEXT CHALLENGE TO BEGIN
 
                 // Just wait here too...
+                adapter.sendMessage("");
+            }
+            else
+            {
+                if (DEBUG) System.out.println("REACHED ELSE CONDITION");
+                if (DEBUG) System.out.println("SERVER SENT GARBAGE");
+                adapter.sendMessage("");
             }
 
             if (state == GAME_END)
@@ -362,7 +400,7 @@ public class TigerzoneClient {
             else if (state == WAITING)
             {
                 // do nothing, we are just waiting for the server
-                if (DEBUG) System.out.println("Just waiting for the server...");
+                if (DEBUG) System.out.println("ACTION Just waiting for the server...");
             }
         }
     }
