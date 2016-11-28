@@ -16,7 +16,9 @@ import java.util.*;
 public class TigerzoneClient {
 
     private static final boolean DEBUG = true; // for easy on/off debug messages
-
+    private static Drawer d1;
+    private static Drawer d2;
+    
     private static String playMove()
     {
         return "GAME <gid> PLACE <tile> AT <x> <y> <orientation> <meeple type>";
@@ -104,6 +106,7 @@ public class TigerzoneClient {
 
         while (state != GAME_END)
         {
+        	if(DEBUG) { d1.refresh(); d2.refresh(); }
             // Wait for a message from the server:
             fromServer = adapter.receiveMessage();
 
@@ -227,7 +230,9 @@ public class TigerzoneClient {
                 deckB = new Deck(deckListB);
 
                 BoardA = new Board();
+                if(DEBUG) d1 = new Drawer(BoardA.getGraph(), deckA);
                 BoardB = new Board();
+                if(DEBUG) d2 = new Drawer(BoardB.getGraph(), deckB);
 
                 if (DEBUG) System.out.println("Boards initialized");
 
@@ -248,7 +253,7 @@ public class TigerzoneClient {
                 BoardB.place(move);
 
                 if (DEBUG) System.out.println("startTile placed on both boards");
-                //adapter.sendMessage("");
+                adapter.sendMessage("");
             }
             else if (tokens[0].equals("MAKE") && tokens[1].equals("YOUR"))
             {
