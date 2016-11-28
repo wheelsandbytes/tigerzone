@@ -19,6 +19,9 @@ public class Deck {
 		generated = true;
 	}
 	
+	public Deck(){
+	}
+	
 	public Deck(List<Tile> deck){
 		this.deck = deck;
 		generated = true;

@@ -93,6 +93,7 @@ public abstract class Player {
 		else if(mp.type == GameInfo.CROCODILE && !tile.hasCrocodile){
 			if(crocodiles != 0)
 				tile.placeCrocodile();
+				crocodiles--;
 		}
 		
 		for(Region r : tile.getRegions()){
