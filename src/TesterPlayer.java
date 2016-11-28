@@ -30,7 +30,7 @@ public class TesterPlayer extends Player{
 	
 	//Decide MeeplePlacement based on console input
 	@Override
-	public MeeplePlacement decideMeeple(Tile t) {
+	public MeeplePlacement decideMeeple() {
 		System.out.println("\nSelect what kind of Meeple to place followed by a position. example: t 2 (Tiger in region 2)");
 		System.out.println("Input: ");
 		char type = sc.next().charAt(0);
