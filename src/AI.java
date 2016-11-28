@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.Random;
 /*------------------------------------------------------------------------------
 |	AI extends Player Class:
 |  	Contains information and behaviours of the AI
@@ -32,9 +33,12 @@ public class AI extends Player{
 	 }
 
 	@Override
-	public Move decideMove() {
+	public Move decideMove(Tile t) {
+	 	List<Move> possibleMoves = mainBoard.find(t);
+	 	Random rand = new Random();
+	 	int randomInt = rand.nextInt(possibleMoves.size());
 		// TODO Auto-generated method stub
-		return null;
+		return possibleMoves.get(randomInt);
 	}
 
 	@Override
