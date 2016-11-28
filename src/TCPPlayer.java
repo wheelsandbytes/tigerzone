@@ -6,9 +6,9 @@ import java.util.*;
 
 public class TCPPlayer extends Player {
 
-	public TCPPlayer (Board board, String pid, List<Tile> deck)
+	public TCPPlayer (Board board, String pid, Deck deck)
 	{
-		
+		super(board,pid,deck);
 	}
 	
 	public MeeplePlacement decideMeeple ()
@@ -22,9 +22,9 @@ public class TCPPlayer extends Player {
 		return null;
 	}
 
-	@Override
-	public MeeplePlacement decideMeeple(Tile t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public MeeplePlacement decideMeeple(Tile t) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 }

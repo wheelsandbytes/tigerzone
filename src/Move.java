@@ -18,7 +18,7 @@ public class Move {
 		rot = r;
 		tile = t;
 	}
-	
+
 	public Move(Coor c, int r, Tile t, int tc, Tiger tig){
 		loc = c;
 		rot = r;
@@ -26,30 +26,30 @@ public class Move {
 		tigerZone = tc;
 		tiger = tig;
 	}
-	
+
 	public Move(Coor c, int r, Tile t, boolean croc){
 		loc = c;
 		rot = r;
 		tile = t;
 		crocodile = croc;
 	}
-	
+
 	public void setZone(int i){
 		tigerZone = i;
 	}
-	
+
 	public void setCroc(boolean croc){
 		crocodile = croc;
 	}
-	
+
 	public Coor getLocation() { return loc; }
 
 	public int getRotation() { return rot; }
 
 	public Tile getTile() { return tile; }
-	
+
 	public Tiger getTiger() { return tiger; }
-	
+
 	public String toString(){
 		return tile.getType() + " AT " + loc.x + " " + loc.y + " " + (rot*90);
 	}

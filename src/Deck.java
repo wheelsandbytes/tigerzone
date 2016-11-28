@@ -19,6 +19,11 @@ public class Deck {
 		generated = true;
 	}
 	
+	public Deck(List<Tile> deck){
+		this.deck = deck;
+		generated = true;
+	}
+	
 	//Generates a shuffled deck for testing
 	public void generateDeck(){
 		String type;

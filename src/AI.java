@@ -15,13 +15,13 @@ Everything the base Player can do plus:
 */
 public class AI extends Player{
 
-	public AI (Board board, String pid, List<Tile> deck)
+	public AI (Board board, String pid, Deck deck)
 	{
-		
+		super(board,pid,deck);
 	}
-	
+
 	public AI () {}
-	
+
 	// this method overrides setMove
 	// this is where the decision making happens
 	 private void setMove(Tile t)
@@ -46,13 +46,13 @@ public class AI extends Player{
 	public MeeplePlacement decideMeeple() {
 		Tile t = globalDeck.getCurrent();
 		if(t.getRegionAt(4) instanceof Den){ return new MeeplePlacement(GameInfo.TIGER, 5); }
-		
+
 		int optimum = -1;
 		int pos = -1;
 		for(int i = 1; i < 10; i++){
 			Region temp = t.getRegionAt(GameInfo.TIGERZONE.getZone(t.getRotation(), i));
-			
-			if(temp.getMeeples() == null ) {
+
+			if(temp.getMeeples().isEmpty()) {
 				int pScore;
 				if(temp instanceof Lake) {
 					pScore = ((Lake) temp).getComp().score();
@@ -61,15 +61,15 @@ public class AI extends Player{
 						pos = i;
 					}
 				}
-				
-				else if(temp instanceof Jungle) {  
+
+				else if(temp instanceof Jungle) {
 					pScore = ((Jungle) temp).getComp().score();
 					if(pScore > optimum){
 						optimum = pScore;
 						pos = i;
 					}
 				}
-				
+
 				else if(temp instanceof Trail) {
 					pScore = ((Trail) temp).getComp().score();
 					if(pScore > optimum){
