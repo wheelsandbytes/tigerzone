@@ -68,6 +68,7 @@ public class AI extends Player{
 				}
 
 				else if(temp instanceof Jungle) {
+					System.out.println(((Jungle) temp).getComp());
 					pScore = ((Jungle) temp).getComp().score();
 					if(pScore > optimum){
 						optimum = pScore;

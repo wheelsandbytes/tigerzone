@@ -141,7 +141,7 @@ public class TigerzoneClient {
             {
                 // WELCOME <pid> PLEASE WAIT FOR THE NEXT CHALLENGE
                 // we sit and wait
-                adapter.sendMessage("");
+                //adapter.sendMessage("");  
             }
             else if (tokens[0].equals("NEW") && tokens[1].equals("CHALLENGE"))
             {
@@ -151,7 +151,7 @@ public class TigerzoneClient {
                 rounds = Integer.parseInt(tokens[6]);
 
                 if (DEBUG) System.out.println("cid = " + cid + " and rounds = " + rounds);
-                adapter.sendMessage("");
+                //
             }
             else if (tokens[0].equals("BEGIN") && tokens[1].equals("ROUND"))
             {
@@ -160,7 +160,7 @@ public class TigerzoneClient {
                 rid = Integer.parseInt(tokens[2]);
 
                 if (DEBUG) System.out.println("rid = " + rid);
-                adapter.sendMessage("");
+                //
             }
             else if (tokens[0].equals("YOUR") && tokens[1].equals("OPPONENT"))
             {
@@ -169,7 +169,7 @@ public class TigerzoneClient {
                 opponentName = tokens[4];
 
                 if (DEBUG) System.out.println("opponent = " + opponentName);
-                adapter.sendMessage("");
+                //
             }
             else if (tokens[0].equals("STARTING") && tokens[1].equals("TILE"))
             {
@@ -181,7 +181,7 @@ public class TigerzoneClient {
                 orientation = Integer.parseInt(tokens[7]);
 
                 if (DEBUG) System.out.println("starting tile = " + startingTile + "and x,y,orientation = " + x + " " + y + " " + orientation);
-                adapter.sendMessage("");
+                //
             }
             else if (tokens[0].equals("THE") && tokens[1].equals("REMAINING"))
             {
@@ -200,7 +200,7 @@ public class TigerzoneClient {
                     tiles[i-5] = tokens[i];
                     if (DEBUG) System.out.println("tiles["+(i-5)+"] = " + tiles[i-5] + "tokens["+i+"] = " +tokens[i]);
                 }
-                adapter.sendMessage("");
+                //
             }
             else if (tokens[0].equals("MATCH") && tokens[1].equals("BEGINS"))
             {
@@ -253,7 +253,7 @@ public class TigerzoneClient {
                 BoardB.place(move);
 
                 if (DEBUG) System.out.println("startTile placed on both boards");
-                adapter.sendMessage("");
+                //
             }
             else if (tokens[0].equals("MAKE") && tokens[1].equals("YOUR"))
             {
@@ -440,7 +440,7 @@ public class TigerzoneClient {
                         System.out.println("B: " + BoardB.map);
                     }
                 }
-                adapter.sendMessage("");
+                //
             }
             else if (tokens[0].equals("GAME") && tokens[6].equals("TILE"))
             {
@@ -512,7 +512,7 @@ public class TigerzoneClient {
                     
 
                 }
-                adapter.sendMessage("");
+                //
             }
             else if (tokens[0].equals("GAME") && tokens[6].equals("FORFEITED:"))
             {
@@ -520,7 +520,7 @@ public class TigerzoneClient {
                 // GAME <gid> MOVE <#> PLAYER <pid> FORFEITED: ILLEGAL TILE PLACEMENT
                 //  0     1    2    3    4      5      6         7       8     9
                 // just waiting here...
-            	adapter.sendMessage("");
+            	//
             }
             else if (tokens[0].equals("GAME") && tokens[2].equals("OVER"))
             {
@@ -528,7 +528,7 @@ public class TigerzoneClient {
                 // GAME <gid> OVER PLAYER <pid> <score> PLAYER <pid> <score>
                 //  0     1    2     3     4      5       6      7      8
                 // GAME OVER, just waiting here...
-                adapter.sendMessage("");
+                //
             }
             else if (tokens[0].equals("END") || tokens[0].equals("PLEASE"))
             {
@@ -542,12 +542,11 @@ public class TigerzoneClient {
             	
             	tf = new TileFactory();
                 // Just wait here too...
-                adapter.sendMessage("");
+                //
             }
             else
             {
                 if (DEBUG) System.out.println("SERVER SENT GARBAGE");
-                adapter.sendMessage("");
             }
 
             if (state == GAME_END)
