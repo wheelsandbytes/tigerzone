@@ -23,7 +23,7 @@ public class GameInfo {
 	
 	
 	//Maximum number of Meeples allowed per type
-	public static final int MAX_CROCS = 2, MAX_TIGERS = 7, MAX_TYPES = 28;
+	public static final int MAX_CROCS = 2, MAX_TIGERS = 7, MAX_TYPES = 28, MAX_ZONES = 9;
 	
 	//Frame's proportions for UI
 	public static final int WIDTH = 800, HEIGHT = 800;
