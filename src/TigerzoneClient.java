@@ -16,8 +16,8 @@ import java.util.*;
 public class TigerzoneClient {
 
     private static final boolean DEBUG = true; // for easy on/off debug messages
-    private static Drawer d1;
-    private static Drawer d2;
+    //private static Drawer d1;
+    //private static Drawer d2;
     
     private static String playMove()
     {
@@ -106,7 +106,7 @@ public class TigerzoneClient {
 
         while (state != GAME_END)
         {
-        	if(DEBUG) { d1.refresh(); d2.refresh(); }
+        	
             // Wait for a message from the server:
             fromServer = adapter.receiveMessage();
 
@@ -230,9 +230,9 @@ public class TigerzoneClient {
                 deckB = new Deck(deckListB);
 
                 BoardA = new Board();
-                if(DEBUG) d1 = new Drawer(BoardA.getGraph(), deckA);
+                //if(DEBUG) d1 = new Drawer(BoardA.getGraph(), deckA);
                 BoardB = new Board();
-                if(DEBUG) d2 = new Drawer(BoardB.getGraph(), deckB);
+                //if(DEBUG) d2 = new Drawer(BoardB.getGraph(), deckB);
 
                 if (DEBUG) System.out.println("Boards initialized");
 
@@ -264,9 +264,10 @@ public class TigerzoneClient {
                 tile = tokens[12];
                 
                 if(gids[0] == null) { gids[0] = gid; }
-                else if(gids[1] == null) { gids[1] = gid; }
+                else if(gids[1] == null && !gid.equals(gids[0])) { gids[1] = gid; }
 
                 if (DEBUG) System.out.println("gid: " + gid);
+                if (DEBUG) System.out.println("gids: "+ gids[0] + " " + gids[1] + " " + gid);
                 if (DEBUG) System.out.println("moveNumber: " + moveNumber);
                 if (DEBUG) System.out.println("tile: " + tile);
 
@@ -314,6 +315,8 @@ public class TigerzoneClient {
                         toServer = "GAME " + gid + " MOVE " + moveNumber + " TILE " + tile + " UNPLACEABLE PASS";
 
                     }
+                    System.out.println("A: " + BoardA.map);
+                    System.out.println("B: " + BoardB.map);
                     deckA.next();
                 }
 
@@ -351,6 +354,8 @@ public class TigerzoneClient {
                         toServer = "GAME " + gid + " MOVE " + moveNumber + " TILE " + tile + " UNPLACEABLE PASS";
 
                     }
+                    System.out.println("A: " + BoardA.map);
+                    System.out.println("B: " + BoardB.map);
                     deckB.next();
                 }
                 // SEND THE MOVE TO THE SERVER
@@ -366,11 +371,11 @@ public class TigerzoneClient {
                 gid = tokens[1];
                 pid = tokens[5];
                 if(gids[0] == null) { gids[0] = gid; }
-                else if(gids[1] == null) { gids[1] = gid; }
+                else if(gids[1] == null && !gid.equals(gids[0])) { gids[1] = gid; }
                 
                 if (DEBUG) System.out.println("pid: "+pid);
-
-                if (pid != username) // make sure it's not us who just played
+                if (DEBUG) System.out.println("gids: "+ gids[0] + " " + gids[1] + " " + gid);
+                if (!pid.equals(username)) // make sure it's not us who just played
                 {
                     moveNumber = Integer.parseInt(tokens[3]);
                     tile = tokens[5];
@@ -403,6 +408,8 @@ public class TigerzoneClient {
                             tcpA.placeMeeple(new MeeplePlacement(GameInfo.CROCODILE, -1), deckA.getCurrent());
                         }
                         deckA.next();
+                        System.out.println("A: " + BoardA.map);
+                        System.out.println("B: " + BoardB.map);
                     }
 
                     if (gid.equals(gids[1]))
@@ -429,6 +436,8 @@ public class TigerzoneClient {
                             tcpB.placeMeeple(new MeeplePlacement(GameInfo.CROCODILE, -1), deckB.getCurrent());
                         }
                         deckB.next();
+                        System.out.println("A: " + BoardA.map);
+                        System.out.println("B: " + BoardB.map);
                     }
                 }
                 adapter.sendMessage("");
@@ -452,7 +461,7 @@ public class TigerzoneClient {
 
                 if (DEBUG) System.out.println("pid: "+pid);
 
-                if (pid != username) // make sure it's not us who just played
+                if (!pid.equals(username)) // make sure it's not us who just played
                 {
                     moveNumber = Integer.parseInt(tokens[3]);
                     tile = tokens[5];
@@ -550,6 +559,7 @@ public class TigerzoneClient {
                 // do nothing, we are just waiting for the server
                 if (DEBUG) System.out.println("ACTION Just waiting for the server...");
             }
+            //if(DEBUG && d1 != null) { d1.refresh(); d2.refresh(); }
         }
     }
 }
