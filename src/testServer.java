@@ -1,11 +1,9 @@
 import java.net.*;
 import java.io.*;
+import java.util.*;
 
 public class testServer {
-	
-//	private class Game{
-//		
-//	}
+	public Deck d1 = new Deck();
 	
     public static void main(String[] args) throws IOException {
 
