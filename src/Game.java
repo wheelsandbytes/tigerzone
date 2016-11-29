@@ -2,32 +2,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
+	//Public references
 	public Board board;
 	public Player player1;
 	public Player player2;
 	public Deck deck;
 	
+	//Private References
 	private Drawer drawer;
 	private List<Tile> tiles;
 	private TileFactory factory;
-	private int initX = 0, initY = 0, initRot = 0;
 	
 	
-	public Game(String pid1, String pid2, String[] types){
+	//Constructor 1
+	public Game(String pid1, String pid2, String startTile, String[] types){
+		setGame(pid1, pid2, startTile, types, 0, 0, 0);
+	}
+	
+	//Constructor 2
+	public Game(String pid1, String pid2, String startTile, String[] types, int initX, int initY, int initRot){
+		setGame(pid1, pid2, startTile, types, initX, initY, initRot);
+	}
+	
+	//Makes move directly given Player pid
+	public void playMove(String pid, Move move){
+		if(pid.equals(player1.name))
+			player1.makeMove(move);
+		else if(pid.equals(player2.name))
+			player2.makeMove(move);
+		else
+			System.out.println("Player does not exists");
+	}
+	
+	
+	
+	//Helper Functions
+	//----------------------------------------------------------------------------------------------------------------------
+	//Setting up the Game
+	private void setGame(String pid1, String pid2, String startTile, String[] types, int initX, int initY, int initRot){
 		//Object initialization
 		tiles = new ArrayList<Tile>();
 		factory = new TileFactory();
 		deck = new Deck();
 		
+		//Continue Object initialization
+		board = new Board(null);
+		board.place(new Move(new Coor(initX,initY), initRot, factory.create(startTile)));
+		
 		//Setup Deck
 		for(String type : types){
 			tiles.add(factory.create(type));
 		}deck.setStandardDeck(tiles);
-		
-		//Continue Object initialization
-		board = new Board(null);
-		board.place(new Move(new Coor(initX,initY), initRot, deck.getCurrent()));
-		deck.next();
 		
 		//Player setup
 		player1 = new AI(board, pid1, deck);
@@ -37,12 +62,8 @@ public class Game {
 		//Drawer needs some testing hence commented out for now
 		drawer = new Drawer(board.getGraph(), deck);
 	}
-	
-	
-	
-	
-	//Helper Functions
-	//---------------------------------------------------------------------------------
+		
+
 	public static boolean equalMoves(Move m1, Move m2){
 		//Check Tiles to be equals
 		if(!m1.getTile().getType().equals(m2.getTile().getType()))
@@ -57,7 +78,7 @@ public class Game {
 		return true;
 	}
 	
-	
+
 	//Makes sure the move is valid
 	public boolean validMove(Move move){
 		for(Move m : board.find(move.getTile())){
