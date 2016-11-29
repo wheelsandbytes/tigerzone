@@ -1,4 +1,4 @@
-
+import java.util.Scanner;
 
 public class MainAvP {
 public static void main(String[] args) {
@@ -15,7 +15,7 @@ public static void main(String[] args) {
 		
 		//Instantiate Players
 		Player p1 = new AI(board, "AI", deck);
-		Player p2 = new TesterPlayer(board, "Tester", deck);
+		Player p2 = new AI(board, "Tester", deck);
 		Tile t1; Move m1; MeeplePlacement mp1;
 		Tile t2; Move m2; MeeplePlacement mp2;
 		
@@ -26,24 +26,27 @@ public static void main(String[] args) {
 		
 		//Game Loop --> NOTE: Validation of Meeple placements not implemented yet
 		while(!deck.isDone()){
-			
+			Scanner s = new Scanner(System.in);
+
 			//Player1's Turn
 			//----------------------------------------------------------------------
 			t1 = deck.getCurrent();
 			
+			mp1=null;
+			mp2=null;
 			
 			m1 = p1.decideMove();
 		
 			
 			//If valid move
-			if(m1 != null) p1.makeMove(m1);
+			if(m1 != null){ p1.makeMove(m1);
 			
 			
 			drawer.refresh();
-			
-			System.out.println(board.map);
-			
+						
 			mp1 = p1.decideMeeple();
+			
+			}
 			
 			//If valid Meeple placement
 			if(mp1 != null)
@@ -55,34 +58,36 @@ public static void main(String[] args) {
 			System.out.println(board.map);
 			System.out.println(board.map.getScores());
 			System.out.println(board.dens.toString());
-			System.out.println("Player 1: " + p1.score + " sPlayer 2: " + p2.score);
-			
+			System.out.println("Player 1: " + p1.score + " Player 2: " + p2.score);
+			s.next();
 			
 			//Player2's Turn
 			//-------------------------------------------------------------------
 			t2 = deck.getCurrent();
 			
-			do{	//Validate Move
-				m2 = p2.decideMove();
-			}while(!validMove(m2, board));
+			m2 = p2.decideMove();
 			
 			//If valid move
-			p2.makeMove(m2);
-			deck.next();
-			drawer.refresh();
+			if(m2 != null){ p2.makeMove(m2);
 			
-			do{	//Validate Meeple placement
-				mp2 = p2.decideMeeple();
-			}while(!validMeeple(mp2, board));
+			
+			drawer.refresh();
+						
+			mp2 = p2.decideMeeple();
+			
+			}
 			
 			//If valid Meeple placement
-			p2.placeMeeple(mp2, t2);
+			if(mp2 != null)
+				p2.placeMeeple(mp2, t2);
 			System.out.println("\n");
+			deck.next();
 			drawer.refresh();
 			System.out.println(board.map);
 			System.out.println(board.map.getScores());
 			System.out.println(board.dens.toString());
 			System.out.println("Player 1: " + p1.score + " Player 2: " + p2.score);
+			s.next();
 		}
 	}
 	

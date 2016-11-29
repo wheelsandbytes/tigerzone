@@ -44,5 +44,5 @@ public abstract class Region {
 	public void removeMeeple(Tiger t) {
 		placedMeeples.remove(placedMeeples.indexOf(t));
 	}  
-    
+	    
 }
