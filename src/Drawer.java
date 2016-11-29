@@ -69,7 +69,7 @@ public class Drawer {
 				}
 				for(int i=0; i<GameInfo.MAX_ZONES; i++){
 					if(!t.getRegionAt(i).getMeeples().isEmpty() && t.getRegionAt(i).getMeeples().get(0) != null){
-						drawTiger(x, y, i, tiger, g);
+						drawTiger(x, y, GameInfo.TIGERZONE.getIndex(t.getRotation(), i)-1, tiger, g);
 						break;
 					}	
 				}

@@ -84,6 +84,7 @@ public class Tile {
 	
 	public void placeTiger(int pos, Tiger t){
 		hasTiger = true;
+		System.out.println("TIGER THOUGHT TO BE PLACED AT " + pos);
 		getRegionAt(GameInfo.TIGERZONE.getZone(rotation, pos)).setMeeple(t);
 	}
 	

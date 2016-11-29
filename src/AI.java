@@ -57,9 +57,8 @@ public class AI extends Player{
 		for(int i = 1; i < 10; i++){
 			Region temp = t.getRegionAt(GameInfo.TIGERZONE.getZone(t.getRotation(), i));
 
-			if(temp.getMeeples().isEmpty()) {
 				int pScore;
-				if(temp instanceof Lake) {
+				if(temp instanceof Lake && ((Lake) temp).getComp().placedTigers.isEmpty()) {
 					pScore = ((Lake) temp).getComp().score();
 					if(pScore > optimum){
 						optimum = pScore;
@@ -67,7 +66,7 @@ public class AI extends Player{
 					}
 				}
 
-				else if(temp instanceof Jungle) {
+				else if(temp instanceof Jungle && ((Jungle) temp).getComp().placedTigers.isEmpty()) {
 					System.out.println(((Jungle) temp).getComp());
 					pScore = ((Jungle) temp).getComp().score();
 					if(pScore > optimum){
@@ -76,14 +75,14 @@ public class AI extends Player{
 					}
 				}
 
-				else if(temp instanceof Trail) {
+				else if(temp instanceof Trail && ((Trail) temp).getComp().placedTigers.isEmpty()) {
 					pScore = ((Trail) temp).getComp().score();
 					if(pScore > optimum){
 						optimum = pScore;
 						pos = i;
 					}
 				}
-			}
+			
 		}
 		if(pos == -1) { return null; }
 		else { return new MeeplePlacement(GameInfo.TIGER, pos); }
