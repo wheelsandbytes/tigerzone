@@ -103,6 +103,7 @@ public class UnitTests {
 		Tile test13 = t.create("TLTJD");
 		Tile test14 = t.create("TLJTP");
 		b.place(new Move(new Coor(0,0), 0, test1));
+		System.out.println(b.getGraph().locate(0, 0));
 		System.out.println(b.map);
 		Move m = b.find(test2).get(4);
 		b.place(m);

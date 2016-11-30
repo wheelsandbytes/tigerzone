@@ -8,7 +8,7 @@
 public class MatrixGraph implements Graph{
 	//Center Row and Col, and Matrix with all Tile references
 	Coor center;
-	private int cRow, cCol;
+	private int cRow, cCol, rootX, rootY;
 	private Tile[][] matrix;
 	private boolean[][] explored;
 	
@@ -27,7 +27,9 @@ public class MatrixGraph implements Graph{
 		//Allocate root
 		matrix[cRow][cCol] = root;
 		center = new Coor(cRow, cCol);
-
+		
+		rootX = 0;
+		rootY = 0;
 		//Designed for traversals
 		explored = new boolean[maxDimension][maxDimension];
 	}

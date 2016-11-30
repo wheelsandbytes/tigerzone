@@ -80,6 +80,10 @@ public class TrailComposite {
 		return tempScore;
 	}
 	
+	public boolean checkComplete(){
+		return ends == 2;
+	}
+	
 	public void placeTiger(Tiger t){
 		placedTigers.add(t);
 		totalTigers++;
@@ -92,7 +96,7 @@ public class TrailComposite {
 		System.out.println("RETURNING");
 		for(Tiger t : placedTigers){
 			System.out.println(t.getPlayer());
-			if(tigerCount.get(t.getPlayer()).intValue() > m) { System.out.println("MAXIMUM"); max = t.getPlayer(); }
+			if(tigerCount.get(t.getPlayer()).intValue() > m) { max = t.getPlayer(); }
 			t.getBack();
 		}
 		placedTigers.clear();
