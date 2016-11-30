@@ -19,8 +19,6 @@ public class TesterPlayer extends Player{
 	//Tester Player gets input from console input
 	@Override
 	public Move decideMove() {
-		System.out.println("Player: "+this.name+" has turn to move\nPlease enter (x,y) coordinates followed by a Rotation(0 90 180 270)");
-		System.out.print("Input: ");
 		Coor c = new Coor(sc.nextInt(), sc.nextInt());
 		Tile t = globalDeck.getCurrent();
 		t.setRot(sc.nextInt()/90);
@@ -31,8 +29,6 @@ public class TesterPlayer extends Player{
 	//Decide MeeplePlacement based on console input
 	@Override
 	public MeeplePlacement decideMeeple() {
-		System.out.println("\nSelect what kind of Meeple to place followed by a position. example: t 2 (Tiger in region 2)");
-		System.out.println("Input: ");
 		char type = sc.next().charAt(0);
 		
 		if(type == 't')

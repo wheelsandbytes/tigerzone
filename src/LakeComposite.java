@@ -110,7 +110,6 @@ public class LakeComposite {
 		}
 		placedTigers.clear();
 		if(max != null) { 
-			System.out.println("SCORING FOR PLAYER " + max);
 			max.updateScore(this.score()); 
 		}
 		tigerCount.clear();

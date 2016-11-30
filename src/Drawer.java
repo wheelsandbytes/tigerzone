@@ -65,7 +65,6 @@ public class Drawer {
 				g.drawImage(rotate(resources.get(t.getType()), t.getAngle()), x, y, TILE_WIDTH, TILE_HEIGHT, null);
 				if(t.hasCrocodile){
 					g.drawImage(crocodile, x+10, y+10, MEEPLE_SIZE, MEEPLE_SIZE, null);
-					System.out.println(t.hasCrocodile);
 				}
 				for(int i=0; i<GameInfo.MAX_ZONES; i++){
 					if(!t.getRegionAt(GameInfo.TIGERZONE.getZone(t.getRotation(), i+1)).getMeeples().isEmpty() && t.getRegionAt(GameInfo.TIGERZONE.getZone(t.getRotation(), i+1)).getMeeples().get(0) != null){

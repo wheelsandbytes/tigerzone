@@ -36,7 +36,6 @@ public static void main(String[] args) {
     if (DEBUG)
     {
         for (int i = 0; i < args.length; i++)
-            System.out.println(args[i]);
     }
 
     // Parse the arguments here:
@@ -105,7 +104,6 @@ public static void main(String[] args) {
 //            if (DEBUG)
 //            { for (int i = 0; i < tokens.length; i++) System.out.println(tokens[i]);}
         	
-        	System.out.println("Server: " + fromServer);
 
             if (fromServer.equals("THANK YOU FOR PLAYING! GOODBYE"))
             {
@@ -138,7 +136,6 @@ public static void main(String[] args) {
                 cid = Integer.parseInt(tokens[2]);
                 rounds = Integer.parseInt(tokens[6]);
 
-                if (DEBUG) System.out.println("cid = " + cid + " and rounds = " + rounds);
             }
             else if (tokens[0].equals("BEGIN") && tokens[1].equals("ROUND"))
             {
@@ -146,7 +143,6 @@ public static void main(String[] args) {
                 //   0     1     2    3    4
                 rid = Integer.parseInt(tokens[2]);
 
-                if (DEBUG) System.out.println("rid = " + rid);
                 //
             }
             else if (tokens[0].equals("YOUR") && tokens[1].equals("OPPONENT"))
@@ -155,7 +151,6 @@ public static void main(String[] args) {
                 //   0     1      2    3     4
                 opponentName = tokens[4];
 
-                if (DEBUG) System.out.println("opponent = " + opponentName);
             }
             else if (tokens[0].equals("STARTING") && tokens[1].equals("TILE"))
             {
@@ -166,7 +161,6 @@ public static void main(String[] args) {
                 y = Integer.parseInt(tokens[6]);
                 orientation = Integer.parseInt(tokens[7]);
 
-                if (DEBUG) System.out.println("starting tile = " + startingTile + "and x,y,orientation = " + x + " " + y + " " + orientation);
             }
             else if (tokens[0].equals("THE") && tokens[1].equals("REMAINING"))
             {
@@ -174,7 +168,6 @@ public static void main(String[] args) {
                 //  0      1            2         3    4       5 ... tokens.length
                 int noTiles = Integer.parseInt(tokens[2]);
 
-                if (DEBUG) System.out.println("no. of tiles = "+ noTiles);
 
                 // String list of tiles to be sent to the Game for creation
                 tiles = new String[noTiles];
@@ -183,7 +176,6 @@ public static void main(String[] args) {
                 for (int i = 5; i < tokens.length; i++)
                 {
                     tiles[i-5] = tokens[i];
-                    if (DEBUG) System.out.println("tiles["+(i-5)+"] = " + tiles[i-5] + " tokens["+i+"] = " +tokens[i]);
                 }
             }
             else if (tokens[0].equals("MATCH") && tokens[1].equals("BEGINS"))
@@ -194,11 +186,9 @@ public static void main(String[] args) {
 
                 gameA = new Game(username,opponentName,startingTile,tiles,x,y,orientation/90);
 
-                if (DEBUG) System.out.println("gameA created successfully");
 
                 gameB = new Game(username,opponentName,startingTile,tiles,x,y,orientation/90);
 
-                if (DEBUG) System.out.println("gameB created successfully");
             }
             else if (tokens[0].equals("MAKE") && tokens[1].equals("YOUR"))
             {
@@ -211,10 +201,6 @@ public static void main(String[] args) {
                 if(gidGameA == null) { gidGameA = gid; gidGameA = gid; }
                 else if(gidGameB == null && !gid.equals(gidGameA)) { gidGameB = gid; gidGameB = gid; }
 
-                if (DEBUG) System.out.println("gid: " + gid);
-                if (DEBUG) System.out.println("gids: "+ gidGameA + " " + gidGameB + " " + gid);
-                if (DEBUG) System.out.println("moveNumber: " + moveNumber);
-                if (DEBUG) System.out.println("tile: " + tile);
 
                 // GAME <gid> MOVE <#> PLACE <tile> AT <x> <y> <orientation> NONE
                 // GAME <gid> MOVE <#> PLACE <tile> AT <x> <y> <orientation> CROCODILE
@@ -313,8 +299,6 @@ public static void main(String[] args) {
                 if(gidGameA == null) { gidGameA = gid; }
                 else if(gidGameB == null && !gid.equals(gidGameA)) { gidGameB = gid; }
 
-                if (DEBUG) System.out.println("pid: "+pid);
-                if (DEBUG) System.out.println("gids: "+ gidGameA + " " + gidGameB + " " + gid);
 
                 if (!pid.equals(username)) // make sure it's not us who just played
                 {
@@ -400,7 +384,6 @@ public static void main(String[] args) {
                 pid = tokens[5];
                 boolean PASS;
 
-                if (DEBUG) System.out.println("pid: "+pid);
 
                 if (!pid.equals(username)) // make sure it's not us who just played
                 {
@@ -486,7 +469,6 @@ public static void main(String[] args) {
             }
             else
             {
-                if (DEBUG) System.out.println("SERVER SENT GARBAGE");
             }
 
             if (state == GAME_END)
@@ -496,7 +478,6 @@ public static void main(String[] args) {
             else if (state == WAITING)
             {
                 // do nothing, we are just waiting for the server
-                if (DEBUG) System.out.println("Just waiting for the server...");
             }
         }
     // } catch (IOException e) {

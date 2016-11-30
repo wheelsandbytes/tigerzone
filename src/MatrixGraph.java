@@ -76,7 +76,6 @@ public class MatrixGraph implements Graph{
 			//}
 			//else System.out.println("Error - No neighbor Tiles available");
 		}
-		else System.out.println("Error - Invalid coordinates");
 	}
 
 	

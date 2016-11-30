@@ -33,7 +33,6 @@ public abstract class Region {
     }
     
     public boolean equals(Region r){
-    	//System.out.println(r.getType() +" " + this.getType());
     	return this.type == r.getType();
     }
     

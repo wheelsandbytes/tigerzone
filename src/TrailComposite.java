@@ -94,16 +94,13 @@ public class TrailComposite {
 	public void returnTigers(){
 		Player max = null;
 		int m = -1;
-		System.out.println("RETURNING");
 		for(Tiger t : placedTigers){
-			System.out.println(t.getPlayer());
 			if(tigerCount.get(t.getPlayer()).intValue() > m) { max = t.getPlayer(); }
 			t.getBack();
 		}
 		placedTigers.clear();
 		
 		if(max != null) { 
-			System.out.println("SCORING FOR PLAYER " + max);
 			max.updateScore(this.score()); 
 		}
 		tigerCount.clear();
