@@ -16,8 +16,8 @@ public class TCPAdapter {
     private String hostName;
     private int portNumber;
     private Socket tzSocket;
-    private static PrintWriter out;
-    private static BufferedReader in;
+    private PrintWriter out;
+    public BufferedReader in;
 
     public TCPAdapter () {} // default constructor
 
@@ -53,16 +53,12 @@ public class TCPAdapter {
     public String receiveMessage ()
     {
         try {
-            String fromServer;
-            while ((fromServer = in.readLine()) != null)
-            {
-                System.out.println("Server: " + fromServer);
-                return fromServer;
-            }
+            return in.readLine();
+
         } catch (IOException e) {
             System.err.println(e);
+            return null;
         }
-        return null;
     }
 
     public static void main(String[] args) throws IOException
