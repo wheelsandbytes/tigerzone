@@ -102,8 +102,10 @@ public static void main(String[] args) {
             
         	String[] tokens = fromServer.split(delims);
 
-            if (DEBUG)
-            { for (int i = 0; i < tokens.length; i++) System.out.println(tokens[i]);}
+//            if (DEBUG)
+//            { for (int i = 0; i < tokens.length; i++) System.out.println(tokens[i]);}
+        	
+        	System.out.println("Server: " + fromServer);
 
             if (fromServer.equals("THANK YOU FOR PLAYING! GOODBYE"))
             {
