@@ -47,6 +47,10 @@ public class Edge {
 		return edges.get(i);
 	}
 	
+	public List<Region> returnAllReg(){
+		return edges;
+	}
+	
 	public String toString(){
 		return edges.toString();
 	}

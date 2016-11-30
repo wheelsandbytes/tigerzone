@@ -46,6 +46,28 @@ public class AI extends Player{
 	 	int maxEdges = mainBoard.possibleLocs.get(fin.getLocation().toString()).numEdges();
 	 	for(Move m : possibleMoves){
 	 		int edges = mainBoard.possibleLocs.get(m.getLocation().toString()).numEdges();
+	 		for(Edge f : mainBoard.possibleLocs.get(m.getLocation().toString()).getAdjacent()){
+	 			if(f != null){
+	 				for(Region r : f.returnAllReg()){
+	 					if(r instanceof Lake && !((Lake) r).getComp().tigerCount.isEmpty()){
+	 						if(((Lake) r).getComp().tigerCount.get(this) == null){
+	 							edges--;
+	 						}
+	 						else{
+	 							edges+=2;
+	 						}
+	 					}
+	 					else if(r instanceof Trail && !((Trail) r).getComp().tigerCount.isEmpty()){
+		 						if(((Trail) r).getComp().tigerCount.get(this) == null){
+		 							edges--;
+		 						}
+		 						else{
+		 							edges+=2;
+		 						}
+		 					}
+	 					}
+	 				}
+	 			}
 	 		if(edges > maxEdges){
 	 			maxEdges = edges;
 	 			fin = m;
