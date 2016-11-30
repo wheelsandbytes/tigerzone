@@ -77,7 +77,7 @@ public abstract class Player {
 	//Places the Meeple after it's been decided
 	public void placeMeeple(MeeplePlacement mp, Tile tile){
 		//If Player wants to place a Tiger
-		if(mp.type == GameInfo.TIGER && !tile.hasTiger){
+		if(mp != null && mp.type == GameInfo.TIGER && !tile.hasTiger){
 			
 			//Get the next available Tiger
 			for(Tiger t : currentTigers){
@@ -90,7 +90,7 @@ public abstract class Player {
 		}
 		
 		//If Player wants to place a Crocodile
-		else if(mp.type == GameInfo.CROCODILE && !tile.hasCrocodile){
+		else if(mp != null && mp.type == GameInfo.CROCODILE && !tile.hasCrocodile){
 			if(crocodiles != 0)
 				tile.placeCrocodile();
 				crocodiles--;
