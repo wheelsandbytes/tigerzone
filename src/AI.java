@@ -112,6 +112,7 @@ public class AI extends Player{
 				}
 
 				else if(temp instanceof Trail && ((Trail) temp).getComp().placedTigers.isEmpty()) {
+					System.out.println("TRAIL BEING CONSIDERED AT " + i);
 					pScore = ((Trail) temp).getComp().score();
 					if(pScore > optimum){
 						optimum = pScore;
