@@ -68,8 +68,8 @@ public class Drawer {
 					System.out.println(t.hasCrocodile);
 				}
 				for(int i=0; i<GameInfo.MAX_ZONES; i++){
-					if(!t.getRegionAt(i).getMeeples().isEmpty() && t.getRegionAt(i).getMeeples().get(0) != null){
-						drawTiger(x, y, GameInfo.TIGERZONE.getIndex(t.getRotation(), i)-1, tiger, g);
+					if(!t.getRegionAt(GameInfo.TIGERZONE.getZone(t.getRotation(), i+1)).getMeeples().isEmpty() && t.getRegionAt(GameInfo.TIGERZONE.getZone(t.getRotation(), i+1)).getMeeples().get(0) != null){
+						drawTiger(x, y, i, tiger, g);
 						break;
 					}	
 				}
