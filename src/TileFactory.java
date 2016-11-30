@@ -307,7 +307,7 @@ public class TileFactory  extends GameInfo implements Factory<Tile>{
 				edges.add(new Edge(r6));		//RIGHT
 				edges.add(new Edge(r6));		//BOTTOM
 				edges.add(new Edge(r3,r2,r1));	//LEFT
-				return assemble(type, NONE, edges, new Region[]{r1, r2, r3, r2, r3, r6, r3, r6, r6});
+				return assemble(type, NONE, edges, new Region[]{r1, r2, r3, r2, r2, r6, r3, r6, r6});
 				
 			case TLLTB:
 				//Region Construction
@@ -318,7 +318,7 @@ public class TileFactory  extends GameInfo implements Factory<Tile>{
 				edges.add(new Edge(r6));		//RIGHT
 				edges.add(new Edge(r6));		//BOTTOM
 				edges.add(new Edge(r3,r2,r1));	//LEFT
-				return assemble(type, BUFFALO, edges, new Region[]{r1, r2, r3, r2, r3, r6, r3, r6, r6});
+				return assemble(type, BUFFALO, edges, new Region[]{r1, r2, r3, r2, r2, r6, r3, r6, r6});
 				
 			case LJTJN:
 				//Region Construction				

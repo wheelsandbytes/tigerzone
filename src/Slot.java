@@ -31,6 +31,15 @@ public class Slot {
 		connections = t;
 	}
 	
+	public int numEdges(){
+		int i = 0;
+		for (Edge e : connections){
+			if(e != null) { i++; }
+		}
+		
+		return i;
+	}
+	
 	public Coor getCoor(){
 		return loc;
 	}
