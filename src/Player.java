@@ -99,7 +99,7 @@ public abstract class Player {
 		for(Region r : tile.getRegions()){
 			if(r instanceof Lake && ((Lake) r).getCompleted()) { ((Lake) r).getComp().returnTigers(); }
 			
-			else if(r instanceof Trail && ((Trail) r).getComp().complete) { ((Trail) r).getComp().returnTigers(); }
+			else if(r instanceof Trail && ((Trail) r).getComp().checkComplete()) { ((Trail) r).getComp().returnTigers(); }
 		}
 		
 		
