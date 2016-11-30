@@ -14,6 +14,8 @@ Everything the base Player can do plus:
 
 */
 public class AI extends Player{
+	
+	int fieldMeeples = 0;
 
 	public AI (Board board, String pid, Deck deck)
 	{
@@ -36,10 +38,21 @@ public class AI extends Player{
 	public Move decideMove() {
 	 	List<Move> possibleMoves = mainBoard.find(globalDeck.getCurrent());
 	 	if(possibleMoves.isEmpty()) { return null; }
+	 	
 	 	Random rand = new Random();
 	 	int randomInt = rand.nextInt(possibleMoves.size());
-		// TODO Auto-generated method stub
-		return possibleMoves.get(randomInt);
+	 	
+	 	Move fin = possibleMoves.get(randomInt);
+	 	int maxEdges = mainBoard.possibleLocs.get(fin.getLocation().toString()).numEdges();
+	 	for(Move m : possibleMoves){
+	 		int edges = mainBoard.possibleLocs.get(m.getLocation().toString()).numEdges();
+	 		if(edges > maxEdges){
+	 			maxEdges = edges;
+	 			fin = m;
+	 		}
+	 	}
+	 	
+		return fin;
 	}
 
 	@Override
@@ -51,17 +64,39 @@ public class AI extends Player{
 		}
 		
 		if(t.getRegionAt(4) instanceof Den){ return new MeeplePlacement(GameInfo.TIGER, 5); }
+		
+		boolean croc = false;
+		
+		for(int i = 1; this.crocodiles > 0 && i < 10; i++){
+			System.out.println("CROC CHECK");
+			Region temp = t.getRegionAt(GameInfo.TIGERZONE.getZone(t.getRotation(), i));
+
+			if(temp instanceof Lake && ((Lake) temp).getComp().tigerCount.get(this) != null) {
+				System.out.println("IT'S OURS");
+				croc = false;
+				break;
+			}
+			
+			else if(temp instanceof Lake && ((Lake) temp).getComp().crocodiles == 0 && !((Lake) temp).getComp().placedTigers.isEmpty()) {
+				System.out.println("LET'S FUCK");	
+				croc = true;
+			}
+		}
+		
+		if(croc) { return new MeeplePlacement(GameInfo.CROCODILE, -1);}
 
 		int optimum = -1;
 		int pos = -1;
+		boolean jungle = false;
 		for(int i = 1; i < 10; i++){
 			Region temp = t.getRegionAt(GameInfo.TIGERZONE.getZone(t.getRotation(), i));
-
-				int pScore;
+				
+			int pScore;
 				if(temp instanceof Lake && ((Lake) temp).getComp().placedTigers.isEmpty()) {
 					pScore = ((Lake) temp).getComp().score();
 					if(pScore > optimum){
 						optimum = pScore;
+						jungle = false;
 						pos = i;
 					}
 				}
@@ -71,6 +106,7 @@ public class AI extends Player{
 					pScore = ((Jungle) temp).getComp().score();
 					if(pScore > optimum){
 						optimum = pScore;
+						jungle = true;
 						pos = i;
 					}
 				}
@@ -79,13 +115,17 @@ public class AI extends Player{
 					pScore = ((Trail) temp).getComp().score();
 					if(pScore > optimum){
 						optimum = pScore;
+						jungle = false;
 						pos = i;
 					}
 				}
 			
 		}
-		if(pos == -1) { return null; }
-		else { return new MeeplePlacement(GameInfo.TIGER, pos); }
+		if(pos == -1 || (jungle && (fieldMeeples > 3))) { return null; }
+		else { 
+			if(jungle) { fieldMeeples++; }
+			return new MeeplePlacement(GameInfo.TIGER, pos); 
+		}
 	}
 	
 	/*
