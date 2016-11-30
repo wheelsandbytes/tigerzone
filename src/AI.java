@@ -51,7 +51,7 @@ public class AI extends Player{
 	 				for(Region r : f.returnAllReg()){
 	 					if(r instanceof Lake && !((Lake) r).getComp().tigerCount.isEmpty()){
 	 						if(((Lake) r).getComp().tigerCount.get(this) == null){
-	 							edges--;
+	 							edges-=2;
 	 						}
 	 						else{
 	 							edges+=2;
@@ -59,7 +59,7 @@ public class AI extends Player{
 	 					}
 	 					else if(r instanceof Trail && !((Trail) r).getComp().tigerCount.isEmpty()){
 		 						if(((Trail) r).getComp().tigerCount.get(this) == null){
-		 							edges--;
+		 							edges-=2;
 		 						}
 		 						else{
 		 							edges+=2;
