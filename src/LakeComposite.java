@@ -39,6 +39,7 @@ public class LakeComposite {
 	}
 	
 	public void add(Lake region){
+		placedTigers.addAll(region.placedMeeples);
 		region.setID(compID);
 		region.setComp(this);
 		components.add(region);

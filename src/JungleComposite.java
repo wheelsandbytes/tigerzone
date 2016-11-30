@@ -37,6 +37,7 @@ public class JungleComposite {
 	}
 	
 	public void add(Jungle region){
+		placedTigers.addAll(region.placedMeeples);
 		region.setID(compID);
 		region.setComp(this);
 		components.add(region);

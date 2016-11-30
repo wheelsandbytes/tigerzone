@@ -29,6 +29,7 @@ public class TrailComposite {
 	}
 	
 	public void add(Trail region){
+		placedTigers.addAll(region.placedMeeples);
 		region.setID(compID);
 		region.setComp(this);
 		components.add(region);
