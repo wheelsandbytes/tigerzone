@@ -49,8 +49,7 @@ public static void main(String[] args) {
 			}
 			
 			//If valid Meeple placement
-			if(mp1 != null)
-				p1.placeMeeple(mp1, t1);
+			p1.placeMeeple(mp1, t1);
 			
 			deck.next();
 			drawer.refresh();
@@ -78,7 +77,6 @@ public static void main(String[] args) {
 			}
 			
 			//If valid Meeple placement
-			if(mp2 != null)
 				p2.placeMeeple(mp2, t2);
 			System.out.println("\n");
 			deck.next();
