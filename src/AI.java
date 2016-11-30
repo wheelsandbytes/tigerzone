@@ -95,17 +95,14 @@ public class AI extends Player{
 		boolean croc = false;
 		
 		for(int i = 1; this.crocodiles > 0 && i < 10; i++){
-			System.out.println("CROC CHECK");
 			Region temp = t.getRegionAt(GameInfo.TIGERZONE.getZone(t.getRotation(), i));
 
 			if(temp instanceof Lake && ((Lake) temp).getComp().tigerCount.get(this) != null) {
-				System.out.println("IT'S OURS");
 				croc = false;
 				break;
 			}
 			
 			else if(temp instanceof Lake && ((Lake) temp).getComp().crocodiles == 0 && !((Lake) temp).getComp().placedTigers.isEmpty()) {
-				System.out.println("LET'S FUCK");	
 				croc = true;
 			}
 		}
@@ -137,7 +134,6 @@ public class AI extends Player{
 				}
 
 				else if(temp instanceof Jungle && ((Jungle) temp).getComp().placedTigers.isEmpty()) {
-					System.out.println(((Jungle) temp).getComp());
 					pScore = ((Jungle) temp).getComp().score();
 					if(pScore > optimum){
 						optimum = pScore;
@@ -147,7 +143,6 @@ public class AI extends Player{
 				}
 
 				else if(temp instanceof Trail && ((Trail) temp).getComp().placedTigers.isEmpty()) {
-					System.out.println("TRAIL BEING CONSIDERED AT " + i + " " + ((Trail) temp).getComp().placedTigers);
 					pScore = ((Trail) temp).getComp().score();
 					if(pScore > optimum){
 						optimum = pScore;

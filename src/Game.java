@@ -31,7 +31,6 @@ public class Game {
 		else if(pid.equals(player2.name))
 			player2.makeMove(move);
 		else
-			System.out.println("Player does not exists");
 	}
 
 	public Move getMoveFromPlayer(String pid)
@@ -41,7 +40,6 @@ public class Game {
 		else if(pid.equals(player2.name))
 			return player2.decideMove();
 		else
-			System.out.println("Player does not exists");
 		return null;
 	}
 

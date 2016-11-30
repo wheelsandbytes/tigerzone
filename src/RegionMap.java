@@ -37,28 +37,23 @@ public class RegionMap {
 				
 				if(!(base instanceof Trail)) { return; }
 				
-				System.out.println("FUCK MY LIFE");
 				Trails.get(bComp).ends = 2;
 				Trails.get(bComp).complete = true;
 				return;
 			}
 			
-			System.out.println("Join");
 			this.join(n, base);
 		}
 		
 		else if(bComp != -1 && nComp == -1){
-			System.out.println("n into b");
 			this.add(n, base);
 		}
 		
 		else if(bComp == -1 && nComp != -1){
-			System.out.println("b into n");
 			this.add(base, n);
 		}
 		
 		else{
-			System.out.println("Brand new");
 			this.addNew(n, base);
 		}
 	}

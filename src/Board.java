@@ -45,18 +45,14 @@ public class Board {
 
 		
 		List<Move> locs = new ArrayList<Move>();
-		System.out.println("Slots:  \n");
 		for(String c : possibleLocs.keySet()){
-			System.out.println(c + " " + possibleLocs.get(c).getAdjacent().toString());
 			for(int i = 0; i < 4; i++){
 				t.setRot(i);
 				if(t.checkValid(possibleLocs.get(c).getAdjacent())){ locs.add(new Move(possibleLocs.get(c).getCoor(), i, t)); }
 			}
 		}
 		
-		System.out.println("Moves:  \n");
 		for(Move m : locs){
-			System.out.println(m);
 		}
 		return locs;
 

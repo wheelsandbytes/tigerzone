@@ -53,11 +53,6 @@ public static void main(String[] args) {
 			
 			deck.next();
 			drawer.refresh();
-			System.out.println("\n");
-			System.out.println(board.map);
-			System.out.println(board.map.getScores());
-			System.out.println(board.dens.toString());
-			System.out.println("Player 1: " + p1.score + " Player 2: " + p2.score);
 			s.next();
 			
 			//Player2's Turn
@@ -78,13 +73,8 @@ public static void main(String[] args) {
 			
 			//If valid Meeple placement
 				p2.placeMeeple(mp2, t2);
-			System.out.println("\n");
 			deck.next();
 			drawer.refresh();
-			System.out.println(board.map);
-			System.out.println(board.map.getScores());
-			System.out.println(board.dens.toString());
-			System.out.println("Player 1: " + p1.score + " Player 2: " + p2.score);
 			s.next();
 		}
 	}
