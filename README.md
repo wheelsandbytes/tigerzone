@@ -5,12 +5,12 @@
 ### Members:
 
 
-* Pei Hui Zheng
-* Hannah Kuehn
-* Saulo De La Rosa
-* Alejandro Chavez
-* Zac Rolston
-* Artem Iryshkov
+* Pei Hui Zheng - SAOxAce
+* Hannah Kuehn - hkuehn
+* Saulo De La Rosa - sadelarosa
+* Alejandro Chavez - alechavez93
+* Zac Rolston - zrolston
+* Artem Iryshkov - wheelsandbytes
 
 ---
 ### [Architectural Design](https://www.gliffy.com/go/share/s8yo6dxqp3tha72iwy0p)
