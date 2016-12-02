@@ -229,7 +229,8 @@ public static void main(String[] args) {
                     {
                     	gameA.player1.makeMove(move);
                     	MeeplePlacement meep = gameA.player1.decideMeeple();
-
+                    	gameA.player1.placeMeeple(meep, move.getTile());
+                    	
                     	if (meep != null)
                     	{
                     		if (meep.type == GameInfo.TIGER)
@@ -241,7 +242,7 @@ public static void main(String[] args) {
                                 toServer = "GAME " + gid + " MOVE " + moveNumber + " PLACE " + move.toString() + " CROCODILE";
                             }
 
-                    		gameA.player1.placeMeeple(meep, move.getTile());
+                    		
                     	}
                         else
                         {
@@ -266,7 +267,8 @@ public static void main(String[] args) {
                     {
                     	gameB.player1.makeMove(move);
                     	MeeplePlacement meep = gameB.player1.decideMeeple();
-
+                    	gameB.player1.placeMeeple(meep, move.getTile());
+                    	
                     	if (meep != null)
                     	{
                     		if (meep.type == GameInfo.TIGER)
@@ -278,7 +280,7 @@ public static void main(String[] args) {
                                 toServer = "GAME " + gid + " MOVE " + moveNumber + " PLACE " + move.toString() + " CROCODILE";
                             }
 
-                    		gameB.player1.placeMeeple(meep, move.getTile());
+                    		
                     	}
                         else
                         {
@@ -325,6 +327,7 @@ public static void main(String[] args) {
                         {
                             move = new Move(new Coor(x,y),orientation/90,gameA.deck.getCurrent());
                             gameA.player2.makeMove(move);
+                            gameA.player2.placeMeeple(null, gameA.deck.getCurrent());
                         }
                     	else if (meeple.equals("TIGER"))
                         {
@@ -341,7 +344,7 @@ public static void main(String[] args) {
                         }
                         else
                         {
-                            // nothing
+                        	//nothing
                         }
                         gameA.deck.next();
                     }
@@ -354,6 +357,7 @@ public static void main(String[] args) {
                         {
                             move = new Move(new Coor(x,y),orientation/90,gameB.deck.getCurrent());
                             gameB.player2.makeMove(move);
+                            gameB.player2.placeMeeple(null, gameB.deck.getCurrent());
                         }
 
                     	else if (meeple.equals("TIGER"))

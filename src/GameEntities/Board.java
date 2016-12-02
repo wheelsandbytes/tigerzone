@@ -26,7 +26,7 @@ public class Board {
 	private Graph board;
 	private List<Tile> deck;
 	
-	RegionMap map;
+	private RegionMap map;
 	List<Den> dens;
 	
 	public HashMap<String, Slot> possibleLocs;  //Coor to Slot hashmap
@@ -34,14 +34,14 @@ public class Board {
 	public Board(){
 		board = new MatrixGraph(null);
 		possibleLocs = new HashMap<String, Slot>();
-		map = new RegionMap();
+		setMap(new RegionMap());
 		dens = new ArrayList<Den>();
 	}
 	
 	public Board(Tile t){
 		board = new MatrixGraph(t);
 		possibleLocs = new HashMap<String, Slot>();
-		map = new RegionMap();
+		setMap(new RegionMap());
 		dens = new ArrayList<Den>();
 	}
 	
@@ -189,7 +189,7 @@ public class Board {
 				Edge n = t.getEdge(i);
 				for(int j = 0; j < 3; j++){
 					if(n.getReg(j).getID() == -1){
-						map.add(n.getReg(j));
+						getMap().add(n.getReg(j));
 					}
 				}
 			}
@@ -198,9 +198,9 @@ public class Board {
 				Edge base = t.getAdj(i).getEdge((i+2)%4);
 				Edge n = t.getEdge(i);
 				
-				map.mergeRegion(base.getReg(0), n.getReg(2));
-				map.mergeRegion(base.getReg(1), n.getReg(1));
-				map.mergeRegion(base.getReg(2), n.getReg(0));
+				getMap().mergeRegion(base.getReg(0), n.getReg(2));
+				getMap().mergeRegion(base.getReg(1), n.getReg(1));
+				getMap().mergeRegion(base.getReg(2), n.getReg(0));
 				
 				/*
 				for(int j = 0; j < 3; j++){
@@ -253,5 +253,13 @@ public class Board {
 				d.returnTigers();
 			}
 		}
+	}
+
+	public RegionMap getMap() {
+		return map;
+	}
+
+	public void setMap(RegionMap map) {
+		this.map = map;
 	}
 }
