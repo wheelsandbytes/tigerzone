@@ -8,7 +8,7 @@ import org.junit.Test;
 -------------------------------------------------------------------------------------------------*/
 
 import GameEntities.Tile.Tile;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 
 public class TestMatrixGraph {
 	

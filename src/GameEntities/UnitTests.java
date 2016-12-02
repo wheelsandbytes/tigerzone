@@ -20,7 +20,7 @@ import GameEntities.Regions.Lake;
 import GameEntities.Regions.Region;
 import GameEntities.Regions.Trail;
 import GameEntities.Tile.Tile;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 import Players.AI;
 import Players.Player;
 

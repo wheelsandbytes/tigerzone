@@ -9,7 +9,7 @@ import java.util.Random;
 
 import GameEntities.Factories.TileFactory;
 import GameEntities.Tile.Tile;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 
 public class Deck {
 	private int curr = 0;

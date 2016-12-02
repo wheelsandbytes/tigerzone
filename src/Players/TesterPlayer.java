@@ -7,7 +7,7 @@ import GameEntities.DataTools.Coor;
 import GameEntities.DataTools.MeeplePlacement;
 import GameEntities.DataTools.Move;
 import GameEntities.Tile.Tile;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 
 /*------------------------------------------------------------------------------
 |	TesterPlayer Class:

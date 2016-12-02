@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import GameEntities.Tile.Tiger;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 
 /*-----------------------------------------------------------------------------------------------
 |	Road class implements Region.java:

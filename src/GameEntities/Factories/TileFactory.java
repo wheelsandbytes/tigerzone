@@ -10,7 +10,7 @@ import GameEntities.Regions.Region;
 import GameEntities.Regions.Trail;
 import GameEntities.Tile.Edge;
 import GameEntities.Tile.Tile;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 
 /*-----------------------------------------------------------------------------------------------
 |	TileFactory Class:

@@ -1,4 +1,4 @@
-package GlobalRefferences;
+package GlobalReferences;
 /*-----------------------------------------------------------------------------------------------	
 |	GameInfo Class:   											
 |  	Contains constant information about the Business Objects accessible publicly

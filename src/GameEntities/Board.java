@@ -12,7 +12,7 @@ import GameEntities.Tile.Edge;
 import GameEntities.Tile.Slot;
 import GameEntities.Tile.Tiger;
 import GameEntities.Tile.Tile;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 
 /*-----------------------------------------------------------------------------------------------
 |	Board Class:
