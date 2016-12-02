@@ -4,7 +4,7 @@ import java.util.*;
 import GameEntities.Regions.Lake;
 import GameEntities.Regions.Region;
 import GameEntities.Regions.Trail;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 
 import static org.junit.Assert.*;
 /*-----------------------------------------------------------------------------------------------

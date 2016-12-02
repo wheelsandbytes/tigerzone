@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import GameEntities.DataTools.Coor;
 import GameEntities.Graphs.Graph;
 import GameEntities.Tile.Tile;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 import javafx.scene.shape.DrawMode;
 
 

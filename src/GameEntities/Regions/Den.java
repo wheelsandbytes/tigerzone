@@ -3,7 +3,7 @@ import java.util.List;
 
 import GameEntities.DataTools.Coor;
 import GameEntities.Tile.Tiger;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 
 /*-----------------------------------------------------------------------------------------------
 |	Church class implements Region.java:

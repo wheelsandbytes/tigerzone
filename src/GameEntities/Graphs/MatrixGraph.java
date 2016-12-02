@@ -1,6 +1,6 @@
 package GameEntities.Graphs;
 import GameEntities.Tile.Tile;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 
 /*-----------------------------------------------------------------------------------------------	
 |	MatrixGraph Class:   											

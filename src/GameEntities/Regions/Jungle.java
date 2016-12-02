@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import GameEntities.Tile.Tiger;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 
 /*-----------------------------------------------------------------------------------------------
 |	Field class implements Region.java:

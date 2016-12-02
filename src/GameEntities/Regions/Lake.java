@@ -1,6 +1,6 @@
 package GameEntities.Regions;
 import GameEntities.Tile.Tiger;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 
 /*-----------------------------------------------------------------------------------------------
 |	City class implements Region.java:

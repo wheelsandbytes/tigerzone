@@ -1,4 +1,4 @@
-package GlobalRefferences;
+package GlobalReferences;
 import java.util.HashMap;
 import java.util.Map;
 

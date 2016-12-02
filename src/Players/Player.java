@@ -17,7 +17,7 @@ import GameEntities.Regions.Region;
 import GameEntities.Regions.Trail;
 import GameEntities.Tile.Tiger;
 import GameEntities.Tile.Tile;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 
 
 public abstract class Player {

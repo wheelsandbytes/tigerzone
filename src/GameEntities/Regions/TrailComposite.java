@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import GameEntities.Tile.Tiger;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 import Players.Player;
 
 public class TrailComposite {

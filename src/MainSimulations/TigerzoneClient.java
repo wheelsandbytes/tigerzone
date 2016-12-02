@@ -19,7 +19,7 @@ import GameEntities.Game;
 import GameEntities.DataTools.Coor;
 import GameEntities.DataTools.MeeplePlacement;
 import GameEntities.DataTools.Move;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 
 public class TigerzoneClient {
 

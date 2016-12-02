@@ -1,5 +1,5 @@
 package GameEntities.Regions;
-import GlobalRefferences.GameInfo;
+import GlobalReferences.GameInfo;
 
 /*-----------------------------------------------------------------------------------------------
 |	Cross class implements Region.java:
