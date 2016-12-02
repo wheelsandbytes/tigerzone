@@ -97,7 +97,6 @@ public class AI extends Player{
 		Tile t = globalDeck.getCurrent();
 		
 		if(this.getTiger() == null){
-			System.out.println("NO TIGERS FOR" + name);
 			return null;
 		}
 		
@@ -119,7 +118,6 @@ public class AI extends Player{
 		}
 		
 		if(croc) {
-			System.out.println("CROC ROCK BOIS " + name);
 			return new MeeplePlacement(GameInfo.CROCODILE, -1);
 		}
 
@@ -162,7 +160,6 @@ public class AI extends Player{
 		if(pos == -1 || (jungle && (fieldMeeples > 3))) { return null; }
 		else {
 			if(jungle) { fieldMeeples++; }
-			System.out.println("TIGER AT " + pos + " " + name);
 			return new MeeplePlacement(GameInfo.TIGER, pos); 
 		}
 	}

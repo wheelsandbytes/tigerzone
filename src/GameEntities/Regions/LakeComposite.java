@@ -150,7 +150,7 @@ public class LakeComposite {
 	}
 	
 	public String toString(){
-		String s = "Cities:\n";
+		String s = "Lakes:\n";
 		for(Lake c : components){
 			s += c.toString();
 		}

@@ -8,6 +8,7 @@ import GameEntities.DataTools.Coor;
 import GameEntities.DataTools.MeeplePlacement;
 import GameEntities.DataTools.Move;
 import GameEntities.Tile.Tile;
+import GlobalReferences.GameInfo;
 import Players.AI;
 import Players.Player;
 
@@ -56,16 +57,25 @@ public static void main(String[] args) {
 			drawer.refresh();
 						
 			mp1 = p1.decideMeeple();
-			
+			p1.placeMeeple(mp1, t1);
 			}
 			
-			//If valid Meeple placement
-			p1.placeMeeple(mp1, t1);
+			String placement1 = "NOTHING";
+			
+			if(mp1 != null){
+				if(mp1.type == GameInfo.CROCODILE){
+					placement1 = "CROCODILE";
+				}
+				else{
+					placement1 = "TIGER AT " + mp1.pos;
+				}
+			}
 			
 			deck.next();
 			drawer.refresh();
 			System.out.println(board.getMap());
-			//System.out.println(board.getMap().getScores());
+			System.out.println(board.getMap().getScores());
+			System.out.println("Player " + p1.name + " Placed " + placement1);
 			System.out.println(p1.toString() + ": " + p1.getScore() + " " + p2.toString() + ": " + p2.getScore());
 			s.next();
 			
@@ -82,15 +92,24 @@ public static void main(String[] args) {
 			drawer.refresh();
 						
 			mp2 = p2.decideMeeple();
-			
+			p2.placeMeeple(mp2, t2);
 			}
 			
-			//If valid Meeple placement
-			p2.placeMeeple(mp2, t2);
+			String placement2 = "NOTHING";
+			
+			if(mp2 != null){
+				if(mp2.type == GameInfo.CROCODILE){
+					placement2 = "CROCODILE";
+				}
+				else{
+					placement2 = "TIGER AT " + mp2.pos;
+				}
+			}			
 			deck.next();
 			drawer.refresh();
 			System.out.println(board.getMap());
-			//System.out.println(board.getMap().getScores());
+			System.out.println(board.getMap().getScores());
+			System.out.println("Player " + p1.name + " Placed " + placement2);
 			System.out.println(p1.toString() + ": " + p1.getScore() + " " + p2.toString() + ": " + p2.getScore());
 			s.next();
 		}

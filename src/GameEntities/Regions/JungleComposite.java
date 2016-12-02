@@ -137,7 +137,7 @@ public class JungleComposite {
 	}
 	
 	public String toString(){
-		String s = "Fields:\n";
+		String s = "Jungles:\n";
 		for(Jungle c : components){
 			s += c.toString();
 		}
