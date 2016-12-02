@@ -229,12 +229,12 @@ public class RegionMap {
 	public String getScores(){
 		String s = "Lakes: \n";
 		for(LakeComposite l : Lakes.values()){
-			s += l.getID() + " " + l.score() + "\n";
+			s += l.getID() + " " + l.score() + " " + l.complete +"\n";
 		}
 		
 		s += "Trails: \n";
 		for(TrailComposite l : Trails.values()){
-			s += l.getID() + " " + l.score() + " " + l.ends + "\n";
+			s += l.getID() + " " + l.score() + " " + l.complete + "\n";
 		}
 		
 		s += "Jungles: \n";

@@ -134,7 +134,7 @@ public class TrailComposite {
 	}
 	
 	public String toString(){
-		String s = "Roads:\n";
+		String s = "Trails:\n";
 		for(Trail c : components){
 			s += c.toString();
 		}
