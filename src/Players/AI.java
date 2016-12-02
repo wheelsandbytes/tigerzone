@@ -97,11 +97,7 @@ public class AI extends Player{
 		Tile t = globalDeck.getCurrent();
 		
 		if(this.getTiger() == null){
-			for(Region r : t.getRegions()){
-				if(r instanceof Lake && ((Lake) r).getCompleted()) { ((Lake) r).getComp().returnTigers(); }
-				
-				else if(r instanceof Trail && ((Trail) r).getComp().checkComplete()) { ((Trail) r).getComp().returnTigers(); }
-			}
+			System.out.println("NO TIGERS FOR" + name);
 			return null;
 		}
 		
@@ -122,13 +118,8 @@ public class AI extends Player{
 			}
 		}
 		
-		if(croc) { 
-			for(Region r : t.getRegions()){
-				if(r instanceof Lake && ((Lake) r).getCompleted()) { ((Lake) r).getComp().returnTigers(); }
-				
-				else if(r instanceof Trail && ((Trail) r).getComp().checkComplete()) { ((Trail) r).getComp().returnTigers(); }
-			}
-			
+		if(croc) {
+			System.out.println("CROC ROCK BOIS " + name);
 			return new MeeplePlacement(GameInfo.CROCODILE, -1);
 		}
 
@@ -167,15 +158,11 @@ public class AI extends Player{
 				}
 			
 		}
-		for(Region r : t.getRegions()){
-			if(r instanceof Lake && ((Lake) r).getCompleted()) { ((Lake) r).getComp().returnTigers(); }
-			
-			else if(r instanceof Trail && ((Trail) r).getComp().checkComplete()) { ((Trail) r).getComp().returnTigers(); }
-		}
 		
 		if(pos == -1 || (jungle && (fieldMeeples > 3))) { return null; }
-		else { 
+		else {
 			if(jungle) { fieldMeeples++; }
+			System.out.println("TIGER AT " + pos + " " + name);
 			return new MeeplePlacement(GameInfo.TIGER, pos); 
 		}
 	}
