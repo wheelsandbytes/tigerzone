@@ -111,7 +111,7 @@ public static void main(String[] args) {
 
 //            if (DEBUG)
 //            { for (int i = 0; i < tokens.length; i++) System.out.println(tokens[i]);}
-        	
+        	System.out.println("Server: "+fromServer);
 
             if (fromServer.equals("THANK YOU FOR PLAYING! GOODBYE"))
             {
