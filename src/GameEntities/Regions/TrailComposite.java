@@ -97,17 +97,39 @@ public class TrailComposite {
 	}
 	
 	public void returnTigers(){
-		Player max = null;
-		int m = -1;
-		for(Tiger t : placedTigers){
-			if(tigerCount.get(t.getPlayer()).intValue() > m) { max = t.getPlayer(); }
-			t.getBack();
+		Player p1 = null;
+		Player p2 = null;
+		for(Trail l : components){
+			for(Tiger t : l.placedMeeples){
+				if(p1 == null) { p1 = t.getPlayer(); }
+				else if(p2 == null && p1 != t.getPlayer()) { p2 = t.getPlayer(); }
+				t.getBack();
+			}
+			l.placedMeeples.clear();
 		}
 		placedTigers.clear();
-		
-		if(max != null) { 
-			max.updateScore(this.score()); 
+		System.out.println("HELLO RETURN " + p1 + " " + p2);
+		if(p1 != null && p2 != null) {
+			int s = this.score();
+			 if(tigerCount.get(p1) < tigerCount.get(p2)){
+				 p2.updateScore(s);
+			 }
+			 else if(tigerCount.get(p1) > tigerCount.get(p2)){
+				 p1.updateScore(s);
+			 }
+			 else{
+				 p1.updateScore(s);
+				 p2.updateScore(s);
+			 }
+			 
 		}
+		else if(p1 != null){
+			p1.updateScore(this.score());
+		}
+		else if(p2 != null){
+			p2.updateScore(this.score());
+		}
+		
 		tigerCount.clear();
 	}
 	

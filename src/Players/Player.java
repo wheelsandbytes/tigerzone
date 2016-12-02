@@ -130,4 +130,8 @@ public abstract class Player {
 	public int  getScore(){
 		return score;
 	}
+	
+	public String toString(){
+		return this.name;
+	}
 }
