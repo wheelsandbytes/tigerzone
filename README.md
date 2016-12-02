@@ -13,6 +13,31 @@
 * Artem Iryshkov - wheelsandbytes
 
 ---
+
+### Compilation/Execution Instuctions (Ecplise IDE)
+
+* Clone the repository
+    *  `git clone https://github.com/wheelsandbytes/tigerzone.git`
+* Create a new project in Eclipse
+    * File -> New -> Java project
+    * Project Name: `tigerzone`
+    * Location: `/.../tigerzone` _(cloned tigerzone repo)_
+    * Select _Next_
+    * In the list of source folders, right-click `images` and select `User as Source Folder`
+    * Select _Libraries_ tab
+    * `Add Library` -> `JUnit`
+    * Select _Next_
+    * Select `JUnit 4`
+    * Select _Finish_
+    * Select _Finish_ again
+* Menu bar -> _Run_ -> _Run Configurations_
+    * right-click `Java Application` -> `New`
+    * _Main class:_ -> _Search_ -> `MainAvP - MainSimulations` -> _Ok_
+    * _Run_
+
+
+
+---
 ### [Architectural Design](https://www.gliffy.com/go/share/s8yo6dxqp3tha72iwy0p)
 
 ### [UML Diagram](https://www.gliffy.com/go/share/satac75pd0xs1h24vyih)
@@ -22,7 +47,7 @@
 
 The majority of our acceptance testing is done through a graphical representation of our game board and the Tigers/Crocodiles placed upon it.  This board has been tested and accurately represents the current state of our game.  Tiles are represernted using the provided images from the Game Rules, tigers are represented by yellow squares, and crocodiles by green squares.  The tigers are placed accurately according to the 1-9 "Tiger Zone" representation, understand that this representation can sometimes lead to a misleading image (an example being a tiger placed at the 7 zone of a 0 rotation JLJL- tile can appear to be placed on the Lake but is  actually placed on the correct zone to denote a tiger on the bottom Jungle) but this is just how the "Tiger Zone" system is implemented. Tigers are removed from a completeable feature when it is completed.  Note that if a tiger is placed onto a feature as it was being completed that turn the tiger will never appear but the game will score for the player who placed that tiger.
 
-This GUI is accessible for acceptance testing throught the MainTvT and MainAvP classes, simply run them. 
+This GUI is accessible for acceptance testing throught the MainTvT and MainAvP classes, simply run them.
 
 Main TvT is a "Tester vs Tester" application where human players follow console instruction to place tiles and tigers.
 

@@ -75,7 +75,7 @@ public class Game {
 
 		//Drawer initialization
 		//Drawer needs some testing hence commented out for now
-		drawer = new Drawer(board.getGraph(), deck);
+//		drawer = new Drawer(board.getGraph(), deck);
 	}
 
 
@@ -106,6 +106,6 @@ public class Game {
 
 	//Refreshes the Game UI representation
 	public void refresh(){
-		drawer.refresh();
+//		drawer.refresh();
 	}
 }
