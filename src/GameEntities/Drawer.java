@@ -82,7 +82,8 @@ public class Drawer {
 		
 		//Draws next Tile
 		public void drawNext(Graphics g){
-			drawTile(BOARD_WIDTH+(MENU_WIDTH-TILE_WIDTH)/2, 10, deck.getCurrent(), g);
+			if(!deck.isDone())
+				drawTile(BOARD_WIDTH+(MENU_WIDTH-TILE_WIDTH)/2, 10, deck.getCurrent(), g);
 		}
 		
 		//Draws Grid System
