@@ -82,6 +82,7 @@ public class Drawer {
 		
 		//Draws next Tile
 		public void drawNext(Graphics g){
+			//Checks for Deck to be valid
 			if(!deck.isDone())
 				drawTile(BOARD_WIDTH+(MENU_WIDTH-TILE_WIDTH)/2, 10, deck.getCurrent(), g);
 		}
