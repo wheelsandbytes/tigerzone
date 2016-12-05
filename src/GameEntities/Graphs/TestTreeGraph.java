@@ -7,7 +7,9 @@ public class TestTreeGraph {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		//Checks structure
+		Graph tree = new TreeGraph();
+		assertNotEquals(null, tree);
 	}
 
 }

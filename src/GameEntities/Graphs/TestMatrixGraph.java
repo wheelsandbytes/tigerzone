@@ -61,7 +61,7 @@ public class TestMatrixGraph {
 		MatrixGraph testGraph = new MatrixGraph(root);
 		
 		assertEquals("A", testGraph.locate(0,0).getType());
-		assertEquals("null", testGraph.locate(0,1).getType());
+		assertEquals(null, testGraph.locate(0,1));
 		assertTrue(getUsedRAM() < 10);
 	}
 	
@@ -77,7 +77,7 @@ public class TestMatrixGraph {
 		assertEquals("B", testGraph.locate(0,1).getType());
 		assertEquals("C", testGraph.locate(1,1).getType());
 		assertEquals("D", testGraph.locate(-1,1).getType());
-		assertEquals("null", testGraph.locate(3,3).getType());
+		assertEquals(null, testGraph.locate(3,3));
 		assertTrue(getUsedRAM() < 10);
 	}
 	
