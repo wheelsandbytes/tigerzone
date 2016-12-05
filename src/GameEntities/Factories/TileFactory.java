@@ -145,7 +145,7 @@ public class TileFactory  extends GameInfo implements Factory<Tile>{
 				edges.add(new Edge(r4));		//RIGHT
 				edges.add(new Edge(r4));		//BOTTOM
 				edges.add(new Edge(r4));		//LEFT
-				return assemble(type, NONE, edges, new Region[]{r1, r1, r1, r4, r4, r4, r4, r4, r4});
+				return assemble(type, NONE, edges, new Region[]{r1, r1, r1, r4, r1, r4, r4, r4, r4});
 
 			case LLJJN:
 				//Region Construction
